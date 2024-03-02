@@ -1,0 +1,26 @@
+.container_button{
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    padding: 10px;
+    display: flex;
+    align-items: center; /* Vertically center content */
+}
+
+.container_button:hover {
+    background-color: var(--surface_color_2);
+    color: var(--text_on_surface_color_2);
+}
+
+.container_button_active{
+    background-color: var(--surface_color_3);
+    color: var(--text_on_surface_color_3);
+}
+
+.container_button_horizontal{
+    justify-content: center; /* Horizontally center content */
+    width: auto;
+}
+
+.container_button_vertical{
+    width: 100%;
+}
