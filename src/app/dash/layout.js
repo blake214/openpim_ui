@@ -1,3 +1,6 @@
+import styles from "./style.module.css"
+import DashNavbar from "@/app/components/dash_navbar/dash_navbar";
+
 export const metadata = {
 	title: "Dashboard",
 	title: {
@@ -7,10 +10,13 @@ export const metadata = {
 	description: "OpenPIM APP: Dashboard",
 };
 
-export default function DashLayout({ children }) {
+export default function DashLayout({ children, test }) {
 	return (
-		<>
-			{children}
-		</>
+		<div className={styles.container}>
+			<DashNavbar/>
+			<main>
+				{children}
+			</main>
+		</div>
 	);
 }

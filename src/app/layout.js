@@ -19,6 +19,3 @@ export default function RootLayout({ children }) {
         </html>
     );
 }
-
-
-// https://www.youtube.com/watch?v=vCOSTG10Y4o&ab_channel=LamaDev

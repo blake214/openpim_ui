@@ -1,16 +1,17 @@
-"use client";
 import Link from "next/link";
-import styles from "./custom_link.module.css";
+import general_styles from "@/app/components/style.module.css"
 import { usePathname } from "next/navigation";
 
-export default function CustomLink({ children, item }) {
+export default function CustomLink({ align_type, children, item }) {
 	const pathName = usePathname();
 	return (
 		<Link
 			href={item.path}
-			className={`${styles.container} ${
-				pathName === item.path && styles.active
-			}`}
+			className={`
+				${general_styles.container_button}
+				${pathName === item.path && general_styles.container_button_active}
+				${align_type === "horizontal" ? (general_styles.container_button_horizontal) : (general_styles.container_button_vertical)}
+			`}
 		>
 			{children}
 		</Link>

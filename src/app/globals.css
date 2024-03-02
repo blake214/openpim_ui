@@ -1,37 +1,52 @@
 :root {
     --background_color: white;
-    --text_color: #121212;
+    --text_color: #171717;
 
     --surface_color_1: #F0F0F0;
-    --text_on_surface_color_1: #121212;
+    --text_on_surface_color_1: #171717;
 
     --surface_color_2: #E1E1E1;
-    --text_on_surface_color_2: #121212;
+    --text_on_surface_color_2: #171717;
 
     --surface_color_3: #272727;
     --text_on_surface_color_3: #F0F0F0;
+
+    --navbar_height: 50px;
+
+    --navbar_list_width: 200px;
+
+    --dash_navbar_width_min: 50px;
+    --dash_navbar_width_max: 200px;
+
+    --drop_shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+
+    --key_value_key_width: 200px;
 }
 
 [data-theme="dark"] {
-    --fg: #fff;
-    --bg: #000;
-    --background_color: #121212;
+    --background_color: #171717;
     --text_on_background_color: #F0F0F0;
 
-    --surface_color_1: #272727;
+    --surface_color_1: #212121;
     --text_on_surface_color_1: #F0F0F0;
 
-    --surface_color_2: #353535;
+    --surface_color_2: #2f2f2f;
     --text_on_surface_color_2: #F0F0F0;
 
-    --surface_color_3: #BDBDBD;
-    --text_on_surface_color_3: #121212;
+    --surface_color_3: #898989;
+    --text_on_surface_color_3: #171717;
+
+    input[type=text], select, textarea {
+        background-color: var(--surface_color_1);
+    }
 }
 
 * {
+    padding: 0px;
+    margin: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -54,3 +69,38 @@ body {
     color: var(--text_on_background_color);
 }
 
+main {
+    padding: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+hr {
+    border: none;
+}
+
+.hr_surface_color_1 {
+    border-top: 1px solid var(--surface_color_1);
+}
+
+.hr_surface_color_2 {
+    border-top: 1px solid var(--surface_color_2);
+}
+
+.align_right {
+    margin-left: auto;
+}
+
+.flex {
+    display: flex;
+}
+
+/* Forms */
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--surface_color_1);
+    border-radius: 4px;
+    resize: vertical;
+}
