@@ -1,10 +1,10 @@
 "use client"
 import styles from "./style.module.css"
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import startCase from 'lodash/startCase';
 
-export default function DashTrailHeading({ children }) {
+export default function DashTrailHeading() {
 	const location = usePathname()
 	const pathnames = location.split('/').filter(x => x)
 	return (
@@ -12,17 +12,18 @@ export default function DashTrailHeading({ children }) {
 			<nav>
 				<ul>
 					{pathnames.map((value, index) => {
+						const first = index == 0
 						const last = index == pathnames.length -1
 						const href = `/${pathnames.slice(0, index + 1).join('/')}`
 						const title = value
 						return (
 							<li key={href}>
-								<span>/</span>
+								{!first && (<span>/</span>)}
 								{
 									last ? (
-										<b>{title}</b>
+										<b>{startCase(title)}</b>
 									) : (
-										<Link href={href}>{title}</Link>
+										<Link href={href}>{startCase(title.replace('_', ' '))}</Link>
 									)
 								}
 							</li>

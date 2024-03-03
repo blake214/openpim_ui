@@ -1,10 +1,9 @@
 "use client"
-import DashTrailHeading from "@/app/components/dash_trail_heading/dash_trail_heading";
-import EditableBlock from "@/app/components/edititable_block/editable_block";
-import KeyValueBlock from "@/app/components/key_value_block/key_value_block";
-import SectionBlockMinimizer from "@/app/components/section_block_minimizer/section_block_minimizer";
+import EditableBlock from "@/components/edititable_block/editable_block";
+import KeyValueBlock from "@/components/key_value_block/key_value_block";
+import SectionBlockMinimizer from "@/components/section_block_minimizer/section_block_minimizer";
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 const user_details = {
     _id: "507f1f77bcf86cd799439012",
@@ -61,15 +60,15 @@ const user_details = {
 
 export default function Account() {
     const router = useRouter();
+    const location = usePathname()
     const handleEditFnameButton = () => {
-        router.push(`account/fname`);
+        router.push(`${location}/first_name`);
     };
     const handleEditLnameButton = () => {
-        router.push(`account/lname`);
+        router.push(`${location}/last_name`);
     };
     return (
         <div>
-            <DashTrailHeading/>
             <br/>
             <h1>Account</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>

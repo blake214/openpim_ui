@@ -1,5 +1,6 @@
+import DashTrailHeading from "@/components/dash_trail_heading/dash_trail_heading";
 import styles from "./style.module.css"
-import DashNavbar from "@/app/components/dash_navbar/dash_navbar";
+import DashNavbar from "@/components/dash_navbar/dash_navbar";
 
 export const metadata = {
 	title: "Dashboard",
@@ -15,6 +16,7 @@ export default function DashLayout({ children, test }) {
 		<div className={styles.container}>
 			<DashNavbar/>
 			<main>
+				<DashTrailHeading/>
 				{children}
 			</main>
 		</div>

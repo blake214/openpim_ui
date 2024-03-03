@@ -1,7 +1,7 @@
 "use client"
 
 import { PiSidebarSimpleFill } from "react-icons/pi";
-import CustomLink from "@/app/components/custom_link/custom_link";
+import CustomLink from "@/components/custom_link/custom_link";
 import styles from "./style.module.css"
 import CustomToggle from "../custom_toggle/custom_toggle";
 import { useState } from "react";

@@ -1,9 +1,15 @@
-import DashTrailHeading from "@/app/components/dash_trail_heading/dash_trail_heading";
+export const metadata = {
+	title: "Messages",
+	title: {
+		default:"Messages",
+		template:"Messages : | %s"
+	},
+	description: "OpenPIM APP: Dashboard Messages",
+};
 
 export default function Message() {
     return (
         <div>
-            <DashTrailHeading/>
             <>Message...</>
         </div>
     );

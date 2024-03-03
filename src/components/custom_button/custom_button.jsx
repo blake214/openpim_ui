@@ -1,14 +1,14 @@
-import general_styles from "@/app/components/style.module.css"
+import general_styles from "@/components/style.module.css"
 
-export default function CustomToggle({ align_type, state, toggleState, children }) {
+export default function CustomButton({ align_type, click_event, children }) {
 	return (
 		<button 
+			onClick={click_event}
 			className={`
 				${general_styles.container_button} 
-				${state && general_styles.container_button_active}
 				${align_type === "horizontal" ? (general_styles.container_button_horizontal) : (general_styles.container_button_vertical)}
 				`}
-			onClick={toggleState}>
+			>
 				{children}
 		</button>
 	);

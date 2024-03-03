@@ -1,8 +1,8 @@
 import styles from "./navigation_links.module.css"
 import { FaUser } from "react-icons/fa6";
 import { IoMdMenu } from "react-icons/io";
-import CustomLink from "@/app/components/custom_link/custom_link";
-import CustomToggle from "@/app/components/custom_toggle/custom_toggle";
+import CustomLink from "@/components/custom_link/custom_link";
+import CustomToggle from "@/components/custom_toggle/custom_toggle";
 
 export default function NavigationLinks({updateMenuObj, updateUserObj}) {
 	return (

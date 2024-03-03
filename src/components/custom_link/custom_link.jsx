@@ -1,5 +1,5 @@
 import Link from "next/link";
-import general_styles from "@/app/components/style.module.css"
+import general_styles from "@/components/style.module.css"
 import { usePathname } from "next/navigation";
 
 export default function CustomLink({ align_type, children, item }) {

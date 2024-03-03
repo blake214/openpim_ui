@@ -1,8 +1,7 @@
 "use client"
-import DashTrailHeading from "@/app/components/dash_trail_heading/dash_trail_heading";
 import styles from "./style.module.css"
-import KeyValueBlock from "@/app/components/key_value_block/key_value_block";
-import CustomButton from "@/app/components/custom_button/custom_button";
+import KeyValueBlock from "@/components/key_value_block/key_value_block";
+import CustomButton from "@/components/custom_button/custom_button";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
@@ -80,7 +79,6 @@ export default function ChangeUser() {
     };
     return (
         <div>
-            <DashTrailHeading/>
             <br/>
             <h1>Change</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
