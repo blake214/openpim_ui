@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { gql, useMutation } from '@apollo/client';
 import GoBackButton from "@/components/go_back_button/go_back_button";
 import { FaGithub } from "react-icons/fa";
+import { handleGithubLogin } from "@/lib/action";
 
 const login_user_query = gql`
     mutation LoginUser($LoginUserInputObject: LoginUserInput!) {
@@ -79,11 +80,13 @@ export default function LoginPage() {
                     <br/>
                     <br/>
                     <CustomButton align_type="verticle" type="submit">Login</CustomButton>
-                    <br/>
-                    <CustomButton align_type="verticle" type="submit"><FaGithub/>Login with github</CustomButton>
-                    <br/>
-                    <GoBackButton target="register" click_event={() => router.push(`/register`)}/>
                 </form>
+                <br/>
+                <form action={handleGithubLogin}>
+                    <CustomButton align_type="verticle" type="submit"><FaGithub/>Login with github</CustomButton>
+                </form>
+                <br/>
+                <GoBackButton target="register" click_event={() => router.push(`/register`)}/>
             </div>
         </div>
     );

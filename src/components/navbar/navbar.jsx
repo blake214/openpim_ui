@@ -12,8 +12,9 @@ import NavigationLinks from "./navigation_links/navigation_links";
 import CustomLink from "../custom_link/custom_link";
 import CustomToggle from "../custom_toggle/custom_toggle";
 import CustomButton from "../custom_button/custom_button";
+import { handleLogout } from "@/lib/action";
 
-export default function Navbar() {
+export default function Navbar({session}) {
 	// ===== This for differenciating when a user or server had rendered this
 	const [mounted, setMounted] = useState(false)
 	const { theme, setTheme } = useTheme()
@@ -117,12 +118,14 @@ export default function Navbar() {
 						</CustomToggle>
 					</div>
 				)}
-				{userToggled && (
+				{userToggled && session?.user && (
 					<div ref={component_ref} className={styles.user_container}>
-						<CustomButton align_type="vertical">
-							<MdLogout size={25} cursor="pointer"/>
-							Logout
-						</CustomButton>
+						<form action={handleLogout}>
+							<CustomButton align_type="vertical" type="submit">
+								<MdLogout size={25} cursor="pointer"/>
+								Logout
+							</CustomButton>
+						</form>
 					</div>
 				)}
 			</div>
