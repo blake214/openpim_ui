@@ -73,6 +73,14 @@ export default function Navbar() {
 						updateMenuObj={{state: menuToggled, updater: updateMenuToggled}}
 						updateUserObj={{state: userToggled, updater: updateUserToggled}}
 						/>
+
+					{/* Temp placement */}
+					<CustomLink align_type="horizontal" item={{ title: "Entities", path: "/login" }}>
+						Temp_login
+					</CustomLink>
+					<CustomLink align_type="horizontal" item={{ title: "Entities", path: "/register" }}>
+						Temp_register
+					</CustomLink>
 				</div>
 				{menuToggled && (
 					<div ref={component_ref} className={styles.list_container}>

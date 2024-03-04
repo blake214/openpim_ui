@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import Navbar from "@/components/navbar/navbar";
 import Providers from "./providers";
+import ApolloAppProvider from "./apollo_app_provider";
 
 export const metadata = {
     title: "OpenPIM",
@@ -12,8 +13,10 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body>
                 <Providers>
-                    <Navbar/>
-                    {children}
+                    <ApolloAppProvider>
+                        <Navbar/>
+                        {children}
+                    </ApolloAppProvider>
                 </Providers>
             </body>
         </html>

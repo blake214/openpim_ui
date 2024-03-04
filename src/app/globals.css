@@ -36,7 +36,7 @@
     --surface_color_3: #898989;
     --text_on_surface_color_3: #171717;
 
-    input[type=text], select, textarea {
+    input[type=text], input[type="password"], input[type="email"], select, textarea {
         background-color: var(--surface_color_1);
     }
 }
@@ -89,6 +89,8 @@ hr {
 }
 
 .align_right {
+    display: flex;
+    align-items: center;
     margin-left: auto;
 }
 
@@ -97,7 +99,7 @@ hr {
 }
 
 /* Forms */
-input[type=text], select, textarea {
+input[type=text], input[type="password"], input[type="email"], select, textarea {
     width: 100%;
     padding: 5px;
     border: 1px solid var(--surface_color_1);

@@ -58,7 +58,9 @@ const user_details = {
     },
 }
 
-export default function ChangeUser() {
+export default function ChangeUser({params}) {
+    const change_type = params.change_type
+    console.log(change_type)
     const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
@@ -71,8 +73,6 @@ export default function ChangeUser() {
             [name]: value,
         }));
     };
-
-
     const updateUserDetails = () => {
         // <- Here we can perform the API update
         router.back(); // This will navigate the user back to the previous page
