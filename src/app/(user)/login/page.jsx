@@ -1,30 +1,17 @@
 "use client"
 import CustomButton from "@/components/custom_button/custom_button";
 import styles from "./style.module.css"
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from "react";
-import { gql, useMutation } from '@apollo/client';
 import GoBackButton from "@/components/go_back_button/go_back_button";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
-import { handleGithubLogin } from "@/lib/action";
-
-const login_user_query = gql`
-    mutation LoginUser($LoginUserInputObject: LoginUserInput!) {
-        loginUser( LoginUserInput: $LoginUserInputObject ) {
-            token
-        }
-    }
-`;
+import { credentialsLogin, handleGithubLogin } from "@/lib/action";
+import { useFormState } from "react-dom";
 
 export default function LoginPage() {
     const router = useRouter();
-
-    // ======= GraphQL
-    const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(login_user_query);
-    // ======= GraphQL
-
     const [loginUserInput, setLoginUserInput] = useState({
-        email: 'blake@example.com',
+        email: 'blakekellett10@gmail.com',
         password: 'password',
     });
     const handleLoginUserInputChange = (e) => {
@@ -34,36 +21,17 @@ export default function LoginPage() {
             [name]: value,
         }));
     };
-
-    const handleLoginUserInputSubmit = (e) => {
-        e.preventDefault();
-        const login_user_input_object = {
-            email: loginUserInput.email,
-            password: loginUserInput.password,
-        }
-        loginUser({
-            variables: {
-                LoginUserInputObject: login_user_input_object
-            }
-        });
-    };
-
-    useEffect(() => {
-        if(loginUserData && !loginUserLoading) {
-            localStorage.setItem('token', loginUserData.loginUser.token);
-            router.push(`/dash`)
-        }
-    }, [loginUserData]);
+    const [credentialsLoginState, credentialsLoginAction] = useFormState(credentialsLogin, undefined);
 
     return (
         <div className={styles.container}>
             <div className={styles.form_container}>
-                <form onSubmit={handleLoginUserInputSubmit}>
+                <form action={credentialsLoginAction}>
                     <input 
                         placeholder="Email" 
                         type="email"
-                        onChange={handleLoginUserInputChange}
                         name="email"
+                        onChange={handleLoginUserInputChange}
                         value={loginUserInput.email}
                         required
                     />
@@ -72,14 +40,15 @@ export default function LoginPage() {
                     <input 
                         placeholder="Password" 
                         type="password"
-                        onChange={handleLoginUserInputChange}
                         name="password"
+                        onChange={handleLoginUserInputChange}
                         value={loginUserInput.password}
                         required
                     />
                     <br/>
                     <br/>
                     <CustomButton align_type="verticle" type="submit">Login</CustomButton>
+                    {credentialsLoginState?.error}
                 </form>
                 <br/>
                 <form action={handleGithubLogin}>

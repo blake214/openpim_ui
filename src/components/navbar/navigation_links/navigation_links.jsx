@@ -5,12 +5,14 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { IoMdMenu } from "react-icons/io";
 import CustomToggle from "../../custom_toggle/custom_toggle";
 
-export default function NavigationLinks({updateMenuObj, updateUserObj}) {
+export default function NavigationLinks({updateMenuObj, updateUserObj, logged_in}) {
 	return (
 		<div className={styles.container}>
-			<CustomLink align_type="horizontal" item={{ title: "Dash", path: "/dash" }}>
-				<MdSpaceDashboard size={25} cursor="pointer"/>
-			</CustomLink>
+			{logged_in && (
+				<CustomLink align_type="horizontal" item={{ title: "Dash", path: "/dash" }}>
+					<MdSpaceDashboard size={25} cursor="pointer"/>
+				</CustomLink>
+			)}
 			<CustomToggle align_type="horizontal" state={updateUserObj.state} toggleState={updateUserObj.updater}>
 				<FaUser size={25} cursor="pointer"/>
 			</CustomToggle>

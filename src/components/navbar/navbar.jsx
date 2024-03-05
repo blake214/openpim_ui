@@ -13,8 +13,12 @@ import CustomLink from "../custom_link/custom_link";
 import CustomToggle from "../custom_toggle/custom_toggle";
 import CustomButton from "../custom_button/custom_button";
 import { handleLogout } from "@/lib/action";
+import { useSession } from "next-auth/react";
 
-export default function Navbar({session}) {
+
+export default function Navbar() {
+	const session = useSession()
+
 	// ===== This for differenciating when a user or server had rendered this
 	const [mounted, setMounted] = useState(false)
 	const { theme, setTheme } = useTheme()
@@ -73,15 +77,8 @@ export default function Navbar({session}) {
 					<NavigationLinks
 						updateMenuObj={{state: menuToggled, updater: updateMenuToggled}}
 						updateUserObj={{state: userToggled, updater: updateUserToggled}}
+						logged_in={(session?.data?.user)}
 						/>
-
-					{/* Temp placement */}
-					<CustomLink align_type="horizontal" item={{ title: "Entities", path: "/login" }}>
-						Temp_login
-					</CustomLink>
-					<CustomLink align_type="horizontal" item={{ title: "Entities", path: "/register" }}>
-						Temp_register
-					</CustomLink>
 				</div>
 				{menuToggled && (
 					<div ref={component_ref} className={styles.list_container}>
@@ -118,15 +115,21 @@ export default function Navbar({session}) {
 						</CustomToggle>
 					</div>
 				)}
-				{userToggled && session?.user && (
-					<div ref={component_ref} className={styles.user_container}>
-						<form action={handleLogout}>
-							<CustomButton align_type="vertical" type="submit">
-								<MdLogout size={25} cursor="pointer"/>
-								Logout
-							</CustomButton>
-						</form>
-					</div>
+				{userToggled && (
+					<>
+						{session?.data?.user ? (
+							<div ref={component_ref} className={styles.user_container}>
+								<form action={handleLogout}>
+									<CustomButton align_type="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
+								</form>
+							</div>
+						) : (
+							<div ref={component_ref} className={styles.user_container}>
+								<CustomLink align_type="vertical" item={{ title: "Login", path: "/login" }}> Login </CustomLink>
+								<CustomLink align_type="vertical" item={{ title: "Register", path: "/register" }}> Register </CustomLink>
+							</div>
+						)}
+					</>
 				)}
 			</div>
 		</>

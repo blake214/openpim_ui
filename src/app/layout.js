@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar/navbar";
 import Providers from "./providers";
 import ApolloAppProvider from "./apollo_app_provider";
 import { auth } from "@/lib/auth";
+import { SessionProvider } from "next-auth/react"
 
 export const metadata = {
     title: "OpenPIM",
@@ -15,10 +16,12 @@ export default async function RootLayout({ children }) {
         <html lang="en">
             <body>
                 <Providers>
-                    <ApolloAppProvider>
-                        <Navbar session={session}/>
-                        {children}
-                    </ApolloAppProvider>
+                    <SessionProvider session={session}>
+                        <ApolloAppProvider>
+                            <Navbar/>
+                            {children}
+                        </ApolloAppProvider>
+                    </SessionProvider>
                 </Providers>
             </body>
         </html>
