@@ -5,6 +5,8 @@ import CustomButton from "@/components/custom_button/custom_button";
 import { gql, useMutation } from '@apollo/client';
 import GoBackButton from "@/components/go_back_button/go_back_button";
 import { useRouter } from 'next/navigation'
+import { IoMdArrowRoundBack } from "react-icons/io";
+import BasicLink from "@/components/basic_link/basic_link";
 
 const create_email_verification_mutation = gql`
     mutation CreateEmailVerification($CreateEmailVerificationInputObject: CreateEmailVerificationInput!) {
@@ -172,7 +174,7 @@ export default function RegisterPage() {
                         <br/>
                         <CustomButton align_type="verticle" type="submit">Register</CustomButton>
                         <br/>
-                        <GoBackButton target="login" click_event={() => router.push(`/login`)}/>
+                        <BasicLink item={{path:"/login", title:"Login"}} align="right"><IoMdArrowRoundBack /> Login</BasicLink>
                     </form>
                 </div>
             )}

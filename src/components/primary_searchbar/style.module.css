@@ -1,0 +1,26 @@
+.container{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    width: 100%;
+    max-width: 1000px;
+}
+
+.searchbar_container{
+    position: relative;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    display: flex;
+    width: 100%;
+    z-index: 990;
+    box-shadow: var(--drop_shadow);
+}
+
+.suggestion_container{
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    width: 100%;
+    z-index: 989;
+    position:absolute;
+    box-shadow: var(--drop_shadow);
+}

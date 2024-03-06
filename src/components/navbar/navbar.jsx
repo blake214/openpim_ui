@@ -21,7 +21,9 @@ export default function Navbar() {
 
 	// ===== This for differenciating when a user or server had rendered this
 	const [mounted, setMounted] = useState(false)
+	const { resolvedTheme } = useTheme();
 	const { theme, setTheme } = useTheme()
+	if(theme === "system") setTheme(resolvedTheme)
 
 	// ===== Menu toggles
 	const [menuToggled, setMenuToggled] = useState(false);

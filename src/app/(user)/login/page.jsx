@@ -1,12 +1,13 @@
 "use client"
 import CustomButton from "@/components/custom_button/custom_button";
 import styles from "./style.module.css"
-import GoBackButton from "@/components/go_back_button/go_back_button";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { credentialsLogin, handleGithubLogin } from "@/lib/action";
 import { useFormState } from "react-dom";
+import BasicLink from "@/components/basic_link/basic_link";
+import { IoMdArrowRoundForward } from "react-icons/io";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -55,7 +56,9 @@ export default function LoginPage() {
                     <CustomButton align_type="verticle" type="submit"><FaGithub/>Login with github</CustomButton>
                 </form>
                 <br/>
-                <GoBackButton target="register" click_event={() => router.push(`/register`)}/>
+                <BasicLink item={{path:"/register", title:"Register"}} align="left"><IoMdArrowRoundForward /> Register account</BasicLink>
+                <BasicLink item={{path:"/forgot_password", title:"Forgot password"}} align="left"><IoMdArrowRoundForward /> Forgot password</BasicLink>
+                <BasicLink item={{path:"/recover_account", title:"Recover account"}} align="left"><IoMdArrowRoundForward /> Recover account</BasicLink>
             </div>
         </div>
     );
