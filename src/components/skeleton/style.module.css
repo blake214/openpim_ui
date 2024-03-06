@@ -4,3 +4,21 @@
     background-color: var(--surface_color_1);
     color: var(--text_on_surface_color_1);
 }
+
+.skeleton_placeholder {
+    min-height: 20px;
+    background-color: var(--surface_color_1); 
+    border-radius: 8px; 
+    opacity: 0;
+    margin-bottom: 10px;
+    animation: fadeInOut 3s infinite;
+}
+  
+@keyframes fadeInOut {
+    0%, 100% {
+    opacity: 0.4;
+    }
+    50% {
+    opacity: 1;
+    }
+}

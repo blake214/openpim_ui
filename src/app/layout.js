@@ -1,9 +1,9 @@
 import "@/app/globals.css";
-import Navbar from "@/components/navbar/navbar";
-import Providers from "./providers";
-import ApolloAppProvider from "./apollo_app_provider";
 import { auth } from "@/lib/auth";
 import { SessionProvider } from "next-auth/react"
+import ApolloAppProvider from "./apollo_app_provider";
+import DarkLightThemeProvider from "./dark_light_theme_provider";
+import Navbar from "@/components/navbar/navbar";
 
 export const metadata = {
     title: "OpenPIM",
@@ -15,14 +15,14 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                <Providers>
-                    <SessionProvider session={session}>
-                        <ApolloAppProvider>
+                <SessionProvider session={session}>
+                    <ApolloAppProvider>
+                        <DarkLightThemeProvider>
                             <Navbar/>
                             {children}
-                        </ApolloAppProvider>
-                    </SessionProvider>
-                </Providers>
+                        </DarkLightThemeProvider>
+                    </ApolloAppProvider>
+                </SessionProvider>
             </body>
         </html>
     );

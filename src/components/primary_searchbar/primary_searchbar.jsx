@@ -22,12 +22,12 @@ export default function PrimarySearchBar() {
                     autoComplete="off"
                     name="search"
                 />
-                <CustomButton align_type="horizontal"><IoMdSearch size={25} cursor="pointer"/></CustomButton>
+                <CustomButton align="horizontal"><IoMdSearch size={25} cursor="pointer"/></CustomButton>
             </div>
             {suggestions.length && (
                 <div className = {styles.suggestion_container}>
                     { suggestions.map( suggestion => (
-                        <CustomLink key={suggestion} align_type="verticle" item={{ title: "Search", path: "/search" }}>
+                        <CustomLink key={suggestion} align="verticle" item={{ title: "Search", path: "/search" }}>
                             {suggestion}
                         </CustomLink>
                     ))}

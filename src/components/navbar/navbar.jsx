@@ -63,17 +63,12 @@ export default function Navbar() {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, []);
-	// ===== useEffect only runs on the client, so now we can safely show the UI
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-	if (!mounted) return null
 	return (
 		<>
 			<div className={styles.container_spacer}></div>
 			<div className={styles.container}>
 				<div className={styles.bar}>
-					<CustomLink align_type="horizontal" item={{ title: "Home", path: "/" }}>
+					<CustomLink align="horizontal" item={{ title: "Home", path: "/" }}>
 						<FaBookOpen size={25} cursor="pointer"/>
 					</CustomLink>
 					<NavigationLinks
@@ -84,25 +79,25 @@ export default function Navbar() {
 				</div>
 				{menuToggled && (
 					<div ref={component_ref} className={styles.list_container}>
-						<CustomLink align_type="vertical" item={{ title: "About", path: "/about" }}>
+						<CustomLink align="vertical" item={{ title: "About", path: "/about" }}>
 							About
 						</CustomLink>
-						<CustomLink align_type="vertical" item={{ title: "Documentation", path: "/documentation" }}>
+						<CustomLink align="vertical" item={{ title: "Documentation", path: "/documentation" }}>
 							Documentation
 						</CustomLink>
-						<CustomLink align_type="vertical" item={{ title: "Articles", path: "/articles" }}>
+						<CustomLink align="vertical" item={{ title: "Articles", path: "/articles" }}>
 							Articles
 						</CustomLink>
-						<CustomLink align_type="vertical" item={{ title: "Demo", path: "/demo" }}>
+						<CustomLink align="vertical" item={{ title: "Demo", path: "/demo" }}>
 							Demo
 						</CustomLink>
-						<CustomLink align_type="vertical" item={{ title: "Disclaimer", path: "/disclaimer" }}>
+						<CustomLink align="vertical" item={{ title: "Disclaimer", path: "/disclaimer" }}>
 							Disclaimer
 						</CustomLink>
-						<CustomLink align_type="vertical" item={{ title: "Terms", path: "/terms" }}>
+						<CustomLink align="vertical" item={{ title: "Terms", path: "/terms" }}>
 							Terms
 						</CustomLink>
-						<CustomToggle align_type="vertical" state={themeToggled} toggleState={updateThemeToggled}>
+						<CustomToggle align="vertical" state={themeToggled} toggleState={updateThemeToggled}>
 							{themeToggled ? (
 								<>
 								<MdLightMode size={25} cursor="pointer"/>
@@ -122,13 +117,13 @@ export default function Navbar() {
 						{session?.data?.user ? (
 							<div ref={component_ref} className={styles.user_container}>
 								<form action={handleLogout}>
-									<CustomButton align_type="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
+									<CustomButton align="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
 								</form>
 							</div>
 						) : (
 							<div ref={component_ref} className={styles.user_container}>
-								<CustomLink align_type="vertical" item={{ title: "Login", path: "/login" }}> Login </CustomLink>
-								<CustomLink align_type="vertical" item={{ title: "Register", path: "/register" }}> Register </CustomLink>
+								<CustomLink align="vertical" item={{ title: "Login", path: "/login" }}> Login </CustomLink>
+								<CustomLink align="vertical" item={{ title: "Register", path: "/register" }}> Register </CustomLink>
 							</div>
 						)}
 					</>

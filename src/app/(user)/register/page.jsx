@@ -1,39 +1,25 @@
 "use client"
-import styles from "./style.module.css";
+
+import styles from "@/app/(user)/style.module.css"
 import { useEffect, useState } from "react";
-import CustomButton from "@/components/custom_button/custom_button";
-import { gql, useMutation } from '@apollo/client';
-import GoBackButton from "@/components/go_back_button/go_back_button";
+import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation'
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { CreateEmailVerification, CreateUser } from "@/lib/graphql";
 import BasicLink from "@/components/basic_link/basic_link";
-
-const create_email_verification_mutation = gql`
-    mutation CreateEmailVerification($CreateEmailVerificationInputObject: CreateEmailVerificationInput!) {
-        createEmailVerification( CreateEmailVerificationInput: $CreateEmailVerificationInputObject ) {
-            _id
-        }
-    }
-`;
-
-const create_user_mutation = gql`
-    mutation CreateUser($CreateUserInputObject: CreateUserInput!, $CreateUserVerificationInputObject: CreateUserVerificationInput!) {
-        createUser( CreateUserInput: $CreateUserInputObject, CreateUserVerificationInput: $CreateUserVerificationInputObject ) {
-            _id
-        }
-    }
-`;
+import CustomButton from "@/components/custom_button/custom_button";
 
 export default function RegisterPage() {
+    // ======= Hooks
     const router = useRouter();
+    // ======= Hooks
 
     // ======= GraphQL
-    const [createEmailVerification, { data: createEmailVerificationData, loading: createEmailVerificationLoading, error: createEmailVerificationError }] = useMutation(create_email_verification_mutation);
-    const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(create_user_mutation);
+    const [createEmailVerification, { data: createEmailVerificationData, loading: createEmailVerificationLoading, error: createEmailVerificationError, reset: createEmailVerificationReset }] = useMutation(CreateEmailVerification);
+    const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CreateUser);
     // ======= GraphQL
 
-    const [emalVerificationToggled, setEmalVerificationToggled] = useState(false);
-
+    // ======= States
     const [createUserInput, setCreateUserInput] = useState({
         fname: 'Blake',
         lname: '',
@@ -44,6 +30,13 @@ export default function RegisterPage() {
         password: 'password',
         password_repeat: 'password',
     });
+    const [createUserVerificationInput, setCreateUserVerificationInput] = useState({
+        primary_email_verification_code: '',
+        recovery_email_verification_code: ''
+    });
+    // ======= States
+
+    // ======= Change Handlers
     const handleCreateUserInputChange = (e) => {
         const { name, value } = e.target;
         setCreateUserInput((prevData) => ({
@@ -51,11 +44,6 @@ export default function RegisterPage() {
             [name]: value,
         }));
     };
-
-    const [createUserVerificationInput, setCreateUserVerificationInput] = useState({
-        primary_email_verification_code: '',
-        recovery_email_verification_code: ''
-    });
     const handleCreateUserVerificationInputChange = (e) => {
         const { name, value } = e.target;
         setCreateUserVerificationInput((prevData) => ({
@@ -63,7 +51,20 @@ export default function RegisterPage() {
             [name]: value,
         }));
     };
+    // ======= Change Handlers
 
+    // ======= Event Handlers
+    const handleUserInputSubmit = (e) => {
+        e.preventDefault();
+        // Check if passwords match
+        if(createUserInput.password !== createUserInput.password_repeat) return alert("passwords dont match")
+        const create_email_verification_input_object = {
+            email: createUserInput.primary_email,
+        }
+        createEmailVerification({
+            variables: { CreateEmailVerificationInputObject: create_email_verification_input_object }
+        })
+    };
     const handleUserVerificationInputSubmit = (e) => {
         e.preventDefault();
         const create_user_input_object = {
@@ -90,29 +91,21 @@ export default function RegisterPage() {
             }
         })
     };
+    // ======= Event Handlers
 
-    const handleUserInputSubmit = (e) => {
-        e.preventDefault();
-        setEmalVerificationToggled(true)
-        const create_email_verification_input_object = {
-            email: createUserInput.primary_email,
-        }
-        createEmailVerification({
-            variables: { CreateEmailVerificationInputObject: create_email_verification_input_object }
-        })
-    };
-
+    // ======= Effects
     useEffect(() => {
-        if(createUserData && !createUserLoading) router.push(`/login`);
+        if(createUserData) router.push(`/login`);
     }, [createUserData]);
-
+    // ======= Effects
+    
     return (
         <div className={styles.container}>
-            {(emalVerificationToggled && createEmailVerificationData && !createEmailVerificationLoading) ? (
+            {(createEmailVerificationData) ? (
                 <div className={styles.form_container}>
                     <form onSubmit={handleUserVerificationInputSubmit}>
                         <input 
-                            placeholder="Verification Code" 
+                            placeholder="Verification code" 
                             type="text" 
                             onChange={handleCreateUserVerificationInputChange}
                             name="primary_email_verification_code"
@@ -121,60 +114,59 @@ export default function RegisterPage() {
                         />
                         <br/>
                         <br/>
-                        <CustomButton align_type="verticle" click_event={handleUserInputSubmit}>Resend Verifivation Codes</CustomButton>
+                        <CustomButton align="verticle" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
                         <br/>
+                        <CustomButton align="verticle" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
                         <br/>
-                        <CustomButton align_type="verticle" type="submit">Register</CustomButton>
-                        <br/>
-                        <GoBackButton target="login" click_event={() => setEmalVerificationToggled(false)}/>
+                        <BasicLink align="right" onClick={createEmailVerificationReset}><IoMdArrowRoundBack/>Go back</BasicLink>
                     </form>
                 </div>
             ) : (
                 <div className={styles.form_container}>
                     <form onSubmit={handleUserInputSubmit}>
                         <input 
-                            placeholder="First Name" 
-                            type="text" 
-                            onChange={handleCreateUserInputChange}
+                            placeholder="First Name"
+                            type="text"
                             name="fname"
+                            onChange={handleCreateUserInputChange}
                             value={createUserInput.fname}
-                            // required
+                            required
                         />
                         <br/>
                         <br/>
                         <input 
-                            placeholder="Email" 
-                            type="email" 
-                            onChange={handleCreateUserInputChange}
+                            placeholder="Email"
+                            type="email"
                             name="primary_email"
+                            onChange={handleCreateUserInputChange}
                             value={createUserInput.primary_email}
-                            // required
+                            required
                         />
                         <br/>
                         <br/>
                         <input 
                             placeholder="Password" 
-                            type="password" 
-                            onChange={handleCreateUserInputChange}
+                            type="password"
                             name="password"
+                            onChange={handleCreateUserInputChange}
                             value={createUserInput.password}
-                            // required
+                            required
                         />
                         <br/>
                         <br/>
                         <input 
-                            placeholder="Repeat Password" 
-                            type="password" 
-                            onChange={handleCreateUserInputChange}
+                            placeholder="Repeat Password"
+                            type="password"
                             name="password_repeat"
+                            onChange={handleCreateUserInputChange}
                             value={createUserInput.password_repeat}
-                            // required
+                            required
                         />
                         <br/>
                         <br/>
-                        <CustomButton align_type="verticle" type="submit">Register</CustomButton>
+                        <CustomButton align="verticle" type="submit" disabled={createEmailVerificationLoading} busy={createEmailVerificationLoading}>Register</CustomButton>
                         <br/>
-                        <BasicLink item={{path:"/login", title:"Login"}} align="right"><IoMdArrowRoundBack /> Login</BasicLink>
+                        <BasicLink href="/login" align="right"><IoMdArrowRoundBack /> Login</BasicLink>
                     </form>
                 </div>
             )}

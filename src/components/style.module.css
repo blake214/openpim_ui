@@ -24,3 +24,8 @@
 .container_button_vertical{
     width: 100%;
 }
+
+.container_button_disabled{
+    pointer-events: none;
+    color: var(--text_on_surface_color_1_disabled);
+}

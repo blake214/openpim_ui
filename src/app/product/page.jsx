@@ -9,8 +9,6 @@ export const metadata = {
 
 export default async function ProductPage() {
     return (
-        <div>
-            <>Product search page...</>
-        </div>
+        <>Product page..</>
     );
 }

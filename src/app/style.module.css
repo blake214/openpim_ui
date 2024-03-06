@@ -4,3 +4,7 @@
     justify-content: center;
     height: calc(100vh - var(--navbar_height));
 }
+
+.center_text {
+    text-align: center;
+}

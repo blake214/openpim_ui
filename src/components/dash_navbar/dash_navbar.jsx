@@ -28,25 +28,25 @@ export default function DashNavbar() {
 					`}
 			
 			>
-				<CustomToggle align_type="verticle" toggleState={updateMenuToggled}>
+				<CustomToggle align="verticle" toggleState={updateMenuToggled}>
 					<div className="align_right"><PiSidebarSimpleFill size={25} cursor="pointer"/></div>
 				</CustomToggle>
 				<hr className="hr_surface_color_2"/>
 				{menuToggled && (
 					<>
-						<CustomLink align_type="verticle" item={{ title: "Dashboard", path: "/dash" }}>
+						<CustomLink align="verticle" item={{ title: "Dashboard", path: "/dash" }}>
 							Dashboard
 						</CustomLink>
-						<CustomLink align_type="verticle" item={{ title: "Account", path: "/dash/account" }}>
+						<CustomLink align="verticle" item={{ title: "Account", path: "/dash/account" }}>
 							Account
 						</CustomLink>
-						<CustomLink align_type="verticle" item={{ title: "Messages", path: "/dash/messages" }}>
+						<CustomLink align="verticle" item={{ title: "Messages", path: "/dash/messages" }}>
 							Messages
 						</CustomLink>
-						<CustomLink align_type="verticle" item={{ title: "Products", path: "/dash/products" }}>
+						<CustomLink align="verticle" item={{ title: "Products", path: "/dash/products" }}>
 							Products
 						</CustomLink>
-						<CustomLink align_type="verticle" item={{ title: "Entities", path: "/dash/entities" }}>
+						<CustomLink align="verticle" item={{ title: "Entities", path: "/dash/entities" }}>
 							Entities
 						</CustomLink>
 					</>

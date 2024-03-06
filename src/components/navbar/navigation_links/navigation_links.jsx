@@ -9,14 +9,14 @@ export default function NavigationLinks({updateMenuObj, updateUserObj, logged_in
 	return (
 		<div className={styles.container}>
 			{logged_in && (
-				<CustomLink align_type="horizontal" item={{ title: "Dash", path: "/dash" }}>
+				<CustomLink align="horizontal" item={{ title: "Dash", path: "/dash" }}>
 					<MdSpaceDashboard size={25} cursor="pointer"/>
 				</CustomLink>
 			)}
-			<CustomToggle align_type="horizontal" state={updateUserObj.state} toggleState={updateUserObj.updater}>
+			<CustomToggle align="horizontal" state={updateUserObj.state} toggleState={updateUserObj.updater}>
 				<FaUser size={25} cursor="pointer"/>
 			</CustomToggle>
-			<CustomToggle align_type="horizontal" state={updateMenuObj.state} toggleState={updateMenuObj.updater}>
+			<CustomToggle align="horizontal" state={updateMenuObj.state} toggleState={updateMenuObj.updater}>
 				<IoMdMenu size={25} cursor="pointer"/>
 			</CustomToggle>
 		</div>

@@ -1,15 +1,18 @@
 :root {
     --background_color: white;
-    --text_color: #171717;
+    --text_on_background_color: #171717;
 
     --surface_color_1: #F0F0F0;
     --text_on_surface_color_1: #171717;
+    --text_on_surface_color_1_disabled: #898989;
 
     --surface_color_2: #E1E1E1;
     --text_on_surface_color_2: #171717;
+    --text_on_surface_color_2_disabled: #898989;
 
     --surface_color_3: #272727;
     --text_on_surface_color_3: #F0F0F0;
+    --text_on_surface_color_3_disabled: #898989;
 
     --navbar_height: 50px;
 
@@ -21,6 +24,7 @@
     --drop_shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
 
     --key_value_key_width: 200px;
+    --button_width: 400px;
 }
 
 [data-theme="dark"] {
@@ -29,12 +33,15 @@
 
     --surface_color_1: #212121;
     --text_on_surface_color_1: #F0F0F0;
+    --text_on_surface_color_1_disabled: #898989;
 
     --surface_color_2: #2f2f2f;
     --text_on_surface_color_2: #F0F0F0;
+    --text_on_surface_color_2_disabled: #898989;
 
     --surface_color_3: #898989;
     --text_on_surface_color_3: #171717;
+    --text_on_surface_color_3_disabled: #898989;
 
     input[type=text], input[type="password"], input[type="email"], select, textarea {
         background-color: var(--surface_color_1);
@@ -64,6 +71,10 @@ button {
     cursor: pointer;
 }
 
+.button_fixed_width {
+    max-width: var(--button_width);
+}
+
 body {
     background-color: var(--background_color);
     color: var(--text_on_background_color);
@@ -88,10 +99,27 @@ hr {
     border-top: 1px solid var(--surface_color_2);
 }
 
+.hr_margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .align_right {
     display: flex;
     align-items: center;
     margin-left: auto;
+}
+
+.align_center {
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.align_left {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
 }
 
 .flex {
@@ -105,4 +133,18 @@ input[type=text], input[type="password"], input[type="email"], select, textarea 
     border: 1px solid var(--surface_color_1);
     border-radius: 4px;
     resize: vertical;
+}
+
+/* Spinner */
+.icon_spinner{
+    animation: animate 2s infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(720deg);
+    }
 }

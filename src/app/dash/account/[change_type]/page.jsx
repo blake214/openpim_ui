@@ -4,6 +4,7 @@ import KeyValueBlock from "@/components/key_value_block/key_value_block";
 import CustomButton from "@/components/custom_button/custom_button";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import { useSearchParams } from 'next/navigation'
 
 const user_details = {
     _id: "507f1f77bcf86cd799439012",
@@ -58,9 +59,16 @@ const user_details = {
     },
 }
 
-export default function ChangeUser({params}) {
-    const change_type = params.change_type
-    console.log(change_type)
+export default function ChangeUser() {
+    const searchParams = useSearchParams()
+ 
+    const change_type = searchParams.get('change_type')
+    const data_key = searchParams.get('data_key')
+    console.log("change_type: ",change_type)
+    console.log("data_key: ",data_key)
+
+
+
     const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
@@ -98,7 +106,7 @@ export default function ChangeUser({params}) {
             <hr className="hr_surface_color_1"/>
             <div className="flex">
                 <div className={`${styles.button_block} align_right`}>
-                    <CustomButton align_type="verticle" click_event={updateUserDetails}>Save</CustomButton>
+                    <CustomButton align="verticle" onClick={updateUserDetails}>Save</CustomButton>
                 </div>
             </div>
         </div>
