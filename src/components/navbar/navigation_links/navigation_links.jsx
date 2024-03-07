@@ -9,7 +9,7 @@ export default function NavigationLinks({updateMenuObj, updateUserObj, logged_in
 	return (
 		<div className={styles.container}>
 			{logged_in && (
-				<CustomLink align="horizontal" item={{ title: "Dash", path: "/dash" }}>
+				<CustomLink href="/dash">
 					<MdSpaceDashboard size={25} cursor="pointer"/>
 				</CustomLink>
 			)}

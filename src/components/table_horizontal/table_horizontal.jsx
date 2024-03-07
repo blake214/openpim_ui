@@ -47,7 +47,7 @@ export default function TableHorizontal({
 			</div>
 			{menuToggled && (
 				<div ref={component_ref} className={styles.list_container}>
-					<CustomLink align="vertical" item={{ title: "About", path: "/about" }}>
+					<CustomLink align="vertical" href="/about">
 						About
 					</CustomLink>
 				</div>

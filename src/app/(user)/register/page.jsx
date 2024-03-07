@@ -114,9 +114,9 @@ export default function RegisterPage() {
                         />
                         <br/>
                         <br/>
-                        <CustomButton align="verticle" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
+                        <CustomButton align="vertical" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
                         <br/>
-                        <CustomButton align="verticle" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
+                        <CustomButton align="vertical" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
                         <br/>
                         <BasicLink align="right" onClick={createEmailVerificationReset}><IoMdArrowRoundBack/>Go back</BasicLink>
                     </form>
@@ -164,7 +164,7 @@ export default function RegisterPage() {
                         />
                         <br/>
                         <br/>
-                        <CustomButton align="verticle" type="submit" disabled={createEmailVerificationLoading} busy={createEmailVerificationLoading}>Register</CustomButton>
+                        <CustomButton align="vertical" type="submit" disabled={createEmailVerificationLoading} busy={createEmailVerificationLoading}>Register</CustomButton>
                         <br/>
                         <BasicLink href="/login" align="right"><IoMdArrowRoundBack /> Login</BasicLink>
                     </form>

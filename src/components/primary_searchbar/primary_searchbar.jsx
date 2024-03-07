@@ -27,7 +27,7 @@ export default function PrimarySearchBar() {
             {suggestions.length && (
                 <div className = {styles.suggestion_container}>
                     { suggestions.map( suggestion => (
-                        <CustomLink key={suggestion} align="verticle" item={{ title: "Search", path: "/search" }}>
+                        <CustomLink key={suggestion} align="verticle" href="/search" >
                             {suggestion}
                         </CustomLink>
                     ))}

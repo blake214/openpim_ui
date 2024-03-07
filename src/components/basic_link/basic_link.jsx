@@ -5,11 +5,7 @@ function CustomLink({ children, href="", align="left" }) {
 	return (
 		<Link
 			href={href}
-			className={`
-				${styles.container}
-				${align === "right" && ".align_right"}
-				${align === "center" && styles.center}				
-			`}
+			className={styles.container}
 		>
 			<div className={`
 				${align === "left" && "align_left"}

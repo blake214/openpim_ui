@@ -28,25 +28,25 @@ export default function DashNavbar() {
 					`}
 			
 			>
-				<CustomToggle align="verticle" toggleState={updateMenuToggled}>
+				<CustomToggle align="vertical" toggleState={updateMenuToggled}>
 					<div className="align_right"><PiSidebarSimpleFill size={25} cursor="pointer"/></div>
 				</CustomToggle>
 				<hr className="hr_surface_color_2"/>
 				{menuToggled && (
 					<>
-						<CustomLink align="verticle" item={{ title: "Dashboard", path: "/dash" }}>
+						<CustomLink type="vertical" href="/dash">
 							Dashboard
 						</CustomLink>
-						<CustomLink align="verticle" item={{ title: "Account", path: "/dash/account" }}>
+						<CustomLink type="vertical" href="/dash/account">
 							Account
 						</CustomLink>
-						<CustomLink align="verticle" item={{ title: "Messages", path: "/dash/messages" }}>
+						<CustomLink type="vertical" href="/dash/messages">
 							Messages
 						</CustomLink>
-						<CustomLink align="verticle" item={{ title: "Products", path: "/dash/products" }}>
+						<CustomLink type="vertical" href="/dash/products">
 							Products
 						</CustomLink>
-						<CustomLink align="verticle" item={{ title: "Entities", path: "/dash/entities" }}>
+						<CustomLink type="vertical" href="/dash/entities">
 							Entities
 						</CustomLink>
 					</>

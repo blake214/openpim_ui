@@ -89,7 +89,7 @@ export default function Account() {
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="User sessions" start_state="false">
-                    <div className={"button_fixed_width"}><CustomButton align="verticle">Log out all users</CustomButton></div>
+                    <div className={"button_fixed_width"}><CustomButton align="vertical">Log out all users</CustomButton></div>
                 </SectionBlockMinimizer>
                 <br/>
                 <h2>Contact Info</h2>

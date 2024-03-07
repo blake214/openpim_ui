@@ -106,7 +106,7 @@ export default function ChangeUser() {
             <hr className="hr_surface_color_1"/>
             <div className="flex">
                 <div className={`${styles.button_block} align_right`}>
-                    <CustomButton align="verticle" onClick={updateUserDetails}>Save</CustomButton>
+                    <CustomButton align="vertical" onClick={updateUserDetails}>Save</CustomButton>
                 </div>
             </div>
         </div>

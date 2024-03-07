@@ -68,9 +68,7 @@ export default function Navbar() {
 			<div className={styles.container_spacer}></div>
 			<div className={styles.container}>
 				<div className={styles.bar}>
-					<CustomLink align="horizontal" item={{ title: "Home", path: "/" }}>
-						<FaBookOpen size={25} cursor="pointer"/>
-					</CustomLink>
+					<CustomLink href="/"><FaBookOpen size={25} cursor="pointer"/></CustomLink>
 					<NavigationLinks
 						updateMenuObj={{state: menuToggled, updater: updateMenuToggled}}
 						updateUserObj={{state: userToggled, updater: updateUserToggled}}
@@ -79,22 +77,22 @@ export default function Navbar() {
 				</div>
 				{menuToggled && (
 					<div ref={component_ref} className={styles.list_container}>
-						<CustomLink align="vertical" item={{ title: "About", path: "/about" }}>
+						<CustomLink type="vertical" href="/about" item={{ title: "About", path: "/about" }}>
 							About
 						</CustomLink>
-						<CustomLink align="vertical" item={{ title: "Documentation", path: "/documentation" }}>
+						<CustomLink type="vertical" href="/documentation">
 							Documentation
 						</CustomLink>
-						<CustomLink align="vertical" item={{ title: "Articles", path: "/articles" }}>
+						<CustomLink type="vertical" href="/articles">
 							Articles
 						</CustomLink>
-						<CustomLink align="vertical" item={{ title: "Demo", path: "/demo" }}>
+						<CustomLink type="vertical" href="/demo">
 							Demo
 						</CustomLink>
-						<CustomLink align="vertical" item={{ title: "Disclaimer", path: "/disclaimer" }}>
+						<CustomLink type="vertical" href="/disclaimer">
 							Disclaimer
 						</CustomLink>
-						<CustomLink align="vertical" item={{ title: "Terms", path: "/terms" }}>
+						<CustomLink type="vertical" href="/terms">
 							Terms
 						</CustomLink>
 						<CustomToggle align="vertical" state={themeToggled} toggleState={updateThemeToggled}>
@@ -122,8 +120,8 @@ export default function Navbar() {
 							</div>
 						) : (
 							<div ref={component_ref} className={styles.user_container}>
-								<CustomLink align="vertical" item={{ title: "Login", path: "/login" }}> Login </CustomLink>
-								<CustomLink align="vertical" item={{ title: "Register", path: "/register" }}> Register </CustomLink>
+								<CustomLink type="vertical" href="/login"> Login </CustomLink>
+								<CustomLink type="vertical" href="/register"> Register </CustomLink>
 							</div>
 						)}
 					</>
