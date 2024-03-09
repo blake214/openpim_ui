@@ -1,0 +1,56 @@
+.title_container{
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    align-items: center;
+}
+
+.body_container{
+    width: 100%;
+    border: 1px solid var(--surface_color_1);
+    padding: 10px;
+}
+
+.button_block{
+    width: 100%;
+    max-width: 200px;
+    border: 1px solid var(--surface_color_1);
+}
+
+/* .input_bar {
+    width: 100%;
+    background-color: aqua;
+} */
+
+/* Edited blocks */
+
+.existing_content{
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.new_content{
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+.changed_content{
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+
+
+/* test */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--navbar_height));
+}
+
+.form_container{
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid var(--surface_color_1);
+}

@@ -41,10 +41,10 @@ export const authConfig = {
             if(user_logged_in) {
                 // Check if trying to access login and register page
                 if(tryingLoginPage || tryingRegisterPage) return Response.redirect(new URL("/dash", request.nextUrl));
-                // Check if has an Authorization header exists
+                // Get headers
                 const requestHeaders = new Headers(request.headers)
                 const authorization = requestHeaders.get("Authorization")
-                // If not add it
+                // If authorization header doesnt exist, include it
                 if(!authorization) {
                     const response = NextResponse.next({
                         request: { headers: requestHeaders },

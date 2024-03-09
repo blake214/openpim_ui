@@ -55,3 +55,11 @@
     float: right;
     margin-right: 10px;
 }
+
+/* Below demo css */
+.row_test {
+    display: grid;
+    grid-template-columns: 30px 30px auto 30px 30px;
+    overflow-wrap: break-word;
+    border: 1px solid red;
+}

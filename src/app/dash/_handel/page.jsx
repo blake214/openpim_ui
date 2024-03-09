@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import CreateProductPage from './create_produt_page/page';
 import EditPage from './edit_page/page';
 import ChangeProductPage from './change_product_page/page';
+import ChangeUserPage from './change_user_page/page';
 
 export default function HandelPage() {
     /** Getting key_id
@@ -18,6 +19,7 @@ export default function HandelPage() {
         <>
         {stored_element.type == "create_product" && <CreateProductPage stored_element={stored_element} />}
         {stored_element.type == "change_product" && <ChangeProductPage stored_element={stored_element} />}
+        {stored_element.type == "change_user" && <ChangeUserPage stored_element={stored_element} />}
         {stored_element.type == "edit" && <EditPage stored_element={stored_element} />}
         </>
     );

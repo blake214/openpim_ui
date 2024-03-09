@@ -8,7 +8,7 @@ import { useRef, useState, useEffect } from 'react'
 import CustomLink from "@/components/custom_link/custom_link";
 
 
-export default function TableHorizontal({
+export default function TableVertical({
 	children,
 	title="",
 	numbers=false,
@@ -70,7 +70,22 @@ export default function TableHorizontal({
 					{numbers && <p>No</p>}
 				</div>
 				<hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
-				{children}
+				
+				
+
+
+				
+				<div className={styles.row_test}>
+					<p>aaa</p>
+					<p>aaa</p>
+					<p></p>
+					<p>aaa</p>
+					<p>aaa</p>
+				</div>
+
+
+
+
 			</div>
 		</div>
 		</>

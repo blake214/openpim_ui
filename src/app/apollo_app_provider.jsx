@@ -1,6 +1,8 @@
 "use client"
 import { from, HttpLink, ApolloLink, ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
+import { useSession } from 'next-auth/react';
+import { useEffect } from "react";
 
 // Log any GraphQL errors or network error that occurred
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -12,11 +14,11 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-    const token = localStorage.getItem('token') || null
+    const openpim_token = localStorage.getItem('openpim_token') || null
     operation.setContext(({ headers = {} }) => ({
         headers: {
             ...headers,
-            ...(token && { authorization: token })
+            ...(openpim_token && { authorization: openpim_token })
         }
     }));
     return forward(operation);
@@ -35,6 +37,15 @@ const client = new ApolloClient({
 });
 
 const ApolloAppProvider = ({ children }) => {
+    const { data: session, status } = useSession()
+    // ======= Effects
+    useEffect(() => {
+        if(session?.user?.openPimToken) {
+            const openpim_token = localStorage.getItem('openpim_token') || null
+            if(!openpim_token) localStorage.setItem('openpim_token', session.user.openPimToken)
+        }
+    }, []);
+    // ======= Effects
     return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 

@@ -14,6 +14,42 @@ mutation CreateUser($CreateUserInputObject: CreateUserInput!, $CreateUserVerific
     }
 }`;
 
+export const UserChange = gql`
+mutation UserChange(
+    $fname: UserNameName,
+    $lname: UserNameName, 
+    $password: Password, 
+    $primary_email: Email, 
+    $recovery_email: Email, 
+    $token_key: Boolean, 
+    $logout_users: Boolean, 
+    $language_id: LanguageKey, 
+    $ui_theme_id: UiThemeKey, 
+    $notifications: UserNoticiationsInput,
+    $primary_email_verification_code: EmailVerificationCode,
+    $recovery_email_verification_code: EmailVerificationCode,
+    $approval_code: EmailVerificationCode
+) {
+    userChange( UserChangeInput: {
+        fname: $fname
+        lname: $lname
+        password: $password
+        primary_email: $primary_email
+        recovery_email: $recovery_email
+        token_key: $token_key
+        logout_users: $logout_users
+        language_id: $language_id
+        ui_theme_id: $ui_theme_id
+        notifications: $notifications
+    }, UserChangeVerificationInput: {
+        primary_email_verification_code: $primary_email_verification_code
+        recovery_email_verification_code: $recovery_email_verification_code
+        approval_code: $approval_code
+    } ) {
+        _id
+    }
+}`;
+
 export const AccountPageGetUser = gql`
 query AccountPageGetUser {
     getUser {

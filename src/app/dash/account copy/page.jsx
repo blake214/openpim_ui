@@ -9,8 +9,6 @@ import { AccountPageGetUser } from "@/lib/graphql";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Skeleton from "@/components/skeleton/skeleton";
 import CustomButton from "@/components/custom_button/custom_button";
-import { createShortUuid } from "@/lib/helpers";
-import { useEffect, useState } from "react";
 // import { useEffect, useState } from "react";
 
 export default function Account() {
@@ -20,90 +18,8 @@ export default function Account() {
     // ======= Hooks
 
     // ======= GraphQL
-    const { loading: AccountPageGetUserLoading, error: AccountPageGetUserError, data: AccountPageGetUserData, refetch: AccountPageGetUserRefetch } = useQuery(AccountPageGetUser);
+    const { loading: AccountPageGetUserLoading, error: AccountPageGetUserError, data: AccountPageGetUserData } = useQuery(AccountPageGetUser);
     // ======= GraphQL
-
-    // ======= States
-    const [mounted, setMounted] = useState(false)
-    // ======= States
-
-    // ======= Handlers
-    const handleEditFname = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
-
-        localStorage.setItem(change_user_id, JSON.stringify({
-            type: "change_user",
-            sub_type: "change_user_fname",
-            title: "change_first_name",
-            existing_content: {
-                fname: change_user_existing_id
-            },
-            new_content: {
-                fname: change_user_new_id
-            },
-        }));
-
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
-            type: "reference",
-            sub_type: "user_fname",
-            title: "fname",
-            content: AccountPageGetUserData.getUser.name.fname,
-        }));
-
-        localStorage.setItem(change_user_new_id, JSON.stringify({
-            type: "edit",
-            sub_type: "user_fname",
-            title: "fname",
-            content: AccountPageGetUserData.getUser.name.fname,
-        }));
-
-        router.push(`${location}/${change_user_id}`)
-    }
-    const handleEditNotifications = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
-
-        localStorage.setItem(change_user_id, JSON.stringify({
-            type: "change_user",
-            sub_type: "change_user_notifications",
-            title: "change_notifications",
-            existing_content: {
-                notifications: change_user_existing_id
-            },
-            new_content: {
-                notifications: change_user_new_id
-            },
-        }));
-
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
-            type: "reference",
-            sub_type: "user_notifications",
-            title: "notifications",
-            content: AccountPageGetUserData.getUser.notifications,
-        }));
-
-        localStorage.setItem(change_user_new_id, JSON.stringify({
-            type: "edit",
-            sub_type: "user_notifications",
-            title: "notifications",
-            content: AccountPageGetUserData.getUser.notifications,
-        }));
-
-        router.push(`${location}/${change_user_id}`)
-    }
-    // ======= Handlers
-
-    // ======= Effects
-    useEffect(() => {
-		setMounted(true)
-	}, [])
-    useEffect(() => {
-        if(mounted) AccountPageGetUserRefetch()
-	}, [mounted])
-    // ======= Effects
 
     return (
         <div>
@@ -137,7 +53,9 @@ export default function Account() {
                 <h2>Basic Info</h2>
                 <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
                 <SectionBlockMinimizer heading="First Name" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditFname}>
+                    <EditableBlock title="Current" onClick={() => {
+                        router.push(`${location}/first_name?change_type=${"fname"}&data_key=${"key_in_local"}`)
+                    }}>
                         <KeyValueBlock title="First Name">{AccountPageGetUserData.getUser.name.fname}</KeyValueBlock>
                     </EditableBlock>
                 </SectionBlockMinimizer>
@@ -161,7 +79,7 @@ export default function Account() {
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="Notifications" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditNotifications}>
+                    <EditableBlock title="Current" onClick={() => {router.push(`${location}/notifications`)}}>
                         <KeyValueBlock title="Product Changes">{AccountPageGetUserData.getUser.notifications.product_changes}</KeyValueBlock>
                         <KeyValueBlock title="Product Changes">{AccountPageGetUserData.getUser.notifications.product_issues}</KeyValueBlock>
                         <KeyValueBlock title="Entity Changes">{AccountPageGetUserData.getUser.notifications.entity_changes}</KeyValueBlock>

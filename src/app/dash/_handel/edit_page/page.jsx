@@ -1,46 +1,8 @@
 "use client"
 
-
-import styles from "./style.module.css"
 import EditProductTitle from "@/components/edits/edit_product_title";
-import CustomButton from '@/components/custom_button/custom_button';
-import KeyValueBlock from '@/components/key_value_block/key_value_block';
-import { usePathname, useRouter } from 'next/navigation'
-import { useState } from "react";
-
-// function EditProductTitle({stored_element}) {
-
-//     const router = useRouter()
-
-//     const location = usePathname()
-//     const parts = location.split('/');
-//     const lastRoute = parts[parts.length - 1];
-//     const prevRoute = location.replace(`/${lastRoute}`, "")
-
-
-//     const [formData, setFormData] = useState(stored_element.content);
-//     const handleFormChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData(value);
-//     };
-//     console.log(stored_element)
-//     const handleChange = () => {
-//         localStorage.setItem(lastRoute, JSON.stringify({
-//             type: "edit",
-//             edit_type: "product_title",
-//             title: "product_title",
-//             content: formData
-//         }));
-//         router.push(`${prevRoute}`)
-//     }
-// 	return (
-// 		<div className={styles.container}>
-//             <input type="text" name="email" value={formData} onChange={handleFormChange} placeholder="..."/>
-//             <button onClick={handleChange}>Butts</button>
-// 		</div>
-// 	);
-// }
-
+import EditUserName from "@/components/edits/edit_user_name";
+import EditUserNotifications from "@/components/edits/edit_user_notifications";
 
 export default function EditPage({stored_element}) {
     /** Checking what editing object it is
@@ -55,6 +17,8 @@ export default function EditPage({stored_element}) {
             <br/>
             <br/>
             {stored_element.edit_type == "product_title" && <EditProductTitle stored_element={stored_element} />}
+            {stored_element.sub_type == "user_fname" && <EditUserName stored_element={stored_element} />}
+            {stored_element.sub_type == "user_notifications" && <EditUserNotifications stored_element={stored_element} />}
         </div>
     );
 }

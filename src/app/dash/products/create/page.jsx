@@ -9,9 +9,9 @@ export default function CreateProductPage() {
     const router = useRouter()
 
     const handleCreateFreshProduct = () => {
-        const create_product_id = createShortUuid(10)
-        const product_series_id = createShortUuid(10)
-        const product_title_id = createShortUuid(10)
+        const create_product_id = createShortUuid()
+        const product_series_id = createShortUuid()
+        const product_title_id = createShortUuid()
 
         localStorage.setItem(create_product_id, JSON.stringify({
             type: "create_product",
