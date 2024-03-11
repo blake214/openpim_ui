@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation'
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { CreateEmailVerification, CreateUser } from "@/lib/graphql";
+import { CreateEmailVerification, CreateUser } from "@/lib/graphql_mutation";
 import BasicLink from "@/components/basic_link/basic_link";
 import CustomButton from "@/components/custom_button/custom_button";
 
@@ -15,7 +15,8 @@ export default function RegisterPage() {
     // ======= Hooks
 
     // ======= GraphQL
-    const [createEmailVerification, { data: createEmailVerificationData, loading: createEmailVerificationLoading, error: createEmailVerificationError, reset: createEmailVerificationReset }] = useMutation(CreateEmailVerification);
+    const [createEmailVerification_primary_email, { data: createEmailVerificationData_primary_email, loading: createEmailVerificationLoading_primary_email, error: createEmailVerificationError_primary_email, reset: createEmailVerificationReset_primary_email }] = useMutation(CreateEmailVerification);
+    const [createEmailVerification_recovery_email, { data: createEmailVerificationData_recovery_email, loading: createEmailVerificationLoading_recovery_email, error: createEmailVerificationError_recovery_email, reset: createEmailVerificationReset_recovery_email }] = useMutation(CreateEmailVerification);
     const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CreateUser);
     // ======= GraphQL
 
@@ -58,12 +59,25 @@ export default function RegisterPage() {
         e.preventDefault();
         // Check if passwords match
         if(createUserInput.password !== createUserInput.password_repeat) return alert("passwords dont match")
+        // Reset the states cor consistency
+        createEmailVerificationReset_primary_email()
+        createEmailVerificationReset_recovery_email()
+        // Lets send the primary email verifications
         const create_email_verification_input_object = {
             email: createUserInput.primary_email,
         }
-        createEmailVerification({
+        createEmailVerification_primary_email({
             variables: { CreateEmailVerificationInputObject: create_email_verification_input_object }
         })
+        // Lets send the recovery email verifications if exists
+        if(createUserInput.recovery_email.length) {
+            const create_email_verification_input_object = {
+                email: createUserInput.recovery_email,
+            }
+            createEmailVerification_recovery_email({
+                variables: { CreateEmailVerificationInputObject: create_email_verification_input_object }
+            })
+        }
     };
     const handleUserVerificationInputSubmit = (e) => {
         e.preventDefault();
@@ -101,24 +115,41 @@ export default function RegisterPage() {
     
     return (
         <div className={styles.container}>
-            {(createEmailVerificationData) ? (
+            {(createEmailVerificationData_primary_email || createEmailVerificationData_recovery_email) ? (
                 <div className={styles.form_container}>
                     <form onSubmit={handleUserVerificationInputSubmit}>
-                        <input 
-                            placeholder="Verification code" 
-                            type="text" 
-                            onChange={handleCreateUserVerificationInputChange}
-                            name="primary_email_verification_code"
-                            value={createUserVerificationInput.primary_email_verification_code}
-                            required
-                        />
-                        <br/>
-                        <br/>
+                        {createEmailVerificationData_primary_email && <>
+                            <input 
+                                placeholder="Primary verification code" 
+                                type="text" 
+                                onChange={handleCreateUserVerificationInputChange}
+                                name="primary_email_verification_code"
+                                value={createUserVerificationInput.primary_email_verification_code}
+                                required
+                            />
+                            <br/>
+                            <br/>
+                        </>}
+                        {createEmailVerificationData_recovery_email && <>
+                            <input 
+                                placeholder="Recovery verification code" 
+                                type="text" 
+                                onChange={handleCreateUserVerificationInputChange}
+                                name="recovery_email_verification_code"
+                                value={createUserVerificationInput.recovery_email_verification_code}
+                                required
+                            />
+                            <br/>
+                            <br/>
+                        </>}
                         <CustomButton align="vertical" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
                         <br/>
                         <CustomButton align="vertical" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
                         <br/>
-                        <BasicLink align="right" onClick={createEmailVerificationReset}><IoMdArrowRoundBack/>Go back</BasicLink>
+                        <BasicLink align="right" onClick={()=>{
+                            createEmailVerificationReset_primary_email()
+                            createEmailVerificationReset_recovery_email()
+                        }}><IoMdArrowRoundBack/>Go back</BasicLink>
                     </form>
                 </div>
             ) : (
@@ -135,12 +166,30 @@ export default function RegisterPage() {
                         <br/>
                         <br/>
                         <input 
-                            placeholder="Email"
+                            placeholder="Last Name (optional)"
+                            type="text"
+                            name="lname"
+                            onChange={handleCreateUserInputChange}
+                            value={createUserInput.lname}
+                        />
+                        <br/>
+                        <br/>
+                        <input 
+                            placeholder="Primary Email"
                             type="email"
                             name="primary_email"
                             onChange={handleCreateUserInputChange}
                             value={createUserInput.primary_email}
                             required
+                        />
+                        <br/>
+                        <br/>
+                        <input 
+                            placeholder="Recovery Email (optional)"
+                            type="email"
+                            name="recovery_email"
+                            onChange={handleCreateUserInputChange}
+                            value={createUserInput.recovery_email}
                         />
                         <br/>
                         <br/>
@@ -164,7 +213,7 @@ export default function RegisterPage() {
                         />
                         <br/>
                         <br/>
-                        <CustomButton align="vertical" type="submit" disabled={createEmailVerificationLoading} busy={createEmailVerificationLoading}>Register</CustomButton>
+                        <CustomButton align="vertical" type="submit" disabled={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)} busy={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)}>Register</CustomButton>
                         <br/>
                         <BasicLink href="/login" align="right"><IoMdArrowRoundBack /> Login</BasicLink>
                     </form>

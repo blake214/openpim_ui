@@ -1,8 +1,12 @@
 "use client"
 
-import EditProductTitle from "@/components/edits/edit_product_title";
-import EditUserName from "@/components/edits/edit_user_name";
-import EditUserNotifications from "@/components/edits/edit_user_notifications";
+import EditProductTitle from "@/components/edits/products/edit_product_title";
+import EditUserEmailsPrimaryEmail from "@/components/edits/users/edit_user_emails_primary_email";
+import EditUserEmailsRecoveryEmail from "@/components/edits/users/edit_user_emails_recovery_email";
+import EditUserNameFname from "@/components/edits/users/edit_user_name_fname";
+import EditUserNameLname from "@/components/edits/users/edit_user_name_lname";
+import EditUserNotifications from "@/components/edits/users/edit_user_notifications";
+import EditUserPasswordPassword from "@/components/edits/users/edit_user_password_password";
 
 export default function EditPage({stored_element}) {
     /** Checking what editing object it is
@@ -16,8 +20,16 @@ export default function EditPage({stored_element}) {
             <p>Findout more</p>
             <br/>
             <br/>
+
+            {/* Product objects */}
             {stored_element.edit_type == "product_title" && <EditProductTitle stored_element={stored_element} />}
-            {stored_element.sub_type == "user_fname" && <EditUserName stored_element={stored_element} />}
+
+            {/* User objects */}
+            {stored_element.sub_type == "user_name_fname" && <EditUserNameFname stored_element={stored_element} />}
+            {stored_element.sub_type == "user_name_lname" && <EditUserNameLname stored_element={stored_element} />}
+            {stored_element.sub_type == "user_emails_primary_email" && <EditUserEmailsPrimaryEmail stored_element={stored_element} />}
+            {stored_element.sub_type == "user_emails_recovery_email" && <EditUserEmailsRecoveryEmail stored_element={stored_element} />}
+            {stored_element.sub_type == "user_password_password" && <EditUserPasswordPassword stored_element={stored_element} />}
             {stored_element.sub_type == "user_notifications" && <EditUserNotifications stored_element={stored_element} />}
         </div>
     );

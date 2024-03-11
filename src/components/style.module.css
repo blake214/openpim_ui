@@ -11,7 +11,7 @@
     color: var(--text_on_surface_color_2);
 }
 
-.container_button_active{
+.container_button_active, .container_button_active:hover{
     background-color: var(--surface_color_3);
     color: var(--text_on_surface_color_3);
 }

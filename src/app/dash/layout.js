@@ -1,4 +1,3 @@
-import styles from "./style.module.css"
 import DashTrailHeading from "@/components/dash_trail_heading/dash_trail_heading";
 import DashNavbar from "@/components/dash_navbar/dash_navbar";
 
@@ -13,7 +12,7 @@ export const metadata = {
 
 export default function DashLayout({ children }) {
 	return (
-		<div className={styles.container}>
+		<div className="flex">
 			<DashNavbar/>
 			<main>
 				<DashTrailHeading/>

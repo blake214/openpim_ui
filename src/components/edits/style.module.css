@@ -12,14 +12,3 @@
     border: 1px solid var(--surface_color_1);
     padding: 10px;
 }
-
-.button_block{
-    width: 100%;
-    max-width: 200px;
-    border: 1px solid var(--surface_color_1);
-}
-
-/* .input_bar {
-    width: 100%;
-    background-color: aqua;
-} */

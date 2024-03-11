@@ -1,6 +1,5 @@
 "use client"
 
-import styles from "./style.module.css"
 import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 import RowHorizontal from "@/components/table_horizontal/row_primary/row";
 import RowHorizontalContent from "@/components/table_horizontal/row_primary/content";

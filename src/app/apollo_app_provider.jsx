@@ -3,10 +3,15 @@ import { from, HttpLink, ApolloLink, ApolloClient, InMemoryCache, ApolloProvider
 import { onError } from "@apollo/client/link/error";
 import { useSession } from 'next-auth/react';
 import { useEffect } from "react";
+import { handleLogout } from "@/lib/action";
 
 // Log any GraphQL errors or network error that occurred
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
+        // Logout if a 401 error
+        graphQLErrors.map(error => {
+            if(error.statusCode == 401) handleLogout()
+        })
         const errorMessage = graphQLErrors.map(({ message }) => message).join(', ');
         alert(errorMessage)
     } 
@@ -43,6 +48,9 @@ const ApolloAppProvider = ({ children }) => {
         if(session?.user?.openPimToken) {
             const openpim_token = localStorage.getItem('openpim_token') || null
             if(!openpim_token) localStorage.setItem('openpim_token', session.user.openPimToken)
+        } else {
+            // Remove any existing tokens
+            localStorage.removeItem('openpim_token')
         }
     }, []);
     // ======= Effects

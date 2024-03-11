@@ -44,7 +44,7 @@
     --text_on_surface_color_3_disabled: #898989;
 
     input[type=text], input[type="password"], input[type="email"], select, textarea {
-        background-color: var(--surface_color_1);
+        background-color: transparent;
     }
 }
 
@@ -72,7 +72,7 @@ button {
 }
 
 .button_fixed_width {
-    max-width: var(--button_width);
+    width: var(--button_width);
 }
 
 body {
@@ -137,14 +137,10 @@ input[type=text], input[type="password"], input[type="email"], select, textarea 
 
 /* Spinner */
 .icon_spinner{
-    animation: animate 2s infinite;
+    animation: spin_animate 2s infinite linear;
 }
 
-@keyframes animate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(720deg);
-    }
+@keyframes spin_animate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(359deg); }
 }

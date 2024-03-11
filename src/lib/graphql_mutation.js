@@ -14,6 +14,18 @@ mutation CreateUser($CreateUserInputObject: CreateUserInput!, $CreateUserVerific
     }
 }`;
 
+export const CreateTempProduct = gql`
+mutation CreateTempProduct($CreateTempProductInputObject: CreateTempProductInput!) {
+    createTempProduct( CreateTempProductInput: $CreateTempProductInputObject ) {
+        _id
+    }
+}`;
+
+/** Notes
+ * Regarding these and the variables, currently i think its better to just have the entire object, as remember not all attributes are needed, and we cant just exclude things here.
+ * The below is a special case as of now. Might change in the furture though
+*/
+
 export const UserChange = gql`
 mutation UserChange(
     $fname: UserNameName,
@@ -47,48 +59,5 @@ mutation UserChange(
         approval_code: $approval_code
     } ) {
         _id
-    }
-}`;
-
-export const AccountPageGetUser = gql`
-query AccountPageGetUser {
-    getUser {
-        _id
-        emails {
-            primary_email
-            recovery_email
-        }
-        password {
-            password
-            password_length
-        }
-        name {
-            fname
-            lname
-        }
-        token_key
-        language_id
-        ui_theme_id
-        account_limits {
-            rate_limit_scaler
-            graphql_rate_limit_scaler
-        }
-        account_status {
-            banned
-            unban_date
-            lifetime_banned
-        }
-        notifications {
-            product_changes
-            product_issues
-            entity_changes
-            entity_issues
-            entity_product_links
-        }
-        score {
-            score_value
-            date_scored
-        }
-        payment_credits
     }
 }`;
