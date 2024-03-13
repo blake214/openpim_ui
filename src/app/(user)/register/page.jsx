@@ -142,9 +142,9 @@ export default function RegisterPage() {
                             <br/>
                             <br/>
                         </>}
-                        <CustomButton align="vertical" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
+                        <CustomButton component_type="vertical" onClick={handleUserInputSubmit}>Resend verification code</CustomButton>
                         <br/>
-                        <CustomButton align="vertical" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
+                        <CustomButton component_type="vertical" type="submit" disabled={createUserLoading} busy={createUserLoading}>Register</CustomButton>
                         <br/>
                         <BasicLink align="right" onClick={()=>{
                             createEmailVerificationReset_primary_email()
@@ -213,7 +213,7 @@ export default function RegisterPage() {
                         />
                         <br/>
                         <br/>
-                        <CustomButton align="vertical" type="submit" disabled={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)} busy={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)}>Register</CustomButton>
+                        <CustomButton component_type="vertical" type="submit" disabled={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)} busy={(createEmailVerificationLoading_primary_email || createEmailVerificationLoading_recovery_email)}>Register</CustomButton>
                         <br/>
                         <BasicLink href="/login" align="right"><IoMdArrowRoundBack /> Login</BasicLink>
                     </form>

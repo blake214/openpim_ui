@@ -19,7 +19,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-    const openpim_token = localStorage.getItem('openpim_token') || null
+    const openpim_token = localStorage?.getItem('openpim_token') || null
     operation.setContext(({ headers = {} }) => ({
         headers: {
             ...headers,
@@ -46,11 +46,11 @@ const ApolloAppProvider = ({ children }) => {
     // ======= Effects
     useEffect(() => {
         if(session?.user?.openPimToken) {
-            const openpim_token = localStorage.getItem('openpim_token') || null
-            if(!openpim_token) localStorage.setItem('openpim_token', session.user.openPimToken)
+            const openpim_token = localStorage?.getItem('openpim_token') || null
+            if(!openpim_token) localStorage?.setItem('openpim_token', session.user.openPimToken)
         } else {
             // Remove any existing tokens
-            localStorage.removeItem('openpim_token')
+            localStorage?.removeItem('openpim_token')
         }
     }, []);
     // ======= Effects

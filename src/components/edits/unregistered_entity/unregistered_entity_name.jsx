@@ -4,11 +4,11 @@ import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import CustomButton from "../../custom_button/custom_button";
+import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 
-export default function EditUserPasswordPassword({stored_element, location, lastRoute, prevRoute}) {
+export default function EditUnregisteredEntityName({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
     const router = useRouter()
     // ======= Hooks
@@ -20,18 +20,14 @@ export default function EditUserPasswordPassword({stored_element, location, last
 
     // ======= States
     const [localStorageData, setLocalStorageData] = useState(content);
-    const [passwordRepeat, setPasswordRepeat] = useState("");
     // ======= States
 
     // ======= Event Handlers
     const handelChangeLocalStorageData = (e) => {
-        const { name, value } = e.target;
-        if(name == "password_repeat") setPasswordRepeat(value)
-        else setLocalStorageData(value);
+        const { value } = e.target;
+        setLocalStorageData(value);
     };
     const handleSave = () => {
-        // Check passwords are the same
-        if(localStorageData != passwordRepeat) return alert("Passwords dont match")
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
@@ -44,7 +40,7 @@ export default function EditUserPasswordPassword({stored_element, location, last
     
 	return (
 		<>
-            <h1>Edit Password</h1>
+            <h1>Edit Entity Name</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
@@ -55,19 +51,9 @@ export default function EditUserPasswordPassword({stored_element, location, last
                         {
                             items: [
                                 {
-                                    title: "Password",
+                                    title: "Entity Name",
                                     content: [
-                                        <input type="password" name="password" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="Password"/>
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            items: [
-                                {
-                                    title: "Repeat Password",
-                                    content: [
-                                        <input type="password" name="password_repeat" value={passwordRepeat} onChange={handelChangeLocalStorageData} placeholder="Repeat Password"/>
+                                        <input type="text" name="entity_name" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="Entity Name"/>
                                     ]
                                 }
                             ]

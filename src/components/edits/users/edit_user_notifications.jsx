@@ -1,87 +1,135 @@
 "use client"
 
-import styles from "../style.module.css"
 import { buildContent } from "@/lib/helpers";
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import KeyValueBlock from "../../key_value_block/key_value_block";
-import CustomButton from "../../custom_button/custom_button";
 import { keyDictionary } from "@/lib/key_dictionary";
+import CustomButton from "../../custom_button/custom_button";
+import BasicLink from "@/components/basic_link/basic_link";
+import ContentBlock from "@/components/content_block/content_block";
+import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 
-export default function EditUserNotifications({stored_element}) {
-    const location = usePathname()
+export default function EditUserNotifications({stored_element, location, lastRoute, prevRoute}) {
+    // ======= Hooks
     const router = useRouter()
+    // ======= Hooks
+
+    // ======= General
     const stored_element_temp = JSON.parse(JSON.stringify(stored_element))
     const content = buildContent(stored_element_temp)
-    const parts = location.split('/');
-    const lastRoute = parts[parts.length - 1];
-    const prevRoute = location.replace(`/${lastRoute}`, "")
+    // ======= General
 
-    const [formData, setFormData] = useState(content);
+    // ======= States
+    const [localStorageData, setLocalStorageData] = useState(content);
+    // ======= States
 
-    const handleFormChange = (e) => {
+    // ======= Event Handlers
+    const handelChangeLocalStorageData = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setLocalStorageData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
-    
     const handleSave = () => {
-        localStorage.setItem(lastRoute, JSON.stringify({
+        // Update the variable
+        localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
-            content: formData
+            content: localStorageData
         }));
+        // Go back to previous step
         router.push(prevRoute)
     }
+    // ======= Event Handlers
     
 	return (
 		<>
-            <div className={styles.title_container}>
-				<b>New</b>
-			</div>
-			<div className={styles.body_container}>
-                <KeyValueBlock title="Product Changes">
-                    <select name="product_changes" value={formData.product_changes} onChange={handleFormChange}>
-                        <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                        <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                        <option value="AAPC">{keyDictionary["AAPC"]}</option>
-                    </select>
-                </KeyValueBlock>
-                <KeyValueBlock title="Product Issues">
-                    <select name="product_issues" value={formData.product_issues} onChange={handleFormChange}>
-                        <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                        <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                        <option value="AAPC">{keyDictionary["AAPC"]}</option>
-                    </select>
-                </KeyValueBlock>
-                <KeyValueBlock title="Entity Changes">
-                    <select name="entity_changes" value={formData.entity_changes} onChange={handleFormChange}>
-                        <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                        <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                        <option value="AAPC">{keyDictionary["AAPC"]}</option>
-                    </select>
-                </KeyValueBlock>
-                <KeyValueBlock title="Entity Issues">
-                    <select name="entity_issues" value={formData.entity_issues} onChange={handleFormChange}>
-                        <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                        <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                        <option value="AAPC">{keyDictionary["AAPC"]}</option>
-                    </select>
-                </KeyValueBlock>
-                <KeyValueBlock title="Entity Product Links">
-                    <select name="entity_product_links" value={formData.entity_product_links} onChange={handleFormChange}>
-                    <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                        <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                        <option value="AAPC">{keyDictionary["AAPC"]}</option>
-                    </select>
-                </KeyValueBlock>
-			</div>
+            <h1>Edit Notifications</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
+            <br/>
+            <BasicLink>Findout more</BasicLink>
+            <br/>
+            <ContentBlock title="New">
+                <TableHorizontal
+					tableContent={[
+                        {
+                            items: [
+                                {
+                                    title: "Product Changes",
+                                    content: [
+                                        <select name="product_changes" value={localStorageData.product_changes} onChange={handelChangeLocalStorageData}>
+                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
+                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
+                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                        </select>
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    title: "Product Issues",
+                                    content: [
+                                        <select name="product_issues" value={localStorageData.product_issues} onChange={handelChangeLocalStorageData}>
+                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
+                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
+                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                        </select>
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    title: "Entity Changes",
+                                    content: [
+                                        <select name="entity_changes" value={localStorageData.entity_changes} onChange={handelChangeLocalStorageData}>
+                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
+                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
+                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                        </select>
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    title: "Entity Issues",
+                                    content: [
+                                        <select name="entity_issues" value={localStorageData.entity_issues} onChange={handelChangeLocalStorageData}>
+                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
+                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
+                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                        </select>
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    title: "Entity Product Links",
+                                    content: [
+                                        <select name="entity_product_links" value={localStorageData.entity_product_links} onChange={handelChangeLocalStorageData}>
+                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
+                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
+                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                        </select>
+                                    ]
+                                }
+                            ]
+                        }
+                    ]}
+				/>
+            </ContentBlock>
             <br/>
             <hr className="hr_surface_color_1"/>
             <div className="flex">
                 <div className={`button_fixed_width align_right`}>
-                    <CustomButton align="vertical" onClick={handleSave}>Save</CustomButton>
+                    <CustomButton component_type="vertical" onClick={handleSave}>Save</CustomButton>
                 </div>
             </div>
 		</>

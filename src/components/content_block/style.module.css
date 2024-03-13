@@ -1,0 +1,24 @@
+.container{
+    /* This is important for using position in children containers */
+    position: relative;
+}
+
+.container_title{
+    display: flex;
+    padding: 10px;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    align-items: center;
+}
+
+.list_container{
+    width: var(--navbar_list_width);
+    position: absolute;
+    right: 0;
+    z-index: 969;
+}
+
+.container_body{
+    border: 1px solid var(--surface_color_1);
+    padding: 10px;
+}

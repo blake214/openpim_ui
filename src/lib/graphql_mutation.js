@@ -21,6 +21,13 @@ mutation CreateTempProduct($CreateTempProductInputObject: CreateTempProductInput
     }
 }`;
 
+export const CreateUnregisteredEntity = gql`
+mutation CreateUnregisteredEntity($CreateUnregisteredEntityInputObject: CreateUnregisteredEntityInput!) {
+    createUnregisteredEntity( CreateUnregisteredEntityInput: $CreateUnregisteredEntityInputObject ) {
+        _id
+    }
+}`;
+
 /** Notes
  * Regarding these and the variables, currently i think its better to just have the entire object, as remember not all attributes are needed, and we cant just exclude things here.
  * The below is a special case as of now. Might change in the furture though

@@ -58,7 +58,7 @@ export default function TableVertical({
 			</div>
 			{menuToggled && 
 				<div ref={component_ref} className={styles.list_container}>
-					<CustomLink type="vertical" href="/about">About</CustomLink>
+					<CustomLink component_type="vertical" href="/about">About</CustomLink>
 				</div>
 			}
 			<div className={styles.body_container}>

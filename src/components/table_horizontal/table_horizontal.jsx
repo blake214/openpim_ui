@@ -1,78 +1,82 @@
 "use client"
 
+import { useState } from "react";
 import styles from "./style.module.css";
-import { FaRegEdit } from "react-icons/fa";
-import { IoMdMenu } from "react-icons/io";
-import { CgUndo } from "react-icons/cg";
-import { useRef, useState, useEffect } from 'react'
-import CustomLink from "@/components/custom_link/custom_link";
+import RowHorizontal from "./row/row";
 
-
+/** tableContentState
+ * This is a state that we parse in in the following structure
+{
+	tableContent: [
+		{
+			checked: true,
+			items: [
+				{
+					title: "Title1",
+					content: [
+						<p>content1</p>
+					]
+				}
+			]
+		}
+	],
+	setTableContent: setTableContent
+}
+*/
 export default function TableHorizontal({
-	children,
-	title="",
+	tableContent=null,
+	tableContentState=null,
+	checks=false,
 	numbers=false,
-	undoClick=null,
-	editClick=null,
-	check_box_state=null,
 }) {
 	// ===== States
-	const [menuToggled, setMenuToggled] = useState(false);
+	const [isChecked, setIsChecked] = useState(false);
 	// ===== States
 
 	// ===== Handlers
-	const updateMenuToggled = () => {
-		setMenuToggled(!menuToggled);
-	};
-	const handleCheckboxChange = (event) => {
-        check_box_state.setIsChecked(event.target.checked);
+	const handlePrimaryCheckboxChange = (e) => {
+		const { checked } = e.target;
+		if(!tableContentState) return
+		let new_content = [...tableContentState.tableContent]
+		new_content = tableContentState.tableContent.map(element => ({
+			...element,
+			checked: checked
+		}))
+		tableContentState.setTableContent(new_content)
+		setIsChecked(checked)
+    };
+	const handleCheckboxChange = (e) => {
+		const { name, checked } = e.target;
+		if(!tableContentState) return
+		let new_content = [...tableContentState.tableContent]
+		new_content[name] = {
+			...new_content[name],
+			checked: checked
+		}
+		tableContentState.setTableContent(new_content)
     };
 	// ===== Handlers
 
-	// ===== Handel menu list
-	const component_ref = useRef(null);
-	useEffect(() => {
-		function handleClickOutside(event) {
-			// Check if the clicked element is not one of component_ref, close all toggles
-			if (component_ref.current && !component_ref.current.contains(event.target)) {
-				setMenuToggled(false);
-			}
-		}
-		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, []);
-	// ===== Handel menu list
-
 	return (
 		<>
-		<div className={styles.container_table}>
-			<div className={styles.container_title}>
-				<b>{title}</b>
-				<div className="align_right">
-					{undoClick && <button onClick={undoClick}><CgUndo size={20} cursor="pointer"/></button>}
-					{editClick && <button onClick={editClick}><FaRegEdit size={20} cursor="pointer"/></button>}
-					<button onClick={updateMenuToggled}><IoMdMenu size={20} cursor="pointer"/></button>
-				</div>
+			<div className={`
+				${(!numbers && !checks) && styles.container_row_1}
+				${(((numbers || checks))) && styles.container_row_2}`}
+			>
+				{checks && <div><input type="checkbox" checked={isChecked} onChange={handlePrimaryCheckboxChange}/></div>}
+				{numbers && <p>No</p>}
 			</div>
-			{menuToggled && 
-				<div ref={component_ref} className={styles.list_container}>
-					<CustomLink type="vertical" href="/about">About</CustomLink>
+			{checks || numbers && <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>}
+			{tableContentState?.tableContent.map((item, index) => (
+				<div key={index}>
+					<RowHorizontal index={index} item={item} checks={checks} numbers={numbers} checkBoxHandler={handleCheckboxChange}/>
 				</div>
-			}
-			<div className={styles.body_container}>
-				<div className={`
-					${(!numbers && !check_box_state) && styles.container_row_1}
-					${(((numbers || check_box_state))) && styles.container_row_2}`}
-				>
-					{check_box_state && <div><input type="checkbox" checked={check_box_state.isChecked} onChange={handleCheckboxChange}/></div>}
-					{numbers && <p>No</p>}
+			))}
+			{tableContent?.map((item, index) => (
+				<div key={index}>
+					<RowHorizontal index={index} item={item}/>
 				</div>
-				<hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
-				{children}
-			</div>
-		</div>
+			))}
 		</>
 	)
 }

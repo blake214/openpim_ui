@@ -5,10 +5,16 @@ import { CiCircleMinus } from "react-icons/ci";
 import styles from "./style.module.css"
 
 export default function SectionBlockMinimizer({ heading, start_state, children }) {
+	// ======= States
 	const [contentToggled, setContentToggled] = useState(start_state === "true");
+	// ======= States
+
+	// ======= Event Handlers
 	const updateContentToggled = () => {
 		setContentToggled(!contentToggled);
 	};
+	// ======= Event Handlers
+	
 	return (
 		<>
 			<div className={styles.container_heading}>

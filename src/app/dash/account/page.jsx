@@ -1,15 +1,16 @@
 "use client"
 
-import EditableBlock from "@/components/edititable_block/editable_block";
-import KeyValueBlock from "@/components/key_value_block/key_value_block";
-import SectionBlockMinimizer from "@/components/section_block_minimizer/section_block_minimizer";
-import Skeleton from "@/components/skeleton/skeleton";
 import { useRouter, usePathname } from 'next/navigation'
 import { useQuery } from '@apollo/client';
 import { AccountPageGetUser } from "@/lib/graphql_query";
-import { createShortUuid } from "@/lib/helpers";
+import { createLocalUuidKey } from "@/lib/helpers";
 import { useEffect, useState } from "react";
 import { keyDictionary } from "@/lib/key_dictionary";
+import SectionBlockMinimizer from "@/components/section_block_minimizer/section_block_minimizer";
+import Skeleton from "@/components/skeleton/skeleton";
+import ContentBlock from "@/components/content_block/content_block";
+import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import RowHorizontal from "@/components/table_horizontal/row/row";
 
 export default function Account() {
     // ======= Hooks
@@ -28,11 +29,11 @@ export default function Account() {
     // ================================================= Handlers
     // ======= Fname
     const handleEditFname = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_fname",
             title: "change_first_name",
@@ -44,14 +45,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_name_fname",
             title: "first_name",
             content: AccountPageGetUserData.getUser.name.fname,
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_name_fname",
             title: "first_name",
@@ -64,11 +65,11 @@ export default function Account() {
 
     // ======= Lname
     const handleEditLname = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_lname",
             title: "change_last_name",
@@ -80,14 +81,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_name_lname",
             title: "last_name",
             ...(AccountPageGetUserData.getUser.name.lname ? ({ content: AccountPageGetUserData.getUser.name.lname }) : ({ content: "" }))
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_name_lname",
             title: "last_name",
@@ -100,11 +101,11 @@ export default function Account() {
 
     // ======= Password
     const handleEditPassword = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_password",
             title: "change_password",
@@ -116,14 +117,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_password_password",
             title: "password",
             content: AccountPageGetUserData.getUser.password.password,
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_password_password",
             title: "password",
@@ -136,11 +137,11 @@ export default function Account() {
 
     // ======= Primary Email
     const handleEditPrimaryEmail = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_primary_email",
             title: "change_primary_email",
@@ -152,14 +153,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_emails_primary_email",
             title: "primary_email",
             content: AccountPageGetUserData.getUser.emails.primary_email,
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_emails_primary_email",
             title: "primary_email",
@@ -172,11 +173,11 @@ export default function Account() {
 
     // ======= Recovery Email
     const handleEditRecoveryEmail = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_recovery_email",
             title: "change_recovery_email",
@@ -188,14 +189,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_emails_recovery_email",
             title: "recovery_email",
             ...(AccountPageGetUserData.getUser.emails.recovery_email ? ({ content: AccountPageGetUserData.getUser.emails.recovery_email }) : ({ content: "" }))
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_emails_recovery_email",
             title: "recovery_email",
@@ -208,11 +209,11 @@ export default function Account() {
 
     // ======= Token Key
     const handleEditTokenKey = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_token_key",
             title: "reissue_token_key",
@@ -224,14 +225,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_token_key",
             title: "token_key",
             ...(AccountPageGetUserData.getUser.token_key ? ({ content: AccountPageGetUserData.getUser.token_key }) : ({ content: "" }))
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_token_key",
             title: "token_key",
@@ -244,11 +245,11 @@ export default function Account() {
 
     // ======= Notifications
     const handleEditNotifications = () => {
-        const change_user_id = createShortUuid()
-        const change_user_existing_id = createShortUuid()
-        const change_user_new_id = createShortUuid()
+        const change_user_id = createLocalUuidKey()
+        const change_user_existing_id = createLocalUuidKey(change_user_id)
+        const change_user_new_id = createLocalUuidKey(change_user_id)
 
-        localStorage.setItem(change_user_id, JSON.stringify({
+        localStorage?.setItem(change_user_id, JSON.stringify({
             type: "change_user",
             sub_type: "change_user_notifications",
             title: "change_notifications",
@@ -260,14 +261,14 @@ export default function Account() {
             },
         }));
 
-        localStorage.setItem(change_user_existing_id, JSON.stringify({
+        localStorage?.setItem(change_user_existing_id, JSON.stringify({
             type: "reference",
             sub_type: "user_notifications",
             title: "notifications",
             content: AccountPageGetUserData.getUser.notifications,
         }));
 
-        localStorage.setItem(change_user_new_id, JSON.stringify({
+        localStorage?.setItem(change_user_new_id, JSON.stringify({
             type: "edit",
             sub_type: "user_notifications",
             title: "notifications",
@@ -290,7 +291,6 @@ export default function Account() {
 
     return (
         <div>
-            <br/>
             <h1>Account</h1>
             <br/>
             {!AccountPageGetUserData ? (
@@ -302,9 +302,39 @@ export default function Account() {
                 </>
             ) : (
                 <>
-                <KeyValueBlock title="User ID">{AccountPageGetUserData.getUser._id}</KeyValueBlock>
-                <KeyValueBlock title="Account Banned">{AccountPageGetUserData.getUser.account_status.banned ? ("Yes") : ("No")}</KeyValueBlock>
-                <KeyValueBlock title="Payment Credits">{AccountPageGetUserData.getUser.payment_credits}</KeyValueBlock>
+                <RowHorizontal item={{
+                    checked: false,
+                    items: [
+                        {
+                            title: "User ID",
+                            content: [
+                                AccountPageGetUserData.getUser._id
+                            ]
+                        }
+                    ]
+                }}/>
+                <RowHorizontal item={{
+                    checked: false,
+                    items: [
+                        {
+                            title: "Account Banned",
+                            content: [
+                                AccountPageGetUserData.getUser.account_status.banned ? ("Yes") : ("No")
+                            ]
+                        }
+                    ]
+                }}/>
+                <RowHorizontal item={{
+                    checked: false,
+                    items: [
+                        {
+                            title: "Payment Credits",
+                            content: [
+                                AccountPageGetUserData.getUser.payment_credits
+                            ]
+                        }
+                    ]
+                }}/>
                 </>
             )}
             <br/>
@@ -318,51 +348,188 @@ export default function Account() {
                 <h2>Basic Info</h2>
                 <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
                 <SectionBlockMinimizer heading="First Name" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditFname}>
-                        <KeyValueBlock title="First Name">{AccountPageGetUserData.getUser.name.fname}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditFname}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "First Name",
+                                            content: [AccountPageGetUserData.getUser.name.fname]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="Last Name" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditLname}>
-                        <KeyValueBlock title="Last Name">{AccountPageGetUserData.getUser.name.lname}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditLname}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Last Name",
+                                            content: [AccountPageGetUserData.getUser.name.lname]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="Password" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditPassword}>
-                        <KeyValueBlock title="Password">{AccountPageGetUserData.getUser.password.password}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditPassword}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Password",
+                                            content: [AccountPageGetUserData.getUser.password.password]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="API Token" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditTokenKey}>
-                        <KeyValueBlock title="Token Key">{AccountPageGetUserData.getUser.token_key}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditTokenKey}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Token Key",
+                                            content: [<p>{AccountPageGetUserData.getUser.token_key}</p>]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="Notifications" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditNotifications}>
-                        <KeyValueBlock title="Product Changes">{keyDictionary[AccountPageGetUserData.getUser.notifications.product_changes]}</KeyValueBlock>
-                        <KeyValueBlock title="Product Changes">{keyDictionary[AccountPageGetUserData.getUser.notifications.product_issues]}</KeyValueBlock>
-                        <KeyValueBlock title="Entity Changes">{keyDictionary[AccountPageGetUserData.getUser.notifications.entity_changes]}</KeyValueBlock>
-                        <KeyValueBlock title="Entity Issues">{keyDictionary[AccountPageGetUserData.getUser.notifications.entity_issues]}</KeyValueBlock>
-                        <KeyValueBlock title="Entity Product Links">{keyDictionary[AccountPageGetUserData.getUser.notifications.entity_product_links]}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditNotifications}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Product Changes",
+                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.product_changes]]
+                                        }
+                                    ]
+                                },
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Product Issues",
+                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.product_issues]]
+                                        }
+                                    ]
+                                },
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Entity Changes",
+                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_changes]]
+                                        }
+                                    ]
+                                },
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Entity Issues",
+                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_issues]]
+                                        }
+                                    ]
+                                },
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Entity Product Links",
+                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_product_links]]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <h2>Contact Info</h2>
                 <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
                 <SectionBlockMinimizer heading="Primary Email" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditPrimaryEmail}>
-                        <KeyValueBlock title="Primary Email">{AccountPageGetUserData.getUser.emails.primary_email}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditPrimaryEmail}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Primary Email",
+                                            content: [AccountPageGetUserData.getUser.emails.primary_email]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 <br/>
                 <SectionBlockMinimizer heading="Recovery Email" start_state="false">
-                    <EditableBlock title="Current" onClick={handleEditRecoveryEmail}>
-                        <KeyValueBlock title="Recovery Email">{AccountPageGetUserData.getUser.emails.recovery_email}</KeyValueBlock>
-                    </EditableBlock>
+                    <ContentBlock
+                        title="Current"
+                        editClick={handleEditRecoveryEmail}
+                    >
+                        <TableHorizontal
+                            tableContent= {[
+                                {
+                                    checked: false,
+                                    items: [
+                                        {
+                                            title: "Recovery Email",
+                                            content: [AccountPageGetUserData.getUser.emails.recovery_email]
+                                        }
+                                    ]
+                                }
+                            ]}
+                        />
+                    </ContentBlock>
                 </SectionBlockMinimizer>
                 </>
             )}

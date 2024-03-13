@@ -1,25 +1,11 @@
 "use client"
 
-import { usePathname } from 'next/navigation'
-
-export default function ChangeProductPage({stored_element}) {
-    const location = usePathname()
-
-    localStorage.setItem('edit_key', JSON.stringify({
-        type: "edit_type",
-        content: "content"
-    }));
+export default function ChangeProductPage({stored_element, location, lastRoute, prevRoute}) {
 
     return (
-        <>
-            <h3>This is a change_type</h3>
-            {JSON.stringify(stored_element.content)}
-            <hr className='hr_surface_color_1'/>
-            <p>Previous content</p>
-            <hr className='hr_surface_color_1'/>
-            <p>New content</p>
-            <hr className='hr_surface_color_1'/>
-            <a href={`${location}/edit_key`}>Edit content xxx</a>
-        </>
+        <div>
+            <h1>Change Product</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
+        </div>
     );
 }

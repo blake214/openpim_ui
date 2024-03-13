@@ -1,43 +1,50 @@
 "use client"
 
+import styles from "./style.module.css"
+import CustomLink from "../custom_link/custom_link";
+import CustomButton from "../custom_button/custom_button";
 import { FaBookOpen } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useRef, useState, useEffect } from 'react'
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
-
-import styles from "./style.module.css"
-import NavigationLinks from "./navigation_links/navigation_links";
-import CustomLink from "../custom_link/custom_link";
-import CustomToggle from "../custom_toggle/custom_toggle";
-import CustomButton from "../custom_button/custom_button";
 import { handleLogout } from "@/lib/action";
 import { useSession } from "next-auth/react";
-
+import { FaUser } from "react-icons/fa6";
+import { MdSpaceDashboard } from "react-icons/md";
+import { IoMdMenu } from "react-icons/io";
 
 export default function Navbar() {
+	// ======= Hooks
 	const session = useSession()
+	// ======= Hooks
 
-	// ===== This for differenciating when a user or server had rendered this
-	const [mounted, setMounted] = useState(false)
-	const { resolvedTheme } = useTheme();
-	const { theme, setTheme } = useTheme()
-	if(theme === "system") setTheme(resolvedTheme)
-
-	// ===== Menu toggles
+	// ======= States
+	const { theme, resolvedTheme, setTheme } = useTheme()
 	const [menuToggled, setMenuToggled] = useState(false);
+	const [userToggled, setUserToggled] = useState(false);
+	const [themeToggled, setThemeToggled] = useState(false);
+	// ======= States
+
+	// ======= General
+	const component_ref = useRef(null);
+	// ======= General
+
+	// ================================================= Handlers
+	// ======= Menu toggle
 	const updateMenuToggled = () => {
 		setMenuToggled(!menuToggled);
 	};
+	// ======= Menu toggle
 
-	const [userToggled, setUserToggled] = useState(false);
+	// ======= User menu toggle
 	const updateUserToggled = () => {
 		setUserToggled(!userToggled);
 	};
+	// ======= User menu toggle
 
-	// ===== Theme toggles
-	const [themeToggled, setThemeToggled] = useState(theme === "dark");
+	// ======= Theme toggle
 	const updateThemeToggled = () => {
 		if(theme === "dark") {
 			setTheme("light");
@@ -48,8 +55,18 @@ export default function Navbar() {
 			setThemeToggled(!themeToggled);
 		}
 	};
-	// ===== When a user clicks outside a box then we should close the modals
-	const component_ref = useRef(null);
+	// ======= Theme toggle
+	// ================================================= Handlers
+
+	// ======= Effects
+	useEffect(() => {
+		if(resolvedTheme) setTheme(resolvedTheme)
+	}, [resolvedTheme]);
+
+	useEffect(() => {
+		if(theme) setThemeToggled(theme === "dark")
+	}, [theme]);
+
 	useEffect(() => {
 		function handleClickOutside(event) {
 			// Check if the clicked element is not one of component_ref, close all toggles
@@ -59,69 +76,76 @@ export default function Navbar() {
 			}
 		}
 		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
 	}, []);
+	// ======= Effects
+
 	return (
 		<>
 			<div className={styles.container_spacer}></div>
 			<div className={styles.container}>
 				<div className={styles.bar}>
 					<CustomLink href="/"><FaBookOpen size={25} cursor="pointer"/></CustomLink>
-					<NavigationLinks
-						updateMenuObj={{state: menuToggled, updater: updateMenuToggled}}
-						updateUserObj={{state: userToggled, updater: updateUserToggled}}
-						logged_in={(session?.data?.user)}
-						/>
+					<div className={styles.links_container}>
+						{session?.data?.user && (
+							<CustomLink href="/dash">
+								<MdSpaceDashboard size={25} cursor="pointer"/>
+							</CustomLink>
+						)}
+						<CustomButton state={userToggled} onClick={updateUserToggled}>
+							<FaUser size={25} cursor="pointer"/>
+						</CustomButton>
+						<CustomButton state={menuToggled} onClick={updateMenuToggled}>
+							<IoMdMenu size={25} cursor="pointer"/>
+						</CustomButton>
+					</div>
 				</div>
 				{menuToggled && (
 					<div ref={component_ref} className={styles.list_container}>
-						<CustomLink type="vertical" href="/about" item={{ title: "About", path: "/about" }}>
+						<CustomLink component_type="vertical" href="/about">
 							About
 						</CustomLink>
-						<CustomLink type="vertical" href="/documentation">
+						<CustomLink component_type="vertical" href="/documentation">
 							Documentation
 						</CustomLink>
-						<CustomLink type="vertical" href="/articles">
+						<CustomLink component_type="vertical" href="/articles">
 							Articles
 						</CustomLink>
-						<CustomLink type="vertical" href="/demo">
+						<CustomLink component_type="vertical" href="/demo">
 							Demo
 						</CustomLink>
-						<CustomLink type="vertical" href="/disclaimer">
+						<CustomLink component_type="vertical" href="/disclaimer">
 							Disclaimer
 						</CustomLink>
-						<CustomLink type="vertical" href="/terms">
+						<CustomLink component_type="vertical" href="/terms">
 							Terms
 						</CustomLink>
-						<CustomToggle align="vertical" state={themeToggled} toggleState={updateThemeToggled}>
+						<CustomButton component_type="vertical" state={themeToggled} onClick={updateThemeToggled}>
 							{themeToggled ? (
 								<>
-								<MdLightMode size={25} cursor="pointer"/>
+								<MdLightMode size={20} cursor="pointer"/>
 								Light Mode
 								</>
 							) : (
 								<>
-								<MdDarkMode size={25} cursor="pointer"/>
+								<MdDarkMode size={20} cursor="pointer"/>
 								Dark Mode
 								</>
 							)}
-						</CustomToggle>
+						</CustomButton>
 					</div>
 				)}
 				{userToggled && (
 					<>
 						{session?.data?.user ? (
-							<div ref={component_ref} className={styles.user_container}>
+							<div ref={component_ref} className={styles.list_container}>
 								<form action={handleLogout}>
-									<CustomButton align="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
+									<CustomButton component_type="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
 								</form>
 							</div>
 						) : (
-							<div ref={component_ref} className={styles.user_container}>
-								<CustomLink type="vertical" href="/login"> Login </CustomLink>
-								<CustomLink type="vertical" href="/register"> Register </CustomLink>
+							<div ref={component_ref} className={styles.list_container}>
+								<CustomLink component_type="vertical" href="/login"> Login </CustomLink>
+								<CustomLink component_type="vertical" href="/register"> Register </CustomLink>
 							</div>
 						)}
 					</>

@@ -19,10 +19,15 @@
     box-shadow: var(--drop_shadow);
 }
 
-.list_container, .user_container{
+.list_container{
     width: var(--navbar_list_width);
     right: 0;
     position: absolute;
     z-index: 997;
     box-shadow: var(--drop_shadow);
+}
+
+.links_container{
+    display: flex;
+    margin-left: auto;
 }

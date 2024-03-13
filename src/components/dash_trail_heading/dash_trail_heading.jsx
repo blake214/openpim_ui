@@ -1,24 +1,37 @@
 "use client"
+
 import styles from "./style.module.css"
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import startCase from 'lodash/startCase';
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function DashTrailHeading() {
+	// ===== Hooks
 	const location = usePathname()
-	const pathnames = location.split('/').filter(x => x)
-	// ===== Check server
-	/** Check if server rendered this
-	 * As server doesnt have localStorage
-	*/
+	// ===== Hooks
+
+	// ======= States
 	const [mounted, setMounted] = useState(false)
-	// useEffect only runs on the client, so now we can safely show the UI
+	// ======= States
+
+	// ===== General
+	const pathnames = location.split('/').filter(x => x)
+	// ===== General
+
+	// ======= Effects
 	useEffect(() => {
-		setMounted(true)
-	}, [])
-	if (!mounted) return <></>
-	// ===== Check server
+        setMounted(true)
+    }, []);
+	// ======= Effects
+
+	if(!mounted) return (
+		<div className={styles.container}>
+			<nav>
+				<ul>...</ul>
+			</nav>
+		</div>
+	);
 	return (
 		<div className={styles.container}>
 			<nav>
@@ -29,7 +42,7 @@ export default function DashTrailHeading() {
 						const href = `/${pathnames.slice(0, index + 1).join('/')}`
 						let title = value
 						// Lets check if its a local_key
-						if(title.includes("_openpimkey")) {
+						if(title.includes("_openpimkey") && typeof localStorage !== "undefined") {
 							const element = JSON.parse(localStorage.getItem(value))
 							title = element.title
 						}

@@ -38,11 +38,11 @@ export default function LoginPage() {
                     />
                     <br/>
                     <br/>
-                    <CustomButton align="vertical" type="submit">Login</CustomButton>
+                    <CustomButton component_type="vertical" type="submit">Login</CustomButton>
                 </form>
                 <br/>
                 <form action={handleGithubLogin}>
-                    <CustomButton align="vertical" type="submit"><FaGithub/>Login with github</CustomButton>
+                    <CustomButton component_type="vertical" type="submit"><FaGithub/>Login with github</CustomButton>
                 </form>
                 <br/>
                 <BasicLink href="/register" align="left"><IoMdArrowRoundForward /> Register account</BasicLink>

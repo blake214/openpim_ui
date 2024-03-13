@@ -16,7 +16,7 @@ function CustomLink({ children, href="", align="left" }) {
 	);
 }
 
-export default function BasicLink({ children, href="", align="left" , onClick=false}) {
+export default function BasicLink({ children, href="", align="left" , onClick=null}) {
 	return (
 		<>
 			{onClick ? (

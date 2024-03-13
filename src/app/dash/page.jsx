@@ -1,63 +1,72 @@
 "use client"
 
 import TableHorizontal from "@/components/table_horizontal/table_horizontal";
-import RowHorizontal from "@/components/table_horizontal/row_primary/row";
-import RowHorizontalContent from "@/components/table_horizontal/row_primary/content";
-import RowHorizontalContentContent from "@/components/table_horizontal/row_primary/content_content";
 import { useState } from "react";
 import TableVertical from "@/components/table_vertical/table_vertical";
-import RowVertical from "@/components/table_vertical/row_primary/row";
-import RowVerticalContent from "@/components/table_vertical/row_primary/content";
-import RowVerticalContentContent from "@/components/table_vertical/row_primary/content_content";
+import ContentBlockHeader from "@/components/content_block/content_block_header";
+import ContentBlockBody from "@/components/content_block/content_block_body";
+import CustomButton from "@/components/custom_button/custom_button";
+
 
 export default function DashPage() {
-	const [isCheckedMain, setIsCheckedMain] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+
+	const [tableContent, setTableContent] = useState([
+		{
+			checked: true,
+			items: [
+				{
+					title: "Title1",
+					content: [
+						<p>content1</p>,
+						<p>content2</p>
+					]
+				},
+				{
+					title: "Title2",
+					content: [
+						<p>content1</p>
+					]
+				}
+			]
+		},
+		{
+			checked: true,
+			items: [
+				{
+					title: "Title3",
+					content: [
+						<p>content1</p>
+					]
+				}
+			]
+		}
+	]);
 
     return (
-        <div>
-           <TableHorizontal
+        <>
+			<ContentBlockHeader
 				title="Title"
 				undoClick={()=>{}}
 				editClick={()=>{}}
-				check_box_state={{
-					isChecked: isCheckedMain,
-					setIsChecked: setIsCheckedMain,
-				}}
-				numbers={true}
-			>
-				<RowHorizontal number="1" check_box_state={{
-					isChecked: isChecked,
-					setIsChecked: setIsChecked,
-				}}>
-					<RowHorizontalContent title="Title">
-						<RowHorizontalContentContent>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-							</p>
-						</RowHorizontalContentContent>
-					</RowHorizontalContent>
-					<RowHorizontalContent title="Title">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-						</p>
-					</RowHorizontalContent>
-				</RowHorizontal>
-				<RowHorizontal number="2">
-					<RowHorizontalContent title="Title">
-						<RowHorizontalContentContent>
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-							</p>
-						</RowHorizontalContentContent>
-					</RowHorizontalContent>
-					<RowHorizontalContent title="Title">
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-						</p>
-					</RowHorizontalContent>
-				</RowHorizontal>
-			</TableHorizontal>
+				menuComponents={
+					<>
+						<CustomButton component_type="vertical" onClick={()=>{}}>Delete</CustomButton>
+					</>
+				}
+			/>
+			<ContentBlockBody>
+				<TableHorizontal
+					tableContentState={{
+						tableContent: tableContent,
+						setTableContent: setTableContent
+					}}
+					checks={true}
+					numbers={true}
+				/>
+			</ContentBlockBody>
+			
+
+			
 			<br/>
 			<br/>
 			<TableVertical
@@ -66,7 +75,7 @@ export default function DashPage() {
 				
 			</TableVertical>
 			
-        </div>
+        </>
         
     );
 }

@@ -11,7 +11,6 @@
 .container, .container_spacer{
     width: var(--dash_navbar_width_min);
     flex-shrink: 0;
-    
 }
 
 .container_open, .container_spacer_open{
