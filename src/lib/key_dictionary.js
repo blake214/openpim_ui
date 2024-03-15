@@ -3,4 +3,5 @@ export const keyDictionary = {
     AAPB: "App notifications",
     AAPC: "Email notifications",
     AAXA: "Brand",
+    AAOA: "Universal",
 }

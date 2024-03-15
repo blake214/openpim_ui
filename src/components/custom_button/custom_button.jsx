@@ -24,8 +24,8 @@ export default function CustomButton({ children, onClick=null, state=false, alig
 					${align === "center" && "align_center"}
 				`}>
 					{children}
-					{(busy || pending) && <div className="align_right" ><LiaSpinnerSolid className="icon_spinner" /></div>}
 				</div>
+				{(busy || pending) && <div className="align_right" ><LiaSpinnerSolid className="icon_spinner" /></div>}
 		</button>
 	);
 }

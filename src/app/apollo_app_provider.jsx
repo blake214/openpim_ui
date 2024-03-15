@@ -33,7 +33,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const additiveLink = from([
     errorLink,
     authMiddleware,
-    new HttpLink({ uri: 'http://localhost:3001/graphql' })
+    new HttpLink({ uri: `${process.env.NEXT_PUBLIC_OPENPIM_API_URL}graphql` })
 ]);
 
 const client = new ApolloClient({

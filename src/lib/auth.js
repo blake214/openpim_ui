@@ -36,7 +36,7 @@ export const { handlers: {GET, POST}, auth, signIn, signOut, update } = NextAuth
                             token
                         }
                     }`;
-                    const data = await request('http://localhost:3001/graphql', login_user_mutation);
+                    const data = await request(`${process.env.NEXT_PUBLIC_OPENPIM_API_URL}graphql`, login_user_mutation);
                     if(!data?.loginUser?.token) throw new Error("Wrong credentials!");
                     return {
                         name: `${data.loginUser.user_id.name.fname} ${data.loginUser.user_id.name.lname}`,

@@ -43,7 +43,7 @@
     --text_on_surface_color_3: #171717;
     --text_on_surface_color_3_disabled: #898989;
 
-    input[type=text], input[type="password"], input[type="email"], select, textarea {
+    input[type=text], input[type="password"], input[type="email"], input[type="url"], select, textarea {
         background-color: transparent;
     }
 }
@@ -128,7 +128,7 @@ hr {
 }
 
 /* Forms */
-input[type=text], input[type="password"], input[type="email"], select, textarea {
+input[type=text], input[type="password"], input[type="email"], input[type="url"], select, textarea {
     width: 100%;
     padding: 5px;
     border: 1px solid var(--surface_color_1);

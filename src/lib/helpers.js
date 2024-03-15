@@ -9,6 +9,13 @@ export const createLocalUuidKey = (parent=null) => {
     return key
 };
 
+export const createDatabaseUuidKey = () => {
+    // Generate a UUID
+    const uuid = uuidv4();
+    // Remove hyphens and truncate
+    return uuid.replace(/-/g, '').substring(0, 10)
+};
+
 export const isLocalUuidKey = (input) => {
     if(typeof input == "string" && input.includes("_openpimkey")) return true
     return false
@@ -60,3 +67,16 @@ export const cleanLocalStorageChildrenKeys = (parent_key) => {
     // Loop through children and delete (we have to seperate these steps else want working as expected)
     children.forEach(element => localStorage.removeItem(element));
 }
+
+export const readFileAsBlob = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            resolve(new Blob([reader.result], { type: file.type }));
+        };
+        reader.onerror = (error) => {
+            reject(error);
+        };
+        reader.readAsArrayBuffer(file);
+    });
+};

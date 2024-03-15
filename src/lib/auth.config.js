@@ -20,7 +20,7 @@ export const authConfig = {
                         token
                     }
                 }`;
-                const data = await request('http://localhost:3001/graphql', login_user_mutation);
+                const data = await request(`${process.env.NEXT_PUBLIC_OPENPIM_API_URL}graphql`, login_user_mutation);
                 if(!data?.loginUser?.token) throw new Error("Couldnt log in, sorry")
                 token.openPimToken= data.loginUser.token
             }

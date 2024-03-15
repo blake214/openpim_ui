@@ -12,6 +12,7 @@
         "@apollo/client": "^3.9.5",
         "cookie": "^0.6.0",
         "cross-fetch": "^4.0.0",
+        "dexie": "^3.2.6",
         "graphql": "^16.8.1",
         "graphql-request": "^6.1.0",
         "lodash": "^4.17.21",

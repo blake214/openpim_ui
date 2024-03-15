@@ -24,8 +24,8 @@ import RowHorizontal from "./row/row";
 }
 */
 export default function TableHorizontal({
-	tableContent=null,
-	tableContentState=null,
+	tableContent=null, // This is just the object as 'state'
+	tableContentState=null, // This is a state object [state, setState]
 	checks=false,
 	numbers=false,
 }) {
@@ -61,12 +61,12 @@ export default function TableHorizontal({
 		<>
 			<div className={`
 				${(!numbers && !checks) && styles.container_row_1}
-				${(((numbers || checks))) && styles.container_row_2}`}
+				${(numbers || checks) && styles.container_row_2}`}
 			>
 				{checks && <div><input type="checkbox" checked={isChecked} onChange={handlePrimaryCheckboxChange}/></div>}
 				{numbers && <p>No</p>}
 			</div>
-			{checks || numbers && <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>}
+			{(checks || numbers) && <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>}
 			{tableContentState?.tableContent.map((item, index) => (
 				<div key={index}>
 					<RowHorizontal index={index} item={item} checks={checks} numbers={numbers} checkBoxHandler={handleCheckboxChange}/>
@@ -74,7 +74,7 @@ export default function TableHorizontal({
 			))}
 			{tableContent?.map((item, index) => (
 				<div key={index}>
-					<RowHorizontal index={index} item={item}/>
+					<RowHorizontal index={index} item={item} numbers={numbers}/>
 				</div>
 			))}
 		</>

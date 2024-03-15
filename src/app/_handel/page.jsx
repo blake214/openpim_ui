@@ -2,12 +2,14 @@
 
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react';
+import Skeleton from '@/components/skeleton/skeleton';
 import CreateProductPage from './create_produt_page/page';
 import EditPage from './edit_page/page';
 import ChangeProductPage from './change_product_page/page';
 import ChangeUserPage from './change_user_page/page';
 import CreateUnregisteredEntityPage from './create_unregistered_entity/page';
-import Skeleton from '@/components/skeleton/skeleton';
+import CreateVideoPage from './create_video/page';
+import CreatePdfPage from './create_pdf/page';
 
 export default function HandelPage() {
     // ======= Hooks
@@ -72,6 +74,18 @@ export default function HandelPage() {
             prevRoute={prevRoute}
         />}
         {stored_element.type == "create_unregistered_entity" && <CreateUnregisteredEntityPage
+            stored_element={stored_element}
+            location={location}
+            lastRoute={lastRoute}
+            prevRoute={prevRoute}
+        />}
+        {stored_element.type == "create_video" && <CreateVideoPage
+            stored_element={stored_element}
+            location={location}
+            lastRoute={lastRoute}
+            prevRoute={prevRoute}
+        />}
+        {stored_element.type == "create_pdf" && <CreatePdfPage
             stored_element={stored_element}
             location={location}
             lastRoute={lastRoute}

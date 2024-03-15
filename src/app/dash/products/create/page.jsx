@@ -46,38 +46,6 @@ export default function CreateProductPage() {
         router.push(`${location}/${create_product_id}`)
     }
     // ======= Create fresh new product
-    // ======= Create unregistered entity
-    const handleCreateUnregisteredEntity = () => {
-        const create_unregistered_entity_id = createLocalUuidKey()
-        const product_entity_types_id = createLocalUuidKey(create_unregistered_entity_id)
-        const product_entity_name_id = createLocalUuidKey(create_unregistered_entity_id)
-
-        localStorage?.setItem(create_unregistered_entity_id, JSON.stringify({
-            type: "create_unregistered_entity",
-            title: "create_unregistered_entity",
-            content: {
-                entity_types: product_entity_types_id,
-                entity_name: product_entity_name_id,
-            }
-        }));
-
-        localStorage?.setItem(product_entity_types_id, JSON.stringify({
-            type: "edit",
-            sub_type: "unregistered_entity_types",
-            title: "entity_types",
-            content: ["AAXA"]
-        }));
-
-        localStorage?.setItem(product_entity_name_id, JSON.stringify({
-            type: "edit",
-            sub_type: "unregistered_entity_name",
-            title: "entity_name",
-            content: ""
-        }));
-
-        router.push(`${location}/${create_unregistered_entity_id}`)
-    }
-    // ======= Create unregistered entity
     // ================================================= Handlers
 
     return (
@@ -88,8 +56,6 @@ export default function CreateProductPage() {
             <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateFreshProduct}>Create fresh product</CustomButton></div>
             <br/>
             <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={()=>{}} disabled={true}>Create product from template</CustomButton></div>
-            <br/>
-            <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateUnregisteredEntity} >Test .... Unregistered entity</CustomButton></div>
         </div>
     );
 }

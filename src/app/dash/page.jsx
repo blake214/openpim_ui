@@ -1,81 +1,167 @@
 "use client"
 
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
-import { useState } from "react";
-import TableVertical from "@/components/table_vertical/table_vertical";
-import ContentBlockHeader from "@/components/content_block/content_block_header";
-import ContentBlockBody from "@/components/content_block/content_block_body";
+import { usePathname, useRouter } from 'next/navigation'
+import { createDatabaseUuidKey, createLocalUuidKey } from '@/lib/helpers';
 import CustomButton from "@/components/custom_button/custom_button";
 
-
 export default function DashPage() {
+	// ======= Hooks
+    const router = useRouter();
+    const location = usePathname()
+    // ======= Hooks
 
-	const [tableContent, setTableContent] = useState([
-		{
-			checked: true,
-			items: [
-				{
-					title: "Title1",
-					content: [
-						<p>content1</p>,
-						<p>content2</p>
-					]
-				},
-				{
-					title: "Title2",
-					content: [
-						<p>content1</p>
-					]
-				}
-			]
-		},
-		{
-			checked: true,
-			items: [
-				{
-					title: "Title3",
-					content: [
-						<p>content1</p>
-					]
-				}
-			]
-		}
-	]);
+	// ======= Create unregistered entity
+    const handleCreateUnregisteredEntity = () => {
+        const create_unregistered_entity_id = createLocalUuidKey()
+        const product_entity_types_id = createLocalUuidKey(create_unregistered_entity_id)
+        const product_entity_name_id = createLocalUuidKey(create_unregistered_entity_id)
+
+        localStorage?.setItem(create_unregistered_entity_id, JSON.stringify({
+            type: "create_unregistered_entity",
+            title: "create_unregistered_entity",
+            content: {
+                entity_types: product_entity_types_id,
+                entity_name: product_entity_name_id,
+            }
+        }));
+
+        localStorage?.setItem(product_entity_types_id, JSON.stringify({
+            type: "edit",
+            sub_type: "unregistered_entity_types",
+            title: "entity_types",
+            content: ["AAXA"]
+        }));
+
+        localStorage?.setItem(product_entity_name_id, JSON.stringify({
+            type: "edit",
+            sub_type: "unregistered_entity_name",
+            title: "entity_name",
+            content: ""
+        }));
+
+        router.push(`${location}/products/create/${create_unregistered_entity_id}`) // The path just needs to go to _handel somehow
+    }
+    // ======= Create unregistered entity
+
+	// ======= Create video
+    const handleCreateVideo = () => {
+        const create_video_id = createLocalUuidKey()
+        const video_external_url_id = createLocalUuidKey(create_video_id)
+        const video_alt_text_id = createLocalUuidKey(create_video_id)
+		const video_description_id = createLocalUuidKey(create_video_id)
+		const video_loopable_id = createLocalUuidKey(create_video_id)
+		const video_language_id_id = createLocalUuidKey(create_video_id)
+
+        localStorage?.setItem(create_video_id, JSON.stringify({
+            type: "create_video",
+            title: "create_video",
+            content: {
+                external_url: video_external_url_id,
+                alt_text: video_alt_text_id,
+				description: video_description_id,
+				loopable: video_loopable_id,
+				language_id: video_language_id_id,
+            }
+        }));
+
+        localStorage?.setItem(video_external_url_id, JSON.stringify({
+            type: "edit",
+            sub_type: "video_external_url",
+            title: "external_url",
+            content: "https://www.youtube.com/watch?v=xLp7Hu1PAX0&ab_channel=LeAwLeaveEverythingandWander-Luca%26Sara"
+        }));
+
+        localStorage?.setItem(video_alt_text_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_alt_text",
+            title: "alt_text",
+            content: "alternative"
+        }));
+
+		localStorage?.setItem(video_description_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_description",
+            title: "desciption",
+            content: "desciption"
+        }));
+
+		localStorage?.setItem(video_loopable_id, JSON.stringify({
+            type: "edit",
+            sub_type: "video_loopable",
+            title: "loopable",
+            content: false
+        }));
+
+		localStorage?.setItem(video_language_id_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_language_id",
+            title: "language",
+            content: "AAOA"
+        }));
+
+        router.push(`${location}/products/create/${create_video_id}`) // The path just needs to go to _handel somehow
+    }
+    // ======= Create video
+
+    // ======= Create pdf
+    const handleCreatePdf = async () => {
+        const create_pdf_id = createLocalUuidKey()
+        const pdf_alt_text_id = createLocalUuidKey(create_pdf_id)
+		const pdf_description_id = createLocalUuidKey(create_pdf_id)
+		const pdf_language_id_id = createLocalUuidKey(create_pdf_id)
+        const files_id = createLocalUuidKey(create_pdf_id)
+
+        const database_table_id = createDatabaseUuidKey()
+
+        localStorage?.setItem(create_pdf_id, JSON.stringify({
+            type: "create_pdf",
+            title: "create_pdf",
+            content: {
+                alt_text: pdf_alt_text_id,
+				description: pdf_description_id,
+				language_id: pdf_language_id_id,
+                files_id: files_id
+            }
+        }));
+
+        localStorage?.setItem(pdf_alt_text_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_alt_text",
+            title: "alt_text",
+            content: "alternative"
+        }));
+
+		localStorage?.setItem(pdf_description_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_description",
+            title: "desciption",
+            content: "desciption"
+        }));
+
+		localStorage?.setItem(pdf_language_id_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_language_id",
+            title: "language",
+            content: "AAOA"
+        }));
+
+        localStorage?.setItem(files_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_files",
+            title: "media_files",
+            max_files: 1,
+            content: database_table_id
+        }));
+
+        router.push(`${location}/products/create/${create_pdf_id}`) // The path just needs to go to _handel somehow
+    }
+    // ======= Create pdf
 
     return (
-        <>
-			<ContentBlockHeader
-				title="Title"
-				undoClick={()=>{}}
-				editClick={()=>{}}
-				menuComponents={
-					<>
-						<CustomButton component_type="vertical" onClick={()=>{}}>Delete</CustomButton>
-					</>
-				}
-			/>
-			<ContentBlockBody>
-				<TableHorizontal
-					tableContentState={{
-						tableContent: tableContent,
-						setTableContent: setTableContent
-					}}
-					checks={true}
-					numbers={true}
-				/>
-			</ContentBlockBody>
-			
-
-			
-			<br/>
-			<br/>
-			<TableVertical
-				title="Title"
-			>
-				
-			</TableVertical>
-			
-        </>
-        
+        <div>
+			<div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateUnregisteredEntity} >Test .... Create unregistered entity</CustomButton></div>
+			<div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateVideo} >Test .... Create video</CustomButton></div>
+            <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreatePdf} >Test .... Create pdf</CustomButton></div>
+        </div>
     );
 }

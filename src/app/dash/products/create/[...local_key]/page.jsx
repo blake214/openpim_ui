@@ -1,4 +1,4 @@
-import HandelPage from "@/app/dash/_handel/page";
+import HandelPage from "@/app/_handel/page";
 
 export default function RedirectHandelPage() {
     return <HandelPage/>
