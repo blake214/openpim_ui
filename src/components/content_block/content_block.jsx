@@ -1,5 +1,3 @@
-"use client"
-
 import ContentBlockHeader from "./content_block_header";
 import ContentBlockBody from "./content_block_body";
 

@@ -3,7 +3,7 @@
 import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import { keyDictionary } from "@/lib/key_dictionary";
+import { keyDictionary_languages } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
@@ -55,7 +55,9 @@ export default function EditMediaLanguageId({stored_element, location, lastRoute
                                     title: "Language",
                                     content: [
                                         <select name="language_id" value={localStorageData.product_changes} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAOA">{keyDictionary["AAOA"]}</option>
+                                            { Object.entries(keyDictionary_languages).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_languages[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }

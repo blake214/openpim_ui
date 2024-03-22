@@ -16,6 +16,7 @@ export const createDatabaseUuidKey = () => {
     return uuid.replace(/-/g, '').substring(0, 10)
 };
 
+/** isLocalUuidKey, checks if a string is a local storage key, this is useful when checking route paths */
 export const isLocalUuidKey = (input) => {
     if(typeof input == "string" && input.includes("_openpimkey")) return true
     return false
@@ -80,3 +81,18 @@ export const readFileAsBlob = (file) => {
         reader.readAsArrayBuffer(file);
     });
 };
+
+/** clampValue
+ * This function restricts a value to within a range
+*/
+export const clampValue = (number, min, max) => {
+    return Math.min(Math.max(number, min), max);
+}
+
+/** mapValueRange
+ * This function maps a value from one range to another
+*/
+export const mapValueRange = (value, oldMin, oldMax, newMin, newMax) => {
+    const normalizedValue = (value - oldMin) / (oldMax - oldMin);
+    return normalizedValue * (newMax - newMin) + newMin;;
+}

@@ -10,6 +10,7 @@ import ChangeUserPage from './change_user_page/page';
 import CreateUnregisteredEntityPage from './create_unregistered_entity/page';
 import CreateVideoPage from './create_video/page';
 import CreatePdfPage from './create_pdf/page';
+import CreateImagePage from './create_image/page';
 
 export default function HandelPage() {
     // ======= Hooks
@@ -17,7 +18,7 @@ export default function HandelPage() {
     // ======= Hooks
 
     // ======= States
-    const [mounted, setMounted] = useState(false)
+    const [storedElement, setStoredElement] = useState()
     // ======= States
 
     // ======= General
@@ -28,17 +29,16 @@ export default function HandelPage() {
     const parts = location.split('/');
     const lastRoute = parts[parts.length - 1];
     const prevRoute = location.replace(`/${lastRoute}`, "")
-    let stored_element
-    if(typeof localStorage !== "undefined") stored_element = JSON.parse(localStorage.getItem(lastRoute))
     // ======= General
 
     // ======= Effects
     useEffect(() => {
-		setMounted(true)
+        const stored_element = JSON.parse(localStorage.getItem(lastRoute))
+		if(stored_element) setStoredElement(stored_element)
     }, [])
     // ======= Effects
 
-    if(!mounted) return <>
+    if(!storedElement) return <>
         <Skeleton width='100'/>
         <Skeleton/>
         <Skeleton/>
@@ -49,44 +49,50 @@ export default function HandelPage() {
 
     return (
         <>
-        {stored_element.type == "edit" && <EditPage
-            stored_element={stored_element}
+        {storedElement.type == "edit" && <EditPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "create_product" && <CreateProductPage
-            stored_element={stored_element}
+        {storedElement.type == "create_product" && <CreateProductPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "change_product" && <ChangeProductPage
-            stored_element={stored_element}
+        {storedElement.type == "change_product" && <ChangeProductPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "change_user" && <ChangeUserPage
-            stored_element={stored_element}
+        {storedElement.type == "change_user" && <ChangeUserPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "create_unregistered_entity" && <CreateUnregisteredEntityPage
-            stored_element={stored_element}
+        {storedElement.type == "create_unregistered_entity" && <CreateUnregisteredEntityPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "create_video" && <CreateVideoPage
-            stored_element={stored_element}
+        {storedElement.type == "create_video" && <CreateVideoPage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}
         />}
-        {stored_element.type == "create_pdf" && <CreatePdfPage
-            stored_element={stored_element}
+        {storedElement.type == "create_pdf" && <CreatePdfPage
+            stored_element={storedElement}
+            location={location}
+            lastRoute={lastRoute}
+            prevRoute={prevRoute}
+        />}
+        {storedElement.type == "create_image" && <CreateImagePage
+            stored_element={storedElement}
             location={location}
             lastRoute={lastRoute}
             prevRoute={prevRoute}

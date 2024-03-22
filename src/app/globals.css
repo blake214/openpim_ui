@@ -14,12 +14,16 @@
     --text_on_surface_color_3: #F0F0F0;
     --text_on_surface_color_3_disabled: #898989;
 
+    --accent_colour: #0096FF;
+
     --navbar_height: 50px;
 
     --navbar_list_width: 200px;
 
     --dash_navbar_width_min: 50px;
     --dash_navbar_width_max: 200px;
+
+    --overlay: rgba(0, 0, 0, 0.5);
 
     --drop_shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
 

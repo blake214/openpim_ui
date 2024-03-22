@@ -14,7 +14,8 @@ export default function LoginPage() {
         email: 'blakekellett10@gmail.com',
         password: 'password',
     });
-    if (credentialsLoginState?.error) alert(credentialsLoginState.error);
+    // Here we explicity catchthe error as we are using the credentials login form which happens on the react server, and the error doesnt get handeled by the graphql provider.
+    if(credentialsLoginState?.error) alert(credentialsLoginState.error);
     // ======= Credentials Form
     return (
         <div className={styles.container}>

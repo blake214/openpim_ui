@@ -3,7 +3,10 @@ import general_styles from "@/components/style.module.css"
 import { usePathname } from "next/navigation";
 
 export default function CustomLink({ children, href="", align="left", component_type="horizontal" }) {
+	// ======= General
 	const pathName = usePathname();
+	// ======= General
+	
 	return (
 		<Link
 			href={href}

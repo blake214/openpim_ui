@@ -5,7 +5,7 @@ import { buildContent, cleanLocalStorageChildrenKeys } from '@/lib/helpers';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { keyDictionary } from '@/lib/key_dictionary';
+import { keyDictionary_languages } from '@/lib/key_dictionary';
 import { handleLogout } from '@/lib/action';
 import CustomButton from '@/components/custom_button/custom_button';
 import TableHorizontal from '@/components/table_horizontal/table_horizontal';
@@ -29,12 +29,16 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
     // ======= States
     
     // ======= Event Handlers
-    const handleCreatePdfSubmit = async (e) => {
-        e.preventDefault();
+    const handleCreatePdfSubmit = async (event) => {
+        event.preventDefault();
+        /** Verify data */
         // Check there is one file available
         if(!stagedFiles.length) return alert("You need to add a file")
         const one_file = stagedFiles[0]
-        // Create multipart form data
+        // Check general
+        if(!content.alt_text.length) return alert("You need to provide an alternative text")
+        if(!content.description.length) return alert("You need to provide an description")
+        /** Create multipart form data */
         const formData = new FormData();
         formData.append('alt_text', content.alt_text);
         formData.append('description', content.description);
@@ -104,14 +108,14 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
             <SectionBlockMinimizer heading="Current Files" start_state="true">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
                 <br/>
-                <ContentBlock title="Current"
+                <ContentBlock
+                    title="Current"
                     editClick={() => {
                         router.push(`${location}/${stored_element.content.files_id}`)
                     }}
                 >
                     <TableHorizontal
                         tableContent={stagedFiles.map(element => ({
-                            checked: false,
                             items: [
                                 {
                                     title: "File Name",
@@ -138,7 +142,6 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Alternative Text",
@@ -163,7 +166,6 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Description",
@@ -188,11 +190,10 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Language",
-                                        content: [keyDictionary[content.language_id]]
+                                        content: [keyDictionary_languages[content.language_id]]
                                     }
                                 ]
                             }
@@ -208,6 +209,3 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
         </div>
     );
 }
-
-
-// internalServer -> origin: uploadPdfTransaction, message: Error: Failed to parse PDF document (line:352 col:4694 offset=54699): No PDF header found

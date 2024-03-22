@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useMutation } from '@apollo/client';
 import { CreateUnregisteredEntity } from '@/lib/graphql_mutation';
 import { useEffect } from 'react';
-import { keyDictionary } from '@/lib/key_dictionary';
+import { keyDictionary_entity_types } from '@/lib/key_dictionary';
 import CustomButton from '@/components/custom_button/custom_button';
 import TableHorizontal from '@/components/table_horizontal/table_horizontal';
 import SectionBlockMinimizer from '@/components/section_block_minimizer/section_block_minimizer';
@@ -26,8 +26,13 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
     // ======= GraphQL
     
     // ======= Event Handlers
-    const handleCreateUnregisteredEntitySubmit = (e) => {
-        e.preventDefault();
+    const handleCreateUnregisteredEntitySubmit = (event) => {
+        event.preventDefault();
+        /** Verify data */
+        // Check entity has a name and a entity type
+        if(!content.entity_name.length) return alert("You need to provide an entity name")
+        if(!content.entity_types.length) return alert("You need to provide an entity type")
+        /** Perform the request */
         createUnregisteredEntity({
             variables: {
                 CreateUnregisteredEntityInputObject: content
@@ -74,11 +79,10 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Entity Types",
-                                        content: content.entity_types.map(element => keyDictionary[element])
+                                        content: content.entity_types.map(element => keyDictionary_entity_types[element])
                                     }
                                 ]
                             }
@@ -90,9 +94,6 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
             <SectionBlockMinimizer heading="Entity Name" start_state="true">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
                 <br/>
-
-
-
                 <ContentBlock
                     title="Current"
                     editClick={() => {
@@ -102,7 +103,6 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
                     <TableHorizontal
                         tableContent={[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Entity Name",

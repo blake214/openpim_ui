@@ -3,7 +3,7 @@
 import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import { keyDictionary } from "@/lib/key_dictionary";
+import { keyDictionary_entity_types } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
 import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 import BasicLink from "@/components/basic_link/basic_link";
@@ -27,7 +27,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             items: [
                 {
                     title: "Entity Type",
-                    content: [keyDictionary[element]]
+                    content: [keyDictionary_entity_types[element]]
                 }
             ]
         })));
@@ -52,7 +52,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             items: [
                 {
                     title: "Entity Type",
-                    content: [keyDictionary[element]]
+                    content: [keyDictionary_entity_types[element]]
                 }
             ]
         })))
@@ -84,7 +84,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             items: [
                 {
                     title: "Entity Type",
-                    content: [keyDictionary[element]]
+                    content: [keyDictionary_entity_types[element]]
                 }
             ]
         })))
@@ -116,7 +116,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             items: [
                 {
                     title: "Entity Type",
-                    content: [keyDictionary[element]]
+                    content: [keyDictionary_entity_types[element]]
                 }
             ]
         })))
@@ -137,7 +137,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             items: [
                 {
                     title: "Entity Type",
-                    content: [keyDictionary[element]]
+                    content: [keyDictionary_entity_types[element]]
                 }
             ]
         })))
@@ -169,7 +169,9 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
                                     title: "Entity Type",
                                     content: [
                                         <select name="entity_type" value={addEntityType} onChange={handleChangeAddFormData}>
-                                            <option value="AAXA">{keyDictionary["AAXA"]}</option>
+                                            { Object.entries(keyDictionary_entity_types).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_entity_types[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }

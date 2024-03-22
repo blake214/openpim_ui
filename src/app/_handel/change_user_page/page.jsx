@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { useMutation } from '@apollo/client';
 import { CreateEmailVerification, UserChange } from "@/lib/graphql_mutation";
-import { keyDictionary } from "@/lib/key_dictionary";
+import { keyDictionary_notifications } from "@/lib/key_dictionary";
 import { useSession } from "next-auth/react"
 import { IoMdArrowRoundBack } from "react-icons/io";
 import CustomButton from '@/components/custom_button/custom_button';
@@ -111,8 +111,8 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
         }
     };
 
-    const handleUserVerificationInputSubmit = (e) => {
-        e?.preventDefault();
+    const handleUserVerificationInputSubmit = (event) => {
+        event?.preventDefault();
         userChange({
             variables: {
                 ...(new_content.fname && {fname: new_content.fname}),
@@ -122,8 +122,6 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                 ...(new_content.recovery_email && {recovery_email: new_content.recovery_email}),
                 ...(new_content.token_key && {token_key: new_content.token_key}),
                 ...(new_content.logout_users && {logout_users: new_content.logout_users}),
-                ...(new_content.language_id && {language_id: new_content.language_id}),
-                ...(new_content.ui_theme_id && {ui_theme_id: new_content.ui_theme_id}),
                 ...(new_content.notifications && {notifications: new_content.notifications}),
                 ...(userChangeVerificationInput.primary_email_verification_code && {primary_email_verification_code: userChangeVerificationInput.primary_email_verification_code}),
                 ...(userChangeVerificationInput.recovery_email_verification_code && {recovery_email_verification_code: userChangeVerificationInput.recovery_email_verification_code}),
@@ -322,7 +320,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Product Changes",
-                                                    content: [keyDictionary[existing_content.notifications.product_changes]]
+                                                    content: [keyDictionary_notifications[existing_content.notifications.product_changes]]
                                                 }
                                             ]
                                         },
@@ -331,7 +329,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Product Issues",
-                                                    content: [keyDictionary[existing_content.notifications.product_issues]]
+                                                    content: [keyDictionary_notifications[existing_content.notifications.product_issues]]
                                                 }
                                             ]
                                         },
@@ -340,7 +338,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Changes",
-                                                    content: [keyDictionary[existing_content.notifications.entity_changes]]
+                                                    content: [keyDictionary_notifications[existing_content.notifications.entity_changes]]
                                                 }
                                             ]
                                         },
@@ -349,7 +347,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Issues",
-                                                    content: [keyDictionary[existing_content.notifications.entity_issues]]
+                                                    content: [keyDictionary_notifications[existing_content.notifications.entity_issues]]
                                                 }
                                             ]
                                         },
@@ -358,7 +356,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Product Links",
-                                                    content: [keyDictionary[existing_content.notifications.entity_product_links]]
+                                                    content: [keyDictionary_notifications[existing_content.notifications.entity_product_links]]
                                                 }
                                             ]
                                         }
@@ -496,7 +494,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Product Changes",
-                                                    content: [keyDictionary[new_content.notifications.product_changes]]
+                                                    content: [keyDictionary_notifications[new_content.notifications.product_changes]]
                                                 }
                                             ]
                                         },
@@ -505,7 +503,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Product Issues",
-                                                    content: [keyDictionary[new_content.notifications.product_issues]]
+                                                    content: [keyDictionary_notifications[new_content.notifications.product_issues]]
                                                 }
                                             ]
                                         },
@@ -514,7 +512,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Changes",
-                                                    content: [keyDictionary[new_content.notifications.entity_changes]]
+                                                    content: [keyDictionary_notifications[new_content.notifications.entity_changes]]
                                                 }
                                             ]
                                         },
@@ -523,7 +521,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Issues",
-                                                    content: [keyDictionary[new_content.notifications.entity_issues]]
+                                                    content: [keyDictionary_notifications[new_content.notifications.entity_issues]]
                                                 }
                                             ]
                                         },
@@ -532,7 +530,7 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
                                             items: [
                                                 {
                                                     title: "Entity Product Links",
-                                                    content: [keyDictionary[new_content.notifications.entity_product_links]]
+                                                    content: [keyDictionary_notifications[new_content.notifications.entity_product_links]]
                                                 }
                                             ]
                                         }

@@ -4,7 +4,7 @@ import { buildContent, cleanLocalStorageChildrenKeys } from '@/lib/helpers';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { keyDictionary } from '@/lib/key_dictionary';
+import { keyDictionary_languages } from '@/lib/key_dictionary';
 import { handleLogout } from '@/lib/action';
 import CustomButton from '@/components/custom_button/custom_button';
 import TableHorizontal from '@/components/table_horizontal/table_horizontal';
@@ -27,9 +27,17 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
     // ======= States
     
     // ======= Event Handlers
-    const handleCreateVideoSubmit = async (e) => {
-        e.preventDefault();
-        // Create multipart form data
+    const handleCreateVideoSubmit = async (event) => {
+        event.preventDefault();
+        /** Verify data */
+        // Check general
+        if(!content.external_url.length) return alert("You need to provide a url link")
+        if(!content.alt_text.length) return alert("You need to provide an alternative text")
+        if(!content.description.length) return alert("You need to provide an description")
+        // Check url
+        const validRegex = /^https:\/\/[^\s/$.?#].[^\s]*$/i;
+        if(!validRegex.test(content.external_url)) return alert("Your url needs to be in a full 'https://www.example.com' format")
+        /** Create multipart form data */
         const formData = new FormData();
         formData.append('external_url', content.external_url);
         formData.append('alt_text', content.alt_text);
@@ -99,7 +107,6 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Link",
@@ -126,7 +133,6 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Alternative Text",
@@ -151,7 +157,6 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Description",
@@ -176,7 +181,6 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Loopable",
@@ -203,11 +207,10 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                     <TableHorizontal
                         tableContent= {[
                             {
-                                checked: false,
                                 items: [
                                     {
                                         title: "Language",
-                                        content: [keyDictionary[content.language_id]]
+                                        content: [keyDictionary_languages[content.language_id]]
                                     }
                                 ]
                             }

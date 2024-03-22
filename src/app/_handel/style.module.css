@@ -10,3 +10,7 @@
 .changed_content{
     background-color: rgba(0, 0, 255, 0.1);
 }
+
+.container_border{
+    border: 1px solid var(--surface_color_1);
+}

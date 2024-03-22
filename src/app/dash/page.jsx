@@ -150,6 +150,7 @@ export default function DashPage() {
             sub_type: "media_files",
             title: "media_files",
             max_files: 1,
+            file_types: ["application/pdf"],
             content: database_table_id
         }));
 
@@ -157,11 +158,114 @@ export default function DashPage() {
     }
     // ======= Create pdf
 
+    // ======= Create image
+    const handleCreateImage = async () => {
+        const create_image_id = createLocalUuidKey()
+        const image_croppings_id = createLocalUuidKey(create_image_id)
+        const image_captions_id = createLocalUuidKey(create_image_id)
+        const image_alt_text_id = createLocalUuidKey(create_image_id)
+		const image_description_id = createLocalUuidKey(create_image_id)
+        const files_id = createLocalUuidKey(create_image_id)
+
+        const database_table_id = createDatabaseUuidKey()
+
+        localStorage?.setItem(create_image_id, JSON.stringify({
+            type: "create_image",
+            title: "create_image",
+            content: {
+                croppings: image_croppings_id,
+                captions: image_captions_id,
+                alt_text: image_alt_text_id,
+				description: image_description_id,
+                files_id: files_id
+            }
+        }));
+
+        localStorage?.setItem(image_croppings_id, JSON.stringify({
+            type: "edit",
+            sub_type: "image_croppings",
+            title: "croppings",
+            extra: database_table_id,
+            content: {
+                version_sq: {
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                },
+                version_rec1: {
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                },
+                version_rec2: {
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                }
+            }
+        }));
+
+        localStorage?.setItem(image_captions_id, JSON.stringify({
+            type: "edit",
+            sub_type: "image_captions",
+            title: "captions",
+            extra: database_table_id,
+            content: [
+                {
+                    caption_image_id : "xxx",
+                    content : "Hello world",
+                    co_ordinates : {
+                        x_axis : 300,
+                        y_axis : 150
+                    }
+                },
+                {
+                    caption_image_id : null,
+                    content : "Crule world",
+                    co_ordinates : {
+                        x_axis : 600,
+                        y_axis : 350
+                    }
+                }
+            ]
+        }));
+
+        localStorage?.setItem(image_alt_text_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_alt_text",
+            title: "alt_text",
+            content: "alternative"
+        }));
+
+		localStorage?.setItem(image_description_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_description",
+            title: "desciption",
+            content: "desciption"
+        }));
+
+        localStorage?.setItem(files_id, JSON.stringify({
+            type: "edit",
+            sub_type: "media_files",
+            title: "media_files",
+            max_files: 1,
+            file_types: ["image/png"],
+            content: database_table_id
+        }));
+
+        router.push(`${location}/products/create/${create_image_id}`) // The path just needs to go to _handel somehow
+    }
+    // ======= Create image
+
     return (
         <div>
 			<div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateUnregisteredEntity} >Test .... Create unregistered entity</CustomButton></div>
 			<div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateVideo} >Test .... Create video</CustomButton></div>
             <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreatePdf} >Test .... Create pdf</CustomButton></div>
+            <div className={"button_fixed_width"}><CustomButton component_type="vertical" onClick={handleCreateImage} >Test .... Create image</CustomButton></div>
         </div>
     );
 }

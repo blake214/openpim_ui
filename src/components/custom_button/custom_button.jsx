@@ -2,12 +2,18 @@ import general_styles from "@/components/style.module.css"
 import { LiaSpinnerSolid } from "react-icons/lia";
 import { useFormStatus } from "react-dom";
 
-export default function CustomButton({ children, onClick=null, state=false, align="left", component_type="horizontal", type="button", disabled=false, busy=false }) {
+export default function CustomButton({ children, onClick=null, onMouseDown=null, onMouseUp=null, onMouseLeave=null, state=false, align="left", component_type="horizontal", type="button", disabled=false, busy=false }) {
+    // ======= General
 	// This will happen on form submit type buttons
 	const { pending } = useFormStatus()
+    // ======= General
+
 	return (
 		<button 
 			onClick={onClick ? onClick : ()=>{}}
+			onMouseDown={onMouseDown ? onMouseDown : ()=>{}}
+			onMouseUp={onMouseUp ? onMouseUp : ()=>{}}
+			onMouseLeave={onMouseLeave ? onMouseLeave : ()=>{}}
 			type={type}
 			disabled={(disabled || pending) && "disabled"}
 			className={`

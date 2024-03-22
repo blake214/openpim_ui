@@ -1,3 +1,12 @@
+.container_link{
+    display: flex;
+    align-items: center; /* Vertically center content */
+}
+
+.container_link:hover {
+    text-decoration: underline;
+}
+
 .container_button{
     background-color: var(--surface_color_1);
     color: var(--text_on_surface_color_1);
@@ -28,4 +37,133 @@
 .container_button_disabled{
     pointer-events: none;
     color: var(--text_on_surface_color_1_disabled);
+}
+
+.container_block_header {
+    /* This is important for using position in children containers */
+    position: relative;
+}
+
+.container_block_title{
+    display: flex;
+    padding: 10px;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    align-items: center;
+}
+
+.block_list_container{
+    width: var(--navbar_list_width);
+    position: absolute;
+    right: 0;
+    z-index: 969;
+}
+
+.container_block_body{
+    border: 1px solid var(--surface_color_1);
+    padding: 10px;
+}
+
+/* Dash navbar */
+.container_dash_nav{
+    position: fixed;
+    height: 100%;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    left: 0;
+    z-index: 800;
+    box-shadow: var(--drop_shadow);
+}
+
+.container_dash_nav, .container_dash_nav_spacer{
+    width: var(--dash_navbar_width_min);
+    flex-shrink: 0;
+}
+
+.container_dash_nav_open{
+    width: var(--dash_navbar_width_max);
+    flex-shrink: 0;
+}
+
+/* Trailing heading */
+.container_trailing_heading{
+    width: 100%;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    padding: 5px;
+}
+
+.container_trailing_heading ul{
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+.container_trailing_heading ul li a:hover{
+    text-decoration: underline;
+}
+
+.container_trailing_heading ul li span{
+    margin: 0 10px;
+}
+
+/* Navbar */
+.container_navbar{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+.container_navbar, .container_navbar_spacer{
+    height: var(--navbar_height);
+}
+
+.container_navbar_bar{
+    position: relative;
+    background-color: var(--surface_color_1);
+    color: var(--text_on_surface_color_1);
+    display: flex;
+    height: 100%;
+    z-index: 998;
+    box-shadow: var(--drop_shadow);
+}
+
+.container_navbar_list{
+    width: var(--navbar_list_width);
+    right: 0;
+    position: absolute;
+    z-index: 997;
+    box-shadow: var(--drop_shadow);
+}
+
+.container_navbar_links{
+    display: flex;
+    margin-left: auto;
+}
+
+/* Section block minimizer */
+.container_section_block_minimizer_heading{
+    display: flex;
+    align-items: center;
+}
+
+/* Skeleton */
+.skeleton_placeholder {
+    min-height: 20px;
+    background-color: var(--surface_color_1); 
+    border-radius: 8px; 
+    opacity: 0;
+    margin-bottom: 10px;
+    animation: fadeInOut 3s infinite;
+}
+  
+@keyframes fadeInOut {
+    0%, 100% {
+    opacity: 0.4;
+    }
+    50% {
+    opacity: 1;
+    }
 }

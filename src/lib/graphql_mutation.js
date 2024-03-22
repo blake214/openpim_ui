@@ -42,8 +42,6 @@ mutation UserChange(
     $recovery_email: Email, 
     $token_key: Boolean, 
     $logout_users: Boolean, 
-    $language_id: LanguageKey, 
-    $ui_theme_id: UiThemeKey, 
     $notifications: UserNoticiationsInput,
     $primary_email_verification_code: EmailVerificationCode,
     $recovery_email_verification_code: EmailVerificationCode,
@@ -57,8 +55,6 @@ mutation UserChange(
         recovery_email: $recovery_email
         token_key: $token_key
         logout_users: $logout_users
-        language_id: $language_id
-        ui_theme_id: $ui_theme_id
         notifications: $notifications
     }, UserChangeVerificationInput: {
         primary_email_verification_code: $primary_email_verification_code

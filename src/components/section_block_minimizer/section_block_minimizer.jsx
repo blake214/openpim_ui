@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
-import styles from "./style.module.css"
+import styles from "../style.module.css"
 
 export default function SectionBlockMinimizer({ heading, start_state, children }) {
 	// ======= States
@@ -17,7 +17,7 @@ export default function SectionBlockMinimizer({ heading, start_state, children }
 	
 	return (
 		<>
-			<div className={styles.container_heading}>
+			<div className={styles.container_section_block_minimizer_heading}>
 				<h3>{heading}</h3>
 				<div className="align_right">
 					<button onClick={updateContentToggled}>

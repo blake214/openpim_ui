@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./style.module.css"
+import styles from "../style.module.css"
 import Link from "next/link";
 import startCase from 'lodash/startCase';
 import { usePathname } from "next/navigation";
@@ -26,14 +26,14 @@ export default function DashTrailHeading() {
 	// ======= Effects
 
 	if(!mounted) return (
-		<div className={styles.container}>
+		<div className={styles.container_trailing_heading}>
 			<nav>
 				<ul>...</ul>
 			</nav>
 		</div>
 	);
 	return (
-		<div className={styles.container}>
+		<div className={styles.container_trailing_heading}>
 			<nav>
 				<ul>
 					{pathnames.map((value, index) => {

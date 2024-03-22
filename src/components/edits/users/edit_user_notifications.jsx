@@ -3,7 +3,7 @@
 import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import { keyDictionary } from "@/lib/key_dictionary";
+import { keyDictionary_notifications } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
@@ -58,9 +58,9 @@ export default function EditUserNotifications({stored_element, location, lastRou
                                     title: "Product Changes",
                                     content: [
                                         <select name="product_changes" value={localStorageData.product_changes} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                            { Object.entries(keyDictionary_notifications).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_notifications[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }
@@ -72,9 +72,9 @@ export default function EditUserNotifications({stored_element, location, lastRou
                                     title: "Product Issues",
                                     content: [
                                         <select name="product_issues" value={localStorageData.product_issues} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                            { Object.entries(keyDictionary_notifications).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_notifications[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }
@@ -86,9 +86,9 @@ export default function EditUserNotifications({stored_element, location, lastRou
                                     title: "Entity Changes",
                                     content: [
                                         <select name="entity_changes" value={localStorageData.entity_changes} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                            { Object.entries(keyDictionary_notifications).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_notifications[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }
@@ -100,9 +100,9 @@ export default function EditUserNotifications({stored_element, location, lastRou
                                     title: "Entity Issues",
                                     content: [
                                         <select name="entity_issues" value={localStorageData.entity_issues} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                            { Object.entries(keyDictionary_notifications).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_notifications[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }
@@ -114,9 +114,9 @@ export default function EditUserNotifications({stored_element, location, lastRou
                                     title: "Entity Product Links",
                                     content: [
                                         <select name="entity_product_links" value={localStorageData.entity_product_links} onChange={handelChangeLocalStorageData}>
-                                            <option value="AAPA">{keyDictionary["AAPA"]}</option>
-                                            <option value="AAPB">{keyDictionary["AAPB"]}</option>
-                                            <option value="AAPC">{keyDictionary["AAPC"]}</option>
+                                            { Object.entries(keyDictionary_notifications).map(element => {
+                                                return <option key={element[0]} value={element[0]}>{keyDictionary_notifications[element[0]]}</option>
+                                            })}
                                         </select>
                                     ]
                                 }

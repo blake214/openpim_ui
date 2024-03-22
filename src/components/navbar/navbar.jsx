@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./style.module.css"
+import styles from "../style.module.css"
 import CustomLink from "../custom_link/custom_link";
 import CustomButton from "../custom_button/custom_button";
 import { FaBookOpen } from "react-icons/fa";
@@ -68,24 +68,29 @@ export default function Navbar() {
 	}, [theme]);
 
 	useEffect(() => {
-		function handleClickOutside(event) {
+		const handleClickOutside = (event) => {
 			// Check if the clicked element is not one of component_ref, close all toggles
 			if (component_ref.current && !component_ref.current.contains(event.target)) {
 				setMenuToggled(false);
 				setUserToggled(false);
 			}
 		}
-		document.addEventListener('mousedown', handleClickOutside);
-	}, []);
+		if(menuToggled || userToggled) {
+			document.addEventListener('mousedown', handleClickOutside);
+			// ========== Cleanup
+            return () => document.removeEventListener('mousedown', handleClickOutside);
+		}
+		else document.removeEventListener('mousedown', handleClickOutside);
+	}, [menuToggled, userToggled]);
 	// ======= Effects
 
 	return (
 		<>
-			<div className={styles.container_spacer}></div>
-			<div className={styles.container}>
-				<div className={styles.bar}>
+			<div className={styles.container_navbar_spacer}/>
+			<div className={styles.container_navbar}>
+				<div className={styles.container_navbar_bar}>
 					<CustomLink href="/"><FaBookOpen size={25} cursor="pointer"/></CustomLink>
-					<div className={styles.links_container}>
+					<div className={styles.container_navbar_links}>
 						{session?.data?.user && (
 							<CustomLink href="/dash">
 								<MdSpaceDashboard size={25} cursor="pointer"/>
@@ -100,7 +105,7 @@ export default function Navbar() {
 					</div>
 				</div>
 				{menuToggled && (
-					<div ref={component_ref} className={styles.list_container}>
+					<div ref={component_ref} className={styles.container_navbar_list}>
 						<CustomLink component_type="vertical" href="/about">
 							About
 						</CustomLink>
@@ -137,13 +142,13 @@ export default function Navbar() {
 				{userToggled && (
 					<>
 						{session?.data?.user ? (
-							<div ref={component_ref} className={styles.list_container}>
+							<div ref={component_ref} className={styles.container_navbar_list}>
 								<form action={handleLogout}>
 									<CustomButton component_type="vertical" type="submit"> <MdLogout size={20} cursor="pointer"/> Logout </CustomButton>
 								</form>
 							</div>
 						) : (
-							<div ref={component_ref} className={styles.list_container}>
+							<div ref={component_ref} className={styles.container_navbar_list}>
 								<CustomLink component_type="vertical" href="/login"> Login </CustomLink>
 								<CustomLink component_type="vertical" href="/register"> Register </CustomLink>
 							</div>

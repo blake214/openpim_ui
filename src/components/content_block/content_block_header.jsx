@@ -1,17 +1,12 @@
 "use client"
 
-import styles from "./style.module.css";
+import styles from "../style.module.css";
 import { IoMdMenu } from "react-icons/io";
 import { CgUndo } from "react-icons/cg";
 import { RiEdit2Line } from "react-icons/ri";
 import { useRef, useState, useEffect } from 'react'
 
-export default function ContentBlockHeader({
-	title="",
-	undoClick=null,
-	editClick=null,
-	menuComponents=null,
-}) {
+export default function ContentBlockHeader({ title="", undoClick=null, editClick=null, menuComponents=null }) {
 	// ===== States
 	const [menuToggled, setMenuToggled] = useState(false);
 	// ===== States
@@ -21,24 +16,31 @@ export default function ContentBlockHeader({
 	// ===== General
 
 	// ======= Event Handlers
-	const updateMenuToggled = () => {
+	const updateMenuToggled = (event) => {
+		event.preventDefault();
 		setMenuToggled(!menuToggled);
 	};
-	function handleClickOutside(e) {
-		// Check if the clicked element is not one of component_ref, close all toggles
-		if (component_ref.current && !component_ref.current.contains(e.target)) setMenuToggled(false);
-	}
 	// ======= Event Handlers
 
 	// ======= Effects
 	useEffect(() => {
-		if(menuComponents) document.addEventListener('mousedown', handleClickOutside);
-	}, []);
+		const handleClickOutside = (event) => {
+			// Check if the clicked element is not one of component_ref, close all toggles
+			if(component_ref.current && !component_ref.current.contains(event.target)) setMenuToggled(false);
+		}
+		if(menuToggled && menuComponents) {
+			document.addEventListener('mousedown', handleClickOutside);
+			// ========== Cleanup
+            return () => document.removeEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+	}, [menuToggled]);
 	// ======= Effects
 
 	return (
-		<div className={styles.container}>
-			<div className={styles.container_title}>
+		<div className={styles.container_block_header}>
+			<div className={styles.container_block_title}>
 				<b>{title}</b>
 				<div className="align_right">
 					{undoClick && <button onClick={undoClick}><CgUndo size={20} cursor="pointer"/></button>}
@@ -47,7 +49,7 @@ export default function ContentBlockHeader({
 				</div>
 			</div>
 			{menuToggled &&
-				<div ref={component_ref} className={styles.list_container}>{menuComponents}</div>
+				<div ref={component_ref} className={styles.block_list_container}>{menuComponents}</div>
 			}
 		</div>
 	);

@@ -20,6 +20,7 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
     const content = buildContent(stored_element_temp)
     const file_input_ref = useRef(null);
     const multi_file_allowed = (stored_element.max_files > 1 || false)
+    const file_types_allowed = stored_element.file_types || ["image/png"]
     // ======= General
 
     // ======= States
@@ -47,26 +48,24 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         e.preventDefault();
         e.stopPropagation();
         setDragActive(false);
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            // Depending if more than one item is allowed
-            if(multi_file_allowed) handelStagedFilesChange(e.dataTransfer.files);
-            else handelStagedFilesChange([e.dataTransfer.files[0]]);
-        }
+        if (e.dataTransfer?.files?.length) handelStagedFilesChange(e.dataTransfer.files);
     };
     
     // triggers when file is selected with click
     const handleFileInputChange = function(e) {
         e.preventDefault();
-        if (e.target.files && e.target.files[0]) {
-            handelStagedFilesChange(e.target.files);
-        }
+        if (e.target.files?.length) handelStagedFilesChange(e.target.files);
     };
     // ======= Change Handlers
 
     // ======= Event Handlers
     const handelStagedFilesChange = async (files) => {
         // Turn that into an array (its not really an array)
-        const files_array = Array.from(files)
+        let files_array = Array.from(files)
+        // Check if we allowed more than one file
+        if(files_array.length && !multi_file_allowed) files_array = [files_array[0]]
+        // Lets filter the file types that are allowed
+        files_array = files_array.filter(element => file_types_allowed.includes(element.type));
         // Create an array of promises to convert the files into blobs and be ready for the DB
         const fileDataPromises = files_array.map(async (element) => {
             const file_contents = await readFileAsBlob(element);
@@ -83,7 +82,7 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
             ...(multi_file_allowed ? [...prevData] : []),
             ...data
         ]));
-        alert("Number of files added: " + files.length);
+        alert("Number of files added: " + files_array.length);
     }
     const handleDeleteFormData = (e) => {
         e.preventDefault();
@@ -203,7 +202,7 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         })
     }, [])
     useEffect(() => {
-        // This is so we dont uncheck our boxes when we move things, as we have already changed the current staged files
+        // This is so we dont uncheck our boxes when we move things, as we have already changed the current staged files. Remember there is other ways that staged files can change, so just do this, why not
         if(currentStagedFiles_changed) return setCurrentStagedFiles_changed(false)
         // Update the current staged files
         setCurrentStagedFiles(stagedFiles.map(element => ({
@@ -226,7 +225,7 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
             <BasicLink>Findout more</BasicLink>
             <br/>
             <form className={styles.form_file} onDragEnter={handleFileDrag} onSubmit={(e) => e.preventDefault()}>
-                <input className={styles.form_file_input} ref={file_input_ref} type="file" id="file_input" multiple={multi_file_allowed} onChange={handleFileInputChange} />
+                <input className={styles.form_file_input} ref={file_input_ref} type="file" id="file_input" multiple={multi_file_allowed} onChange={handleFileInputChange} accept={file_types_allowed.join(', ')}/>
                 <label htmlFor="file_input" 
                     className={`
                         ${styles.label_form_file_input}
@@ -241,6 +240,18 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
                 </label>
                 { dragActive && <div className={styles.drag_file_element} onDragEnter={handleFileDrag} onDragLeave={handleFileDrag} onDragOver={handleFileDrag} onDrop={handleFileDrop}></div> }
             </form>
+            <br/>
+            <div className="flex">
+                <b>Allowed Formats</b>
+                <b className="align_right">Maximum Size</b>
+            </div>
+            <hr className="hr_surface_color_1 hr_margin"/>
+            {file_types_allowed.map(element => (
+                <div key={element} className="flex">
+                    <p>{element}</p>
+                    <p className="align_right">5MB</p>
+                </div>
+            ))}
             <br/>
             <ContentBlock 
                 title="Current"

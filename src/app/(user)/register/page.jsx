@@ -24,8 +24,6 @@ export default function RegisterPage() {
     const [createUserInput, setCreateUserInput] = useState({
         fname: 'Blake',
         lname: '',
-        language_id: '',
-        ui_theme_id: '',
         primary_email: 'blake@example.com',
         recovery_email: '',
         password: 'password',
@@ -38,15 +36,15 @@ export default function RegisterPage() {
     // ======= States
 
     // ======= Change Handlers
-    const handleCreateUserInputChange = (e) => {
-        const { name, value } = e.target;
+    const handleCreateUserInputChange = (event) => {
+        const { name, value } = event.target;
         setCreateUserInput((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
-    const handleCreateUserVerificationInputChange = (e) => {
-        const { name, value } = e.target;
+    const handleCreateUserVerificationInputChange = (event) => {
+        const { name, value } = event.target;
         setCreateUserVerificationInput((prevData) => ({
             ...prevData,
             [name]: value,
@@ -55,13 +53,16 @@ export default function RegisterPage() {
     // ======= Change Handlers
 
     // ======= Event Handlers
-    const handleUserInputSubmit = (e) => {
-        e.preventDefault();
+    const handleUserInputSubmit = (event) => {
+        event.preventDefault();
+        /** Verify data */
         // Check if passwords match
         if(createUserInput.password !== createUserInput.password_repeat) return alert("passwords dont match")
-        // Reset the states cor consistency
+        if(!createUserInput.password.length) return alert("password cant be empty")
+        /** Reset the states cor consistency */
         createEmailVerificationReset_primary_email()
         createEmailVerificationReset_recovery_email()
+        /** Perform requests */
         // Lets send the primary email verifications
         const create_email_verification_input_object = {
             email: createUserInput.primary_email,
@@ -79,8 +80,8 @@ export default function RegisterPage() {
             })
         }
     };
-    const handleUserVerificationInputSubmit = (e) => {
-        e.preventDefault();
+    const handleUserVerificationInputSubmit = (event) => {
+        event.preventDefault();
         const create_user_input_object = {
             emails: {
                 primary_email: createUserInput.primary_email,
@@ -90,8 +91,6 @@ export default function RegisterPage() {
                 fname: createUserInput.fname,
                 ...(createUserInput.fname.length && { fname: createUserInput.fname })
             },
-            ...(createUserInput.language_id.length && { language_id: createUserInput.language_id }),
-            ...(createUserInput.ui_theme_id.length && { ui_theme_id: createUserInput.ui_theme_id }),
             password: createUserInput.password,
         }
         const create_user_verification_input_object = {

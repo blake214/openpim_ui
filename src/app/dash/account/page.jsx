@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import { AccountPageGetUser } from "@/lib/graphql_query";
 import { createLocalUuidKey } from "@/lib/helpers";
 import { useEffect, useState } from "react";
-import { keyDictionary } from "@/lib/key_dictionary";
+import { keyDictionary_notifications } from "@/lib/key_dictionary";
 import SectionBlockMinimizer from "@/components/section_block_minimizer/section_block_minimizer";
 import Skeleton from "@/components/skeleton/skeleton";
 import ContentBlock from "@/components/content_block/content_block";
@@ -443,7 +443,7 @@ export default function Account() {
                                     items: [
                                         {
                                             title: "Product Changes",
-                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.product_changes]]
+                                            content: [keyDictionary_notifications[AccountPageGetUserData.getUser.notifications.product_changes]]
                                         }
                                     ]
                                 },
@@ -452,7 +452,7 @@ export default function Account() {
                                     items: [
                                         {
                                             title: "Product Issues",
-                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.product_issues]]
+                                            content: [keyDictionary_notifications[AccountPageGetUserData.getUser.notifications.product_issues]]
                                         }
                                     ]
                                 },
@@ -461,7 +461,7 @@ export default function Account() {
                                     items: [
                                         {
                                             title: "Entity Changes",
-                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_changes]]
+                                            content: [keyDictionary_notifications[AccountPageGetUserData.getUser.notifications.entity_changes]]
                                         }
                                     ]
                                 },
@@ -470,7 +470,7 @@ export default function Account() {
                                     items: [
                                         {
                                             title: "Entity Issues",
-                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_issues]]
+                                            content: [keyDictionary_notifications[AccountPageGetUserData.getUser.notifications.entity_issues]]
                                         }
                                     ]
                                 },
@@ -479,7 +479,7 @@ export default function Account() {
                                     items: [
                                         {
                                             title: "Entity Product Links",
-                                            content: [keyDictionary[AccountPageGetUserData.getUser.notifications.entity_product_links]]
+                                            content: [keyDictionary_notifications[AccountPageGetUserData.getUser.notifications.entity_product_links]]
                                         }
                                     ]
                                 }

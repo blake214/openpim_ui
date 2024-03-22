@@ -1,11 +1,11 @@
 import Link from "next/link";
-import styles from "./style.module.css"
+import styles from "../style.module.css"
 
 function CustomLink({ children, href="", align="left" }) {
 	return (
 		<Link
 			href={href}
-			className={styles.container}
+			className={styles.container_link}
 		>
 			<div className={`
 				${align === "left" && "align_left"}
@@ -21,7 +21,6 @@ export default function BasicLink({ children, href="", align="left" , onClick=nu
 		<>
 			{onClick ? (
 				<div onClick={onClick}><CustomLink href={href} align={align}>{children}</CustomLink></div>
-				
 			) : (
 				<CustomLink href={href} align={align}>{children}</CustomLink>
 			)}

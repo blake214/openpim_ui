@@ -14,13 +14,6 @@ export const { handlers: {GET, POST}, auth, signIn, signOut, update } = NextAuth
         CredentialsProvider({
             async authorize(credentials) {
                 try {
-                    // ======================= This block for testing
-                    // return {
-                    //     name: `Tester`,
-                    //     email: "blake@example.com",
-                    //     openPimToken: "TOKEN"
-                    // }
-                    // ======================= This block for testing
                     const login_user_mutation = gql`
                     mutation {
                         loginUser(LoginUserInput:{

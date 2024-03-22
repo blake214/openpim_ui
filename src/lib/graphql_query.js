@@ -17,8 +17,6 @@ query AccountPageGetUser {
             lname
         }
         token_key
-        language_id
-        ui_theme_id
         account_limits {
             rate_limit_scaler
             graphql_rate_limit_scaler
