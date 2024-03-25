@@ -3,13 +3,13 @@
 import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
-import { keyDictionary_entity_types } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
+import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import { keyDictionary_languages } from "@/lib/key_dictionary";
 
-export default function EditUnregisteredEntityTypes({stored_element, location, lastRoute, prevRoute}) {
+export default function EditProductNames({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
     const router = useRouter()
     // ======= Hooks
@@ -21,49 +21,55 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
 
     // ======= States
     const [localStorageData, setLocalStorageData] = useState(content);
-    const [currentEntityTypes, setCurrentEntityTypes] = useState(localStorageData.map(element => ({
+    const [currentNames, setCurrentNames] = useState(content.map(element => ({
         checked: false,
         items: [
             {
-                title: "Entity Type",
-                content: [keyDictionary_entity_types[element]]
+                title: "Name",
+                content: [element.name]
+            },
+            {
+                title: "Language",
+                content: [keyDictionary_languages[element.language_id]]
             }
         ]
     })));
     // Add form states
-    const [addEntityType, setAddEntityType] = useState("AAXA");
+    const [addName, setAddName] = useState("");
+    const [addLanguage, setAddLanguage] = useState("AAOA");
     // ======= States
 
     // ======= Change Handlers
     const handleChangeAddFormData = (event) => {
         const { name, value } = event.target;
-        if(name == "entity_type") setAddEntityType(value);
+        if(name == "name") setAddName(value);
+        if(name == "language") setAddLanguage(value);
     };
     // ======= Change Handlers
 
-    // ======= Change Handlers
+    // ======= Event Handlers
     const handleDeleteFormData = (event) => {
         event.preventDefault();
         // Initialise the update
         let new_local_storage_data = []
-        let new_current_entity_types = []
+        let new_current_names = []
         // Check which values are checked
-        currentEntityTypes.forEach((element, index) => {
+        currentNames.forEach((element, index) => {
             if(!element.checked) {
                 new_local_storage_data.push(localStorageData[index])
-                new_current_entity_types.push(currentEntityTypes[index])
+                new_current_names.push(currentNames[index])
             }
         });
         // Updates
         setLocalStorageData(new_local_storage_data)
-        setCurrentEntityTypes(new_current_entity_types)
+        setCurrentNames(new_current_names)
     }
     const handleMoveUpFormData = (event) => {
         event.preventDefault();
         // Inlitialise
         let selected_indicies = null
         // Check which values are checked
-        currentEntityTypes.forEach((element, index) => {
+        currentNames.forEach((element, index) => {
             if(element.checked) {
                 if(!selected_indicies) selected_indicies = index
                 else return alert('Can only move one element at a time')
@@ -76,28 +82,28 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
         // ======= States
         // Create the working list
         let new_local_storage_data = [...localStorageData]
-        let new_current_entity_types = [...currentEntityTypes]
+        let new_current_names = [...currentNames]
         // Record the elements we swapping
         const current_local_value = localStorageData[selected_indicies]
         const prev_local_value = localStorageData[selected_indicies - 1]
-        const current_current_value = currentEntityTypes[selected_indicies]
-        const prev_current_value = currentEntityTypes[selected_indicies - 1]
+        const current_current_value = currentNames[selected_indicies]
+        const prev_current_value = currentNames[selected_indicies - 1]
         // Swap elements
         new_local_storage_data[selected_indicies] = prev_local_value
         new_local_storage_data[selected_indicies - 1] = current_local_value
-        new_current_entity_types[selected_indicies] = prev_current_value
-        new_current_entity_types[selected_indicies - 1] = current_current_value
+        new_current_names[selected_indicies] = prev_current_value
+        new_current_names[selected_indicies - 1] = current_current_value
         // ======= States
         // Updates
         setLocalStorageData(new_local_storage_data)
-        setCurrentEntityTypes(new_current_entity_types)
+        setCurrentNames(new_current_names)
     }
     const handleMoveDownFormData = (event) => {
         event.preventDefault();
         // Inlitialise
         let selected_indicies = null
         // Check which values are checked
-        currentEntityTypes.forEach((element, index) => {
+        currentNames.forEach((element, index) => {
             if(element.checked) {
                 if(!selected_indicies) selected_indicies = index
                 else return alert('Can only move one element at a time')
@@ -106,47 +112,54 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
         // Make sure there is only one entry selected (0 is a index also so we match for null)
         if(selected_indicies == null) return alert('Need to select an element')
         // Make sure there is not at the bottom of the list already
-        if(selected_indicies == currentEntityTypes.length - 1) return
+        if(selected_indicies == currentNames.length - 1) return
         // ======= States
         // Create the working list
         let new_local_storage_data = [...localStorageData]
-        let new_current_entity_types = [...currentEntityTypes]
+        let new_current_names = [...currentNames]
         // Record the elements we swapping
         const current_local_value = localStorageData[selected_indicies]
         const next_value_staged_files = localStorageData[selected_indicies + 1]
-        const current_current_value = currentEntityTypes[selected_indicies]
-        const next_value_current_staged_files = currentEntityTypes[selected_indicies + 1]
+        const current_current_value = currentNames[selected_indicies]
+        const next_value_current_staged_files = currentNames[selected_indicies + 1]
         // Swap elements
         new_local_storage_data[selected_indicies] = next_value_staged_files
         new_local_storage_data[selected_indicies + 1] = current_local_value
-        new_current_entity_types[selected_indicies] = next_value_current_staged_files
-        new_current_entity_types[selected_indicies + 1] = current_current_value
+        new_current_names[selected_indicies] = next_value_current_staged_files
+        new_current_names[selected_indicies + 1] = current_current_value
         // ======= States
         // Updates
         setLocalStorageData(new_local_storage_data)
-        setCurrentEntityTypes(new_current_entity_types)
+        setCurrentNames(new_current_names)
     }
     const handleAdd = (event) => {
         event.preventDefault();
         // Check element doesnt already exist
-        if(localStorageData.includes(addEntityType)) return
+        if(localStorageData.some(element => element.language_id == addLanguage)) return
         // Initialise
         let new_local_storage_data = [...localStorageData]
-        let new_current_entity_types = [...currentEntityTypes]
+        let new_current_names = [...currentNames]
         // Update new record
-        new_local_storage_data.push(addEntityType)
-        new_current_entity_types.push({
+        new_local_storage_data.push({
+            name: addName,
+            language_id: addLanguage
+        })
+        new_current_names.push({
             checked: false,
             items: [
                 {
-                    title: "Entity Type",
-                    content: [keyDictionary_entity_types[addEntityType]]
+                    title: "Name",
+                    content: [addName]
+                },
+                {
+                    title: "Language",
+                    content: [keyDictionary_languages[addLanguage]]
                 }
             ]
         })
         // Update states
         setLocalStorageData(new_local_storage_data)
-        setCurrentEntityTypes(new_current_entity_types)
+        setCurrentNames(new_current_names)
     }
     const handleSave = (event) => {
         event.preventDefault();
@@ -162,23 +175,29 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
     
 	return (
 		<>
-            <h1>Edit Entity Types</h1>
+            <h1>Edit Product Names</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
             <br/>
             <form onSubmit={handleAdd}>
-                <ContentBlock title="Add Entity Type">
+                <ContentBlock title="Add Name">
                     <TableHorizontal
                         tableContent={[
                             {
                                 items: [
                                     {
-                                        title: "Entity Type",
+                                        title: "Name",
                                         content: [
-                                            <select name="entity_type" value={addEntityType} onChange={handleChangeAddFormData} required>
-                                                { Object.entries(keyDictionary_entity_types).map(element => {
-                                                    return <option key={element[0]} value={element[0]}>{keyDictionary_entity_types[element[0]]}</option>
+                                            <input type="text" name="name" value={addName} onChange={handleChangeAddFormData} placeholder="..." required/>
+                                        ]
+                                    },
+                                    {
+                                        title: "Language",
+                                        content: [
+                                            <select name="language" value={addLanguage} onChange={handleChangeAddFormData} required>
+                                                { Object.entries(keyDictionary_languages).map(element => {
+                                                    return <option key={element[0]} value={element[0]}>{keyDictionary_languages[element[0]]}</option>
                                                 })}
                                             </select>
                                         ]
@@ -195,7 +214,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
                 </div>
             </form>
             <br/>
-            <h2>Current Entity Types</h2>
+            <h2>Current Names</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <ContentBlock 
@@ -210,8 +229,8 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             >
                 <TableHorizontal
 					tableContentState={{
-						tableContent: currentEntityTypes,
-						setTableContent: setCurrentEntityTypes
+						tableContent: currentNames,
+						setTableContent: setCurrentNames
 					}}
                     checks={true}
                     numbers={true}

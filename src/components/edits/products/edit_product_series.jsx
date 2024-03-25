@@ -8,7 +8,7 @@ import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
 import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 
-export default function EditUserNameLname({stored_element, location, lastRoute, prevRoute}) {
+export default function EditProductSeries({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
     const router = useRouter()
     // ======= Hooks
@@ -44,20 +44,20 @@ export default function EditUserNameLname({stored_element, location, lastRoute, 
     
 	return (
 		<>
-            <h1>Edit Last Name</h1>
+            <h1>Edit Product Series</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
             <br/>
-            <ContentBlock title="New">
+            <ContentBlock title="Product Series">
                 <TableHorizontal
 					tableContent={[
                         {
                             items: [
                                 {
-                                    title: "Last Name",
+                                    title: "Series",
                                     content: [
-                                        <input type="text" name="lname" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
+                                        <input type="text" name="series" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
                                     ]
                                 }
                             ]

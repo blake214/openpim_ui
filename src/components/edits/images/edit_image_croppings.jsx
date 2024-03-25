@@ -23,7 +23,6 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
 
     // ======= States
     const [localStorageData, setLocalStorageData] = useState(content);
-    const [stagedFiles, setStagedFiles] = useState([]);
     const [previewFile, setPreviewFile] = useState();
     const [cropVersionSq, setCropVersionSq] = useState(localStorageData.version_sq);
     const [cropVersionRec1, setCropVersionRec1] = useState(localStorageData.version_rec1);
@@ -31,7 +30,8 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
     // ======= States
 
     // ======= Event Handlers
-    const handleSave = () => {
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
@@ -49,18 +49,15 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
             db.files.where('key').equals(file_database_table_id).toArray().then(result => {
                 // Sort the result
                 result.sort((a, b) => (a.no - b.no));
-                setStagedFiles(result)
+                // Set the preview
+                if(result.length) {
+                    const blob = result[0].file
+                    const imageUrl = URL.createObjectURL(blob);
+                    setPreviewFile(imageUrl)
+                }
             })
         }
     }, [])
-    useEffect(() => {
-        if(stagedFiles.length) {
-            // Get the first file
-            const blob = stagedFiles[0].file
-            const imageUrl = URL.createObjectURL(blob);
-            setPreviewFile(imageUrl)
-        }
-    }, [stagedFiles])
     useEffect(() => {
         setLocalStorageData({
             version_sq: cropVersionSq,
@@ -68,9 +65,6 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
             version_rec2: cropVersionRec2
         })
     }, [cropVersionSq, cropVersionRec1, cropVersionRec2]);
-    // ======= Effects
-
-
     useEffect(() => {
         if(previewFile) {
             // If the initial values are ZEROs we will auto fit (we can use this for the first load)
@@ -149,16 +143,17 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
             }
         }
     }, [previewFile])
+    // ======= Effects    
     
 	return (
 		<>
-            <h1>Edit Croppings</h1>
+            <h1>Edit Ratios</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
             <br/>
             <SectionBlockMinimizer heading="Ratio 1:1" start_state="true">
-                <ContentBlock title="New">
+                <ContentBlock title="Current">
                     <RatioPickerBlock
                         imageUrl={previewFile}
                         ratio={1}
@@ -170,8 +165,8 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
                 </ContentBlock>
             </SectionBlockMinimizer>
             <br/>
-            <SectionBlockMinimizer heading="Ratio 16:9" start_state="false">
-                <ContentBlock title="New">
+            <SectionBlockMinimizer heading="Ratio 16:9" start_state="true">
+                <ContentBlock title="Current">
                     <RatioPickerBlock
                         imageUrl={previewFile}
                         ratio={1.777777}
@@ -183,8 +178,8 @@ export default function EditImageCroppings({stored_element, location, lastRoute,
                 </ContentBlock>
             </SectionBlockMinimizer>
             <br/>
-            <SectionBlockMinimizer heading="Ratio 18:6" start_state="false">
-                <ContentBlock title="New">
+            <SectionBlockMinimizer heading="Ratio 18:6" start_state="true">
+                <ContentBlock title="Current">
                     <RatioPickerBlock
                         imageUrl={previewFile}
                         ratio={3}

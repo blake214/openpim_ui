@@ -22,12 +22,16 @@ export default function EditUserEmailsPrimaryEmail({stored_element, location, la
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { value } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { value } = event.target;
         setLocalStorageData(value);
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
@@ -53,7 +57,7 @@ export default function EditUserEmailsPrimaryEmail({stored_element, location, la
                                 {
                                     title: "Primary Email",
                                     content: [
-                                        <input type="email" name="primary_email" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="Primary Email"/>
+                                        <input type="email" name="primary_email" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
                                     ]
                                 }
                             ]

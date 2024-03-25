@@ -22,12 +22,16 @@ export default function EditUserEmailsRecoveryEmail({stored_element, location, l
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { value } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { value } = event.target;
         setLocalStorageData(value);
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
@@ -53,7 +57,7 @@ export default function EditUserEmailsRecoveryEmail({stored_element, location, l
                                 {
                                     title: "Recovery Email",
                                     content: [
-                                        <input type="email" name="recovery_email" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="Recovery Email"/>
+                                        <input type="email" name="recovery_email" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
                                     ]
                                 }
                             ]

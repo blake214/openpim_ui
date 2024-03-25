@@ -3,7 +3,7 @@ import { from, HttpLink, ApolloLink, ApolloClient, InMemoryCache, ApolloProvider
 import { onError } from "@apollo/client/link/error";
 import { useSession } from 'next-auth/react';
 import { useEffect } from "react";
-import { handleLogout } from "@/lib/action";
+import { handleLogout } from "@/lib/action_server";
 
 // Log any GraphQL errors or network error that occurred
 const errorLink = onError(({ graphQLErrors, networkError }) => {

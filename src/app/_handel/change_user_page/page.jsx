@@ -45,8 +45,8 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
     // ======= States
 
     // ======= Change Handlers
-    const handleUserChangeVerificationInputChange = (e) => {
-        const { name, value } = e.target;
+    const handleUserChangeVerificationInputChange = (event) => {
+        const { name, value } = event.target;
         setUserChangeVerificationInput((prevData) => ({
             ...prevData,
             [name]: value,
@@ -55,8 +55,8 @@ export default function ChangeUserPage({stored_element, location, lastRoute, pre
     // ======= Change Handlers
 
     // ======= Event Handlers
-    const handleUserChangeSubmit = (e) => {
-        e.preventDefault();
+    const handleUserChangeSubmit = (event) => {
+        event.preventDefault();
         // Reset the states for consistency
         createEmailVerificationReset_primary_email()
         createEmailVerificationReset_recovery_email()

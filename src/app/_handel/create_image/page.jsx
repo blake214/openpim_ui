@@ -5,7 +5,7 @@ import { buildContent, cleanLocalStorageChildrenKeys } from '@/lib/helpers';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { handleLogout } from '@/lib/action';
+import { handleLogout } from '@/lib/action_server';
 import { useTheme } from "next-themes";
 import styles from "../style.module.css";
 import CustomButton from '@/components/custom_button/custom_button';
@@ -33,10 +33,11 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
     const [stagedFiles, setStagedFiles] = useState([]);
     const [previewFile, setPreviewFile] = useState();
     const [croppingsNotZeros, setCroppingsNotZeros] = useState(false);
+    const [createImageDataBusy, setCreateImageDataBusy] = useState(false);
     // ======= States
     
     // ======= Event Handlers
-    const handleCreateImageSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         /** Verify data */
         // Check there is one file available
@@ -60,6 +61,8 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
         formData.append('description', content.description);
         formData.append('image', one_file.file, one_file.name);
         /** Perform the request */
+        // Set is loading
+        setCreateImageDataBusy(true)
         fetch(`${process.env.NEXT_PUBLIC_OPENPIM_API_URL}image`, {
             method: 'POST',
             headers: {
@@ -67,6 +70,7 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
             },
             body: formData
         }).then(response => {
+            setCreateImageDataBusy(false)
             return response.json();
         }).then(response => {
             // Check if there was an error
@@ -80,6 +84,9 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
             } else if(response.data) {
                 setCreateImageData(response.data.image_id)
             }
+        }).catch(err => {
+            setCreateImageDataBusy(false)
+            alert(err)
         })
     }
     // ======= Event Handlers
@@ -109,6 +116,13 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
             // Sort the result
             result.sort((a, b) => (a.no - b.no));
             setStagedFiles(result)
+            // Set preview
+            if(result.length) {
+                // Get the first file
+                const blob = result[0].file
+                const imageUrl = URL.createObjectURL(blob);
+                setPreviewFile(imageUrl)
+            }
         })
         // Lets check if croppings arent zeros
         if( content.croppings.version_sq.width ||
@@ -120,14 +134,6 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
                 setCroppingsNotZeros(true)
             }
     }, [])
-    useEffect(() => {
-        if(stagedFiles.length) {
-            // Get the first file
-            const blob = stagedFiles[0].file
-            const imageUrl = URL.createObjectURL(blob);
-            setPreviewFile(imageUrl)
-        }
-    }, [stagedFiles])
     // ======= Effects
     
     return (
@@ -373,7 +379,7 @@ export default function CreateImagePage({stored_element, location, lastRoute, pr
             <br/>
             <hr className="hr_surface_color_1"/>
             <div className="button_fixed_width align_right">
-                <CustomButton component_type="vertical" onClick={handleCreateImageSubmit} >Submit</CustomButton>
+                <CustomButton component_type="vertical" onClick={handleSubmit} disabled={createImageDataBusy} busy={createImageDataBusy}>Submit</CustomButton>
             </div>
         </div>
     );

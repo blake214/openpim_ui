@@ -23,15 +23,19 @@ export default function EditUserNotifications({stored_element, location, lastRou
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { name, value } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { name, value } = event.target;
         setLocalStorageData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,

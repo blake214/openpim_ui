@@ -22,12 +22,16 @@ export default function EditVideoLoopable({stored_element, location, lastRoute, 
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { checked } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { checked } = event.target;
         setLocalStorageData(checked);
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,

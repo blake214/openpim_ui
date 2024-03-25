@@ -215,7 +215,7 @@ export default function DashPage() {
             extra: database_table_id,
             content: [
                 {
-                    caption_image_id : "xxx",
+                    caption_image_id : null,
                     content : "Hello world",
                     co_ordinates : {
                         x_axis : 300,
@@ -251,7 +251,7 @@ export default function DashPage() {
             type: "edit",
             sub_type: "media_files",
             title: "media_files",
-            max_files: 1,
+            max_files: 5,
             file_types: ["image/png"],
             content: database_table_id
         }));

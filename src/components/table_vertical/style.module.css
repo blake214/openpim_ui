@@ -1,31 +1,6 @@
-.container_table{
-    /* This is important for using position in children containers */
-    position: relative;
-}
-
-.container_title{
-    display: flex;
-    padding: 10px;
-    background-color: var(--surface_color_1);
-    color: var(--text_on_surface_color_1);
-    align-items: center;
-}
-
-.list_container{
-    width: var(--navbar_list_width);
-    position: absolute;
-    right: 0;
-    z-index: 969;
-}
-
-.body_container{
-    border: 1px solid var(--surface_color_1);
-    padding: 10px;
-}
-
-.container_row_3 {
+.container_row_1 {
     display: grid;
-    grid-template-columns: 30px 30px auto;
+    grid-template-columns: auto;
     overflow-wrap: break-word;
 }
 
@@ -35,9 +10,9 @@
     overflow-wrap: break-word;
 }
 
-.container_row_1 {
+.container_row_3 {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 30px 30px auto;
     overflow-wrap: break-word;
 }
 
@@ -46,20 +21,44 @@
     grid-template-columns: var(--key_value_key_width) auto;
 }
 
-.container_row_content_content {
-    display: grid;
-    grid-template-columns: 10px auto;
-}
-
 .title_right_colon {
     float: right;
     margin-right: 10px;
 }
 
-/* Below demo css */
-.row_test {
+/* horizontal */
+.container_primary_horizonatal_row {
     display: grid;
-    grid-template-columns: 30px 30px auto 30px 30px;
-    overflow-wrap: break-word;
+    align-items: center;
+    grid-template-columns: auto 1fr auto;
     border: 1px solid red;
+}
+
+.container_horizontal_rhs_dots, .container_horizontal_lhs_dots {
+    margin-bottom: auto;
+    width: fit-content;
+}
+
+.container_horizontal_rhs_dots {
+    justify-self: end;
+    margin-left: auto;
+}
+
+.container_horizontal_lhs_dots {
+    justify-self: start;
+    margin-right: auto;
+}
+
+.container_scrollable_horizonatal_row_column {
+    overflow-x: scroll;
+    display: flex;
+    gap: 10px;
+    width: fit-content
+}
+
+.container_scrollable_horizonatal_row_column_content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 200px
 }

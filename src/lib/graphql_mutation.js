@@ -17,7 +17,7 @@ mutation CreateUser($CreateUserInputObject: CreateUserInput!, $CreateUserVerific
 export const CreateTempProduct = gql`
 mutation CreateTempProduct($CreateTempProductInputObject: CreateTempProductInput!) {
     createTempProduct( CreateTempProductInput: $CreateTempProductInputObject ) {
-        _id
+        temp_product_id
     }
 }`;
 

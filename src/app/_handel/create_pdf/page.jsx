@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { keyDictionary_languages } from '@/lib/key_dictionary';
-import { handleLogout } from '@/lib/action';
+import { handleLogout } from '@/lib/action_server';
 import CustomButton from '@/components/custom_button/custom_button';
 import TableHorizontal from '@/components/table_horizontal/table_horizontal';
 import SectionBlockMinimizer from '@/components/section_block_minimizer/section_block_minimizer';
@@ -26,10 +26,11 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
     // ======= States
     const [createPdfData, setCreatePdfData] = useState()
     const [stagedFiles, setStagedFiles] = useState([]);
+    const [createPdfDataBusy, setCreatePdfDataBusy] = useState(false);
     // ======= States
     
     // ======= Event Handlers
-    const handleCreatePdfSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         /** Verify data */
         // Check there is one file available
@@ -44,7 +45,9 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
         formData.append('description', content.description);
         formData.append('language_id', content.language_id);
         formData.append('pdf', one_file.file, one_file.name);
-        // Perform request
+        /** Perform the request */
+        // Set is loading
+        setCreatePdfDataBusy(true)
         fetch(`${process.env.NEXT_PUBLIC_OPENPIM_API_URL}pdf`, {
             method: 'POST',
             headers: {
@@ -52,6 +55,7 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
             },
             body: formData
         }).then(response => {
+            setCreatePdfDataBusy(false)
             return response.json();
         }).then(response => {
             // Check if there was an error
@@ -65,6 +69,9 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
             } else if(response.data) {
                 setCreatePdfData(response.data.pdf_id)
             }
+        }).catch(err => {
+            setCreatePdfDataBusy(false)
+            alert(err)
         })
     }
     // ======= Event Handlers
@@ -204,7 +211,7 @@ export default function CreatePdfPage({stored_element, location, lastRoute, prev
             <br/>
             <hr className="hr_surface_color_1"/>
             <div className="button_fixed_width align_right">
-                <CustomButton component_type="vertical" onClick={handleCreatePdfSubmit} >Submit</CustomButton>
+                <CustomButton component_type="vertical" onClick={handleSubmit} disabled={createPdfDataBusy} busy={createPdfDataBusy}>Submit</CustomButton>
             </div>
         </div>
     );

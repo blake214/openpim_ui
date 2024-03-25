@@ -24,68 +24,38 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
     // ======= General
 
     // ======= States
-    const [localStorageData, setLocalStorageData] = useState(content);
+    const [localStorageData, setLocalStorageData] = useState(content); // for consistency
     const [stagedFiles, setStagedFiles] = useState([]);
     const [currentStagedFiles, setCurrentStagedFiles] = useState([]);
-    const [currentStagedFiles_changed, setCurrentStagedFiles_changed] = useState(false);
     const [dragActive, setDragActive] = useState(false);
     // ======= States
 
     // ======= Change Handlers
     // handle drag events
-    const handleFileDrag = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (e.type === "dragenter" || e.type === "dragover") {
-            setDragActive(true);
-        } else if (e.type === "dragleave") {
-            setDragActive(false);
-        }
+    const handleFileDrag = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.type === "dragenter" || event.type === "dragover") setDragActive(true);
+        else if (event.type === "dragleave") setDragActive(false);
     };
-    
     // triggers when file is dropped
-    const handleFileDrop = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+    const handleFileDrop = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         setDragActive(false);
-        if (e.dataTransfer?.files?.length) handelStagedFilesChange(e.dataTransfer.files);
+        if (event.dataTransfer?.files?.length) handelStagedFilesChange(event.dataTransfer.files);
     };
-    
     // triggers when file is selected with click
-    const handleFileInputChange = function(e) {
-        e.preventDefault();
-        if (e.target.files?.length) handelStagedFilesChange(e.target.files);
+    const handleFileInputChange = (event) => {
+        event.preventDefault();
+        if (event.target.files?.length) handelStagedFilesChange(event.target.files);
     };
     // ======= Change Handlers
 
     // ======= Event Handlers
-    const handelStagedFilesChange = async (files) => {
-        // Turn that into an array (its not really an array)
-        let files_array = Array.from(files)
-        // Check if we allowed more than one file
-        if(files_array.length && !multi_file_allowed) files_array = [files_array[0]]
-        // Lets filter the file types that are allowed
-        files_array = files_array.filter(element => file_types_allowed.includes(element.type));
-        // Create an array of promises to convert the files into blobs and be ready for the DB
-        const fileDataPromises = files_array.map(async (element) => {
-            const file_contents = await readFileAsBlob(element);
-            return {
-                key: localStorageData,
-                name: element.name,
-                file: file_contents
-            }
-        })
-        // Perform promises
-        const data = await Promise.all(fileDataPromises);
-        // Add to the staged state depending if more than one file allowed or not
-        setStagedFiles((prevData) => ([
-            ...(multi_file_allowed ? [...prevData] : []),
-            ...data
-        ]));
-        alert("Number of files added: " + files_array.length);
-    }
-    const handleDeleteFormData = (e) => {
-        e.preventDefault();
+    const handleDeleteFormData = (event) => {
+        event.preventDefault();
+        // Initialise the update
         let new_staged_files = []
         let new_current_staged_files = []
         // Check which values are checked
@@ -99,8 +69,9 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         setStagedFiles(new_staged_files)
         setCurrentStagedFiles(new_current_staged_files)
     }
-    const handleMoveUpFormData = (e) => {
-        e.preventDefault();
+    const handleMoveUpFormData = (event) => {
+        event.preventDefault();
+        // Inlitialise
         let selected_indicies = null
         // Check which values are checked
         currentStagedFiles.forEach((element, index) => {
@@ -131,10 +102,10 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         // Updates
         setStagedFiles(new_staged_files)
         setCurrentStagedFiles(new_current_staged_files)
-        setCurrentStagedFiles_changed(true)
     }
-    const handleMoveDownFormData = (e) => {
-        e.preventDefault();
+    const handleMoveDownFormData = (event) => {
+        event.preventDefault();
+        // Inlitialise
         let selected_indicies = null
         // Check which values are checked
         currentStagedFiles.forEach((element, index) => {
@@ -165,9 +136,53 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         // Updates
         setStagedFiles(new_staged_files)
         setCurrentStagedFiles(new_current_staged_files)
-        setCurrentStagedFiles_changed(true)
     }
-    const handleSave = async () => {
+    const handelStagedFilesChange = async (files) => {
+        // Initialise
+        let new_staged_files = [...stagedFiles]
+        let new_current_staged_files = [...currentStagedFiles]
+        // Turn that into an array (its not really an array)
+        let files_array = Array.from(files)
+        // Check if we allowed more than one file
+        if(files_array.length && !multi_file_allowed) files_array = [files_array[0]]
+        // Lets filter the file types that are allowed
+        files_array = files_array.filter(element => file_types_allowed.includes(element.type));
+        // Create an array of promises to convert the files into blobs and be ready for the DB
+        const fileDataPromises = files_array.map(async (element) => {
+            const file_contents = await readFileAsBlob(element);
+            return {
+                key: localStorageData,
+                name: element.name,
+                file: file_contents
+            }
+        })
+        // Perform promises
+        const data = await Promise.all(fileDataPromises);
+        // Update new record
+        new_staged_files = [
+            ...(multi_file_allowed ? [...new_staged_files] : []), // Add to the staged state depending if more than one file allowed or not
+            ...data
+        ]
+        new_current_staged_files = [
+            ...(multi_file_allowed ? [...new_current_staged_files] : []), // Add to the staged state depending if more than one file allowed or not
+            ...data.map(element => ({
+                checked: false,
+                items: [
+                    {
+                        title: "File Name",
+                        content: [element.name]
+                    }
+                ]
+            }))
+        ]
+        // Update states
+        setStagedFiles(new_staged_files);
+        setCurrentStagedFiles(new_current_staged_files)
+        // Notify user
+        alert("Number of files added: " + files_array.length);
+    }
+    const handleSave = async (event) => {
+        event.preventDefault();
         // ======= IndexDB
         // Delete all existing files
         await db.clearList(localStorageData)
@@ -178,8 +193,7 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
                 ...element,
                 no: index
             }))
-            // Add to DB
-            // await db.files.bulkAdd(stagedFiles);
+            // Add to indexDB
             await db.files.bulkAdd(ordered_files);
         }
         // ======= IndexDB
@@ -187,44 +201,42 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
         router.push(prevRoute)
     }
     // triggers the input when the button is clicked
-    const handleChooseFiles = () => {
+    const handleChooseFiles = (event) => {
+        event.preventDefault();
         file_input_ref.current.click();
     };
     // ======= Event Handlers
 
     // ======= Effects
     useEffect(() => {
-        // Get the files in the database
-        db.files.where('key').equals(localStorageData).toArray().then(result => {
-            // Sort the result
-            result.sort((a, b) => (a.no - b.no));
-            setStagedFiles(result)
-        })
+        if(localStorageData.length) {
+            // Get the files in the database
+            db.files.where('key').equals(localStorageData).toArray().then(result => {
+                // Sort the result
+                result.sort((a, b) => (a.no - b.no));
+                setStagedFiles(result)
+                setCurrentStagedFiles(result.map(element => ({
+                    checked: false,
+                    items: [
+                        {
+                            title: "File Name",
+                            content: [element.name]
+                        }
+                    ]
+                })))
+            })
+        }
     }, [])
-    useEffect(() => {
-        // This is so we dont uncheck our boxes when we move things, as we have already changed the current staged files. Remember there is other ways that staged files can change, so just do this, why not
-        if(currentStagedFiles_changed) return setCurrentStagedFiles_changed(false)
-        // Update the current staged files
-        setCurrentStagedFiles(stagedFiles.map(element => ({
-            checked: false,
-            items: [
-                {
-                    title: "File Name",
-                    content: [element.name]
-                }
-            ]
-        })))
-    }, [stagedFiles])
     // ======= Effects
 
 	return (
 		<>
-            <h1>Edit Media Files</h1>
+            <h1>Edit Files</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
             <br/>
-            <form className={styles.form_file} onDragEnter={handleFileDrag} onSubmit={(e) => e.preventDefault()}>
+            <form className={styles.form_file} onDragEnter={handleFileDrag}>
                 <input className={styles.form_file_input} ref={file_input_ref} type="file" id="file_input" multiple={multi_file_allowed} onChange={handleFileInputChange} accept={file_types_allowed.join(', ')}/>
                 <label htmlFor="file_input" 
                     className={`
@@ -252,6 +264,9 @@ export default function EditMediaFiles({stored_element, location, lastRoute, pre
                     <p className="align_right">5MB</p>
                 </div>
             ))}
+            <br/>
+            <h2>Current Files</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <ContentBlock 
                 title="Current"

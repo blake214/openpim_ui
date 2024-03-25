@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { keyDictionary_languages } from '@/lib/key_dictionary';
-import { handleLogout } from '@/lib/action';
+import { handleLogout } from '@/lib/action_server';
 import CustomButton from '@/components/custom_button/custom_button';
 import TableHorizontal from '@/components/table_horizontal/table_horizontal';
 import SectionBlockMinimizer from '@/components/section_block_minimizer/section_block_minimizer';
@@ -24,10 +24,11 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
 
     // ======= States
     const [createVideoData, setCreateVideoData] = useState()
+    const [createVideoDataBusy, setCreateVideoDataBusy] = useState(false);
     // ======= States
     
     // ======= Event Handlers
-    const handleCreateVideoSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         /** Verify data */
         // Check general
@@ -44,7 +45,9 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
         formData.append('description', content.description);
         formData.append('loopable', content.loopable);
         formData.append('language_id', content.language_id);
-        // Perform request
+        /** Perform the request */
+        // Set is loading
+        setCreateVideoDataBusy(true)
         fetch(`${process.env.NEXT_PUBLIC_OPENPIM_API_URL}video`, {
             method: 'POST',
             headers: {
@@ -52,6 +55,7 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
             },
             body: formData
         }).then(response => {
+            setCreateVideoDataBusy(false)
             return response.json();
         }).then(response => {
             // Check if there was an error
@@ -65,6 +69,9 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
             } else if(response.data) {
                 setCreateVideoData(response.data.video_id)
             }
+        }).catch(err => {
+            setCreateVideoDataBusy(false)
+            alert(err)
         })
     }
     // ======= Event Handlers
@@ -95,7 +102,7 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
             <br/>
             <h2>General Info</h2>
             <hr className={`${"hr_surface_color_1"} ${"hr_margin"}`}/>
-            <SectionBlockMinimizer heading="Current Link" start_state="false">
+            <SectionBlockMinimizer heading="Current Url" start_state="false">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
                 <br/>
                 <ContentBlock
@@ -109,7 +116,7 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
                             {
                                 items: [
                                     {
-                                        title: "Link",
+                                        title: "Url",
                                         content: [content.external_url]
                                     }
                                 ]
@@ -221,7 +228,7 @@ export default function CreateVideoPage({stored_element, location, lastRoute, pr
             <br/>
             <hr className="hr_surface_color_1"/>
             <div className="button_fixed_width align_right">
-                <CustomButton component_type="vertical" onClick={handleCreateVideoSubmit} >Submit</CustomButton>
+                <CustomButton component_type="vertical" onClick={handleSubmit} disabled={createVideoDataBusy} busy={createVideoDataBusy}>Submit</CustomButton>
             </div>
         </div>
     );

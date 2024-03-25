@@ -22,12 +22,16 @@ export default function EditMediaDescription({stored_element, location, lastRout
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { value } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { value } = event.target;
         setLocalStorageData(value);
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,

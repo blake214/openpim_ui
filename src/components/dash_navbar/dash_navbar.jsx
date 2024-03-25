@@ -12,7 +12,7 @@ export default function DashNavbar() {
 	// ======= States
 
 	// ======= Handlers
-	const updateMenuToggled = (event) => {
+	const updateMenuToggled = () => {
 		setMenuToggled(!menuToggled);
 	};
 	// ======= Handlers

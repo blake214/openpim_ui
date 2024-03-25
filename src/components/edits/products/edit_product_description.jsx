@@ -8,7 +8,7 @@ import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
 import TableHorizontal from "@/components/table_horizontal/table_horizontal";
 
-export default function EditUserNameLname({stored_element, location, lastRoute, prevRoute}) {
+export default function EditProductDescription({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
     const router = useRouter()
     // ======= Hooks
@@ -24,8 +24,11 @@ export default function EditUserNameLname({stored_element, location, lastRoute, 
 
     // ======= Change Handlers
     const handelChangeLocalStorageData = (event) => {
-        const { value } = event.target;
-        setLocalStorageData(value);
+        const { name, value } = event.target;
+        setLocalStorageData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
     // ======= Change Handlers
 
@@ -44,20 +47,30 @@ export default function EditUserNameLname({stored_element, location, lastRoute, 
     
 	return (
 		<>
-            <h1>Edit Last Name</h1>
+            <h1>Edit Product Description</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <BasicLink>Findout more</BasicLink>
             <br/>
-            <ContentBlock title="New">
+            <ContentBlock title="Product Title">
                 <TableHorizontal
 					tableContent={[
                         {
                             items: [
                                 {
-                                    title: "Last Name",
+                                    title: "Short",
                                     content: [
-                                        <input type="text" name="lname" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
+                                        <input type="text" name="short" value={localStorageData.short} onChange={handelChangeLocalStorageData} placeholder="..."/>
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            items: [
+                                {
+                                    title: "Long",
+                                    content: [
+                                        <input type="text" name="long" value={localStorageData.long} onChange={handelChangeLocalStorageData} placeholder="..."/>
                                     ]
                                 }
                             ]

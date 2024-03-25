@@ -2,7 +2,7 @@
 
 import styles from "@/app/(user)/style.module.css"
 import { FaGithub } from "react-icons/fa";
-import { credentialsLogin, handleGithubLogin } from "@/lib/action";
+import { credentialsLogin, handleGithubLogin } from "@/lib/action_server";
 import { useFormState } from "react-dom";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import CustomButton from "@/components/custom_button/custom_button";

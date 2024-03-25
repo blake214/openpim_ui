@@ -26,7 +26,7 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
     // ======= GraphQL
     
     // ======= Event Handlers
-    const handleCreateUnregisteredEntitySubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         /** Verify data */
         // Check entity has a name and a entity type
@@ -117,7 +117,7 @@ export default function CreateUnregisteredEntityPage({stored_element, location, 
             <br/>
             <hr className="hr_surface_color_1"/>
             <div className="button_fixed_width align_right">
-                <CustomButton component_type="vertical" onClick={handleCreateUnregisteredEntitySubmit} disabled={createUnregisteredEntityLoading}>Submit</CustomButton>
+                <CustomButton component_type="vertical" onClick={handleSubmit} disabled={createUnregisteredEntityLoading}>Submit</CustomButton>
             </div>
         </div>
     );

@@ -22,12 +22,16 @@ export default function EditUserNameFname({stored_element, location, lastRoute, 
     const [localStorageData, setLocalStorageData] = useState(content);
     // ======= States
 
-    // ======= Event Handlers
-    const handelChangeLocalStorageData = (e) => {
-        const { value } = e.target;
+    // ======= Change Handlers
+    const handelChangeLocalStorageData = (event) => {
+        const { value } = event.target;
         setLocalStorageData(value);
     };
-    const handleSave = () => {
+    // ======= Change Handlers
+
+    // ======= Event Handlers
+    const handleSave = (event) => {
+        event.preventDefault();
         // Update the variable
         localStorage?.setItem(lastRoute, JSON.stringify({
             ...stored_element,
@@ -53,7 +57,7 @@ export default function EditUserNameFname({stored_element, location, lastRoute, 
                                 {
                                     title: "First Name",
                                     content: [
-                                        <input type="text" name="fname" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="First Name"/>
+                                        <input type="text" name="fname" value={localStorageData} onChange={handelChangeLocalStorageData} placeholder="..."/>
                                     ]
                                 }
                             ]

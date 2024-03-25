@@ -1,5 +1,5 @@
 export const keyDictionary_entity_types = {
-    AAXA: "Brand",
+    AAXA: "Brand"
 }
 
 export const keyDictionary_notifications = {
@@ -10,4 +10,11 @@ export const keyDictionary_notifications = {
 
 export const keyDictionary_languages = {
     AAOA: "Universal",
+    EN: "English",
+    AA: "Afar",
+    AB: "Abkhazian",
+}
+
+export const keyDictionary_product_packaging = {
+    AAYA: "unpackaged",
 }

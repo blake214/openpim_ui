@@ -15,6 +15,12 @@ import EditVideoLoopable from "@/components/edits/videos/edit_video_loopable";
 import EditMediaFiles from "@/components/edits/media/edit_media_files";
 import EditImageCroppings from "@/components/edits/images/edit_image_croppings";
 import EditImageCaptions from "@/components/edits/images/edit_image_captions";
+import EditProductNames from "@/components/edits/products/edit_product_names";
+import EditProductSeries from "@/components/edits/products/edit_product_series";
+import EditProductDescription from "@/components/edits/products/edit_product_description";
+import EditProductSummary from "@/components/edits/products/edit_product_summary";
+import EditProductPackaging from "@/components/edits/products/edit_product_packaging";
+import EditProductEntity from "@/components/edits/products/edit_product_entity";
 
 export default function EditPage({stored_element, location, lastRoute, prevRoute}) {
     /** Checking what editing object it is
@@ -91,7 +97,43 @@ export default function EditPage({stored_element, location, lastRoute, prevRoute
             />}
 
             {/* Product objects */}
+            {stored_element.sub_type == "product_names" && <EditProductNames
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
+            {stored_element.sub_type == "product_series" && <EditProductSeries
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
             {stored_element.sub_type == "product_title" && <EditProductTitle
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
+            {stored_element.sub_type == "product_description" && <EditProductDescription
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
+            {stored_element.sub_type == "product_summary" && <EditProductSummary
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
+            {stored_element.sub_type == "product_packaging" && <EditProductPackaging
+                stored_element={stored_element}
+                location={location}
+                lastRoute={lastRoute}
+                prevRoute={prevRoute}
+            />}
+            {stored_element.sub_type == "product_entity" && <EditProductEntity
                 stored_element={stored_element}
                 location={location}
                 lastRoute={lastRoute}

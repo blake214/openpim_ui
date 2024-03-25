@@ -9,7 +9,7 @@ import { useRef, useState, useEffect } from 'react'
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
-import { handleLogout } from "@/lib/action";
+import { handleLogout } from "@/lib/action_server";
 import { useSession } from "next-auth/react";
 import { FaUser } from "react-icons/fa6";
 import { MdSpaceDashboard } from "react-icons/md";
