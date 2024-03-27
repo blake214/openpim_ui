@@ -7,7 +7,7 @@ import { keyDictionary_notifications } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 
 export default function EditUserNotifications({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
@@ -54,7 +54,7 @@ export default function EditUserNotifications({stored_element, location, lastRou
             <BasicLink>Findout more</BasicLink>
             <br/>
             <ContentBlock title="New">
-                <TableHorizontal
+                <CustomTable
 					tableContent={[
                         {
                             items: [

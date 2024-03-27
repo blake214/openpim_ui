@@ -4,7 +4,7 @@ import { buildContent } from "@/lib/helpers";
 import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import CustomButton from "../../custom_button/custom_button";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
 
@@ -50,7 +50,7 @@ export default function EditUnregisteredEntityName({stored_element, location, la
             <BasicLink>Findout more</BasicLink>
             <br/>
             <ContentBlock title="New">
-                <TableHorizontal
+                <CustomTable
 					tableContent={[
                         {
                             items: [

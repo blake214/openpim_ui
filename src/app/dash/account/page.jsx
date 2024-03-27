@@ -2,17 +2,58 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useQuery } from '@apollo/client';
-import { AccountPageGetUser } from "@/lib/graphql_query";
 import { createLocalUuidKey } from "@/lib/helpers";
 import { useEffect, useState } from "react";
 import { keyDictionary_notifications } from "@/lib/key_dictionary";
+import { gql } from '@apollo/client';
 import SectionBlockMinimizer from "@/components/section_block_minimizer/section_block_minimizer";
 import Skeleton from "@/components/skeleton/skeleton";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
-import RowHorizontal from "@/components/table_horizontal/row/row";
+import CustomTable from "@/components/custom_table/custom_table";
+import RowVertical from "@/components/custom_table/row/row_vertical";
 
-export default function Account() {
+export const AccountPageGetUser = gql`
+query AccountPageGetUser {
+    getUser {
+        _id
+        emails {
+            primary_email
+            recovery_email
+        }
+        password {
+            password
+            password_length
+        }
+        name {
+            fname
+            lname
+        }
+        token_key
+        account_limits {
+            rate_limit_scaler
+            graphql_rate_limit_scaler
+        }
+        account_status {
+            banned
+            unban_date
+            lifetime_banned
+        }
+        notifications {
+            product_changes
+            product_issues
+            entity_changes
+            entity_issues
+            entity_product_links
+        }
+        score {
+            score_value
+            date_scored
+        }
+        payment_credits
+    }
+}`;
+
+export default function AccountPage() {
     // ======= Hooks
     const router = useRouter();
     const location = usePathname()
@@ -302,7 +343,7 @@ export default function Account() {
                 </>
             ) : (
                 <>
-                <RowHorizontal item={{
+                <RowVertical item={{
                     checked: false,
                     items: [
                         {
@@ -313,7 +354,7 @@ export default function Account() {
                         }
                     ]
                 }}/>
-                <RowHorizontal item={{
+                <RowVertical item={{
                     checked: false,
                     items: [
                         {
@@ -324,7 +365,7 @@ export default function Account() {
                         }
                     ]
                 }}/>
-                <RowHorizontal item={{
+                <RowVertical item={{
                     checked: false,
                     items: [
                         {
@@ -352,7 +393,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditFname}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -373,7 +414,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditLname}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -394,7 +435,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditPassword}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -415,7 +456,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditTokenKey}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -436,7 +477,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditNotifications}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -495,7 +536,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditPrimaryEmail}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,
@@ -516,7 +557,7 @@ export default function Account() {
                         title="Current"
                         editClick={handleEditRecoveryEmail}
                     >
-                        <TableHorizontal
+                        <CustomTable
                             tableContent= {[
                                 {
                                     checked: false,

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import CustomButton from "../../custom_button/custom_button";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import BasicLink from "@/components/basic_link/basic_link";
 
 export default function EditUserEmailsRecoveryEmail({stored_element, location, lastRoute, prevRoute}) {
@@ -50,7 +50,7 @@ export default function EditUserEmailsRecoveryEmail({stored_element, location, l
             <BasicLink>Findout more</BasicLink>
             <br/>
             <ContentBlock title="New">
-                <TableHorizontal
+                <CustomTable
 					tableContent={[
                         {
                             items: [

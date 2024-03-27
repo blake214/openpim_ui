@@ -5,6 +5,7 @@ import Link from "next/link";
 import startCase from 'lodash/startCase';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { mongoIdPath } from "@/lib/helpers";
 
 export default function DashTrailHeading() {
 	// ===== Hooks
@@ -46,6 +47,8 @@ export default function DashTrailHeading() {
 							const element = JSON.parse(localStorage.getItem(value))
 							title = element.title
 						}
+						const mongo_id_path = mongoIdPath(title)
+						if(mongo_id_path) title = mongo_id_path[1]
 						return (
 							<li key={href}>
 								{!first && (<span>/</span>)}

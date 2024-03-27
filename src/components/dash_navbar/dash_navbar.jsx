@@ -42,6 +42,9 @@ export default function DashNavbar() {
 						<CustomLink component_type="vertical" href="/dash/entities">
 							Entities
 						</CustomLink>
+						<CustomLink component_type="vertical" href="/dash/temp">
+							Temp
+						</CustomLink>
 					</>
 				)}
 			</div>

@@ -6,7 +6,7 @@ import { useState } from "react";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import { keyDictionary_product_packaging } from "@/lib/key_dictionary";
 
 export default function EditProductPackaging({stored_element, location, lastRoute, prevRoute}) {
@@ -54,7 +54,7 @@ export default function EditProductPackaging({stored_element, location, lastRout
             <BasicLink>Findout more</BasicLink>
             <br/>
             <ContentBlock title="Product Packaging">
-                <TableHorizontal
+                <CustomTable
 					tableContent={[
                         {
                             items: [

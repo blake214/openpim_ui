@@ -1,4 +1,5 @@
-const { request, gql } = require('graphql-request');
+import { gql } from '@apollo/client';
+import { request } from 'graphql-request';
 import { NextResponse } from 'next/server';
 
 export const authConfig = {

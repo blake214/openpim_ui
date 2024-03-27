@@ -34,7 +34,7 @@ export const handleCreateUnregisteredEntity = () => {
 // ======= Create unregistered entity
 
 // ======= Create temp product
-export const handleCreateTempProduct = () => {
+export const handleCreateTempProduct = (previous_object) => {
     const create_product_id = createLocalUuidKey()
     const product_names_id = createLocalUuidKey(create_product_id)
     const product_series_id = createLocalUuidKey(create_product_id)
@@ -48,6 +48,7 @@ export const handleCreateTempProduct = () => {
         type: "create_product",
         title: "create_product",
         content: {
+            ...(previous_object && { temp_product_id: previous_object.temp_product_id }),
             names: product_names_id,
             series: product_series_id,
             title: product_title_id,
@@ -62,74 +63,133 @@ export const handleCreateTempProduct = () => {
         type: "edit",
         sub_type: "product_names",
         title: "names",
-        content: [
-            {
-                name: "iPhone",
-                language_id: "AAOA"
-            }
-        ]
+        ...(previous_object ? { content: previous_object.names } : {
+            content: [
+                {
+                    name: "iPhone",
+                    language_id: "AAOA"
+                }
+            ]
+        })
     }));
 
     localStorage?.setItem(product_series_id, JSON.stringify({
         type: "edit",
         sub_type: "product_series",
         title: "series",
-        content: ""
+        ...(previous_object?.series ? { content: previous_object.series } : {
+            content: ""
+        })
     }));
 
     localStorage?.setItem(product_title_id, JSON.stringify({
         type: "edit",
         sub_type: "product_title",
         title: "title",
-        content: {
-            short: "Short",
-            long: "Longier"
-        }
+        ...(previous_object ? { content: previous_object.title } : {
+            content: {
+                short: "Short",
+                long: "Longier"
+            }
+        })
     }));
 
     localStorage?.setItem(product_description_id, JSON.stringify({
         type: "edit",
         sub_type: "product_description",
         title: "description",
-        content: {
-            short: "Short",
-            long: "Longier"
-        }
+        ...(previous_object ? { content: previous_object.description } : {
+            content: {
+                short: "Short",
+                long: "Longier"
+            }
+        })
     }));
 
     localStorage?.setItem(product_summary_id, JSON.stringify({
         type: "edit",
         sub_type: "product_summary",
         title: "summary",
-        content: {
-            short: "Short",
-            long: "Longier"
-        }
+        ...(previous_object ? { content: previous_object.summary } : {
+            content: {
+                short: "Short",
+                long: "Longier"
+            }
+        })
     }));
 
     localStorage?.setItem(product_packaging_id, JSON.stringify({
         type: "edit",
         sub_type: "product_packaging",
         title: "packaging",
-        content: {
-            packaging_type: "AAYA",
-            width: 50,
-            height: 50,
-            depth: 50,
-            weight: 50
-        }
+        ...(previous_object ? { content: previous_object.packaging } : {
+            content: {
+                packaging_type: "AAYA",
+                width: 50,
+                height: 50,
+                depth: 50,
+                weight: 50
+            }
+        })
     }));
 
     localStorage?.setItem(product_entity_id, JSON.stringify({
         type: "edit",
         sub_type: "product_entity",
         title: "product_entity",
-        content: "66013366c4b4dc632eae8968"
+        ...(previous_object ? { content: previous_object.entity_id._id } : {
+            content: "66013366c4b4dc632eae8968"
+        })
     }));
 
     return create_product_id
 };
 // ======= Create temp product
+
+// ======= Change product
+export const handleCreateProductChange = (product_id, change_type, new_object) => {
+    const create_product_change_id = createLocalUuidKey()
+    const create_product_change_title_existing_id = new_object?.title && createLocalUuidKey(create_product_change_id)
+    const create_product_change_title_new_id = new_object?.title && createLocalUuidKey(create_product_change_id)
+
+    localStorage?.setItem(create_product_change_id, JSON.stringify({
+        type: "create_product_change",
+        title: "create_product_change",
+        product_id: product_id,
+        change_type: change_type,
+        new_content: {
+            ...(create_product_change_title_new_id && { title: create_product_change_title_new_id })
+        },
+        existing_content: {
+            ...(create_product_change_title_existing_id && { title: create_product_change_title_existing_id })
+        },
+        comment: ""
+    }));
+
+    if(create_product_change_title_new_id && create_product_change_title_existing_id) {
+        localStorage?.setItem(create_product_change_title_new_id, JSON.stringify({
+            type: "edit",
+            sub_type: "product_title",
+            title: "title",
+            content: {
+                ...(new_object.title.short ? {short: new_object.title.short} : { short: "" }),
+                ...(new_object.title.long ? {long: new_object.title.long} : { long: "" })
+            }
+        }));
+        localStorage?.setItem(create_product_change_title_existing_id, JSON.stringify({
+            type: "reference",
+            sub_type: "product_title",
+            title: "title",
+            content: {
+                ...(new_object.title.short ? {short: new_object.title.short} : { short: "" }),
+                ...(new_object.title.long ? {long: new_object.title.long} : { long: "" })
+            }
+        }));
+    }
+
+    return create_product_change_id
+};
+// ======= Change product
 
 // ======= Create image
 export const handleCreateImage = () => {

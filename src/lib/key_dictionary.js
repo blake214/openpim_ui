@@ -18,3 +18,7 @@ export const keyDictionary_languages = {
 export const keyDictionary_product_packaging = {
     AAYA: "unpackaged",
 }
+
+export const keyDictionary_REVERSE_product_change_types = {
+    title: "AAJG",
+}

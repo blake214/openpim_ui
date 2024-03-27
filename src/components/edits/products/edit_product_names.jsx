@@ -6,7 +6,7 @@ import { useState } from "react";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import { keyDictionary_languages } from "@/lib/key_dictionary";
 
 export default function EditProductNames({stored_element, location, lastRoute, prevRoute}) {
@@ -182,7 +182,7 @@ export default function EditProductNames({stored_element, location, lastRoute, p
             <br/>
             <form onSubmit={handleAdd}>
                 <ContentBlock title="Add Name">
-                    <TableHorizontal
+                    <CustomTable
                         tableContent={[
                             {
                                 items: [
@@ -227,7 +227,7 @@ export default function EditProductNames({stored_element, location, lastRoute, p
 					</>
 				}
             >
-                <TableHorizontal
+                <CustomTable
 					tableContentState={{
 						tableContent: currentNames,
 						setTableContent: setCurrentNames

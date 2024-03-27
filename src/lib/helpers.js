@@ -22,6 +22,21 @@ export const isLocalUuidKey = (input) => {
     return false
 }
 
+/** mongoIdPath, checks if the path includes a mongoID
+ * Returns either 'false' if not valid OR and returns the id and type as [id,type]
+ */
+export const mongoIdPath = (input) => {
+    if(typeof input == "string") {
+        const index = input.indexOf('_');
+        const firstPart = index !== -1 ? input.substring(0, index) : input;
+        const secondPart = index !== -1 ? input.substring(index + 1) : '';
+        const mongo_id_regex = /^[0-9a-fA-F]{24}$/
+        if(!mongo_id_regex.test(firstPart)) return false
+        else return [firstPart, secondPart]
+    }
+    return false
+}
+
 export const buildContent = (stored_element, content_key="content") => {
     if(!stored_element) return stored_element
     // Check if local storage exists
@@ -34,9 +49,21 @@ export const buildContent = (stored_element, content_key="content") => {
             if(isLocalUuidKey(stored_element[content_key][key])) stored_element[content_key][key] = buildContent(JSON.parse(localStorage.getItem(stored_element[content_key][key])))
         }
         // This is a attribute graphql includes in some stuff for some reason
-        if("__typename" in stored_element[content_key]) delete stored_element[content_key]["__typename"]
+        if(stored_element[content_key] && "__typename" in stored_element[content_key]) delete stored_element[content_key]["__typename"]
     }
     return stored_element[content_key]
+}
+
+export const removeTypeNameGraphQl = (element) => {
+    if (!element || typeof element !== "object") return element;
+    if (Array.isArray(element)) {
+        return element.map(removeTypeNameGraphQl);
+    }
+    const newObj = {};
+    for (const key in element) {
+        if (key !== "__typename") newObj[key] = removeTypeNameGraphQl(element[key]);
+    }
+    return newObj;
 }
 
 export const cleanLocalStorage = () => {

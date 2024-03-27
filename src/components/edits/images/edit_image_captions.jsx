@@ -8,7 +8,7 @@ import { handleCreateImage } from "@/lib/action_user";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import CoordinatePickerBlock from "@/components/custom_image/coordinate_picker_block";
 
 export default function EditImageCaptions({stored_element, location, lastRoute, prevRoute}) {
@@ -294,7 +294,7 @@ export default function EditImageCaptions({stored_element, location, lastRoute, 
                         }}
                     />
                     <br/>
-                    <TableHorizontal
+                    <CustomTable
                         tableContent={[
                             {
                                 items: [
@@ -343,13 +343,14 @@ export default function EditImageCaptions({stored_element, location, lastRoute, 
 					</>
 				}
             >
-                <TableHorizontal
+                <CustomTable
 					tableContentState={{
 						tableContent: currentCaptions,
 						setTableContent: setCurrentCaptions
 					}}
                     checks={true}
                     numbers={true}
+                    orientation="horizontal"
 				/>
             </ContentBlock>
             <br/>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from "react";
 import { keyDictionary_entity_types } from "@/lib/key_dictionary";
 import CustomButton from "../../custom_button/custom_button";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
 
@@ -169,7 +169,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
             <br/>
             <form onSubmit={handleAdd}>
                 <ContentBlock title="Add Entity Type">
-                    <TableHorizontal
+                    <CustomTable
                         tableContent={[
                             {
                                 items: [
@@ -208,7 +208,7 @@ export default function EditUnregisteredEntityTypes({stored_element, location, l
 					</>
 				}
             >
-                <TableHorizontal
+                <CustomTable
 					tableContentState={{
 						tableContent: currentEntityTypes,
 						setTableContent: setCurrentEntityTypes

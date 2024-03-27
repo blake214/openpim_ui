@@ -21,10 +21,36 @@ mutation CreateTempProduct($CreateTempProductInputObject: CreateTempProductInput
     }
 }`;
 
+export const ChangeTempProduct = gql`
+mutation ChangeTempProduct($ChangeTempProductInputObject: ChangeTempProductInput!) {
+    changeTempProduct( ChangeTempProductInput: $ChangeTempProductInputObject ) {
+        temp_product_id
+    }
+}`;
+
 export const CreateUnregisteredEntity = gql`
 mutation CreateUnregisteredEntity($CreateUnregisteredEntityInputObject: CreateUnregisteredEntityInput!) {
     createUnregisteredEntity( CreateUnregisteredEntityInput: $CreateUnregisteredEntityInputObject ) {
         _id
+    }
+}`;
+
+export const DeleteTempProduct = gql`
+mutation DeleteTempProduct($DeleteTempProductInputObject: DeleteTempProductInput!) {
+    deleteTempProduct( DeleteTempProductInput: $DeleteTempProductInputObject )
+}`;
+
+export const ApproveTempProduct = gql`
+mutation ApproveTempProduct($ApproveTempProductInputObject: ApproveTempProductInput!) {
+    approveTempProduct( ApproveTempProductInput: $ApproveTempProductInputObject ) {
+        _id
+    }
+}`;
+
+export const CreateProductChange = gql`
+mutation CreateProductChange($CreateProductChangeInputObject: CreateProductChangeInput!) {
+    createProductChange( CreateProductChangeInput: $CreateProductChangeInputObject ) {
+        product_change_id
     }
 }`;
 

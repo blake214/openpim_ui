@@ -1,8 +1,9 @@
-const { request, gql } = require('graphql-request');
+import { gql } from '@apollo/client';
+import { request } from 'graphql-request';
+import { authConfig } from "./auth.config";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
-import { authConfig } from "./auth.config";
 
 export const { handlers: {GET, POST}, auth, signIn, signOut, update } = NextAuth({ 
     ...authConfig,

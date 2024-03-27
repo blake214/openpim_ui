@@ -7,7 +7,7 @@ import { handleCreateUnregisteredEntity } from "@/lib/action_user";
 import CustomButton from "../../custom_button/custom_button";
 import BasicLink from "@/components/basic_link/basic_link";
 import ContentBlock from "@/components/content_block/content_block";
-import TableHorizontal from "@/components/table_horizontal/table_horizontal";
+import CustomTable from "@/components/custom_table/custom_table";
 
 export default function EditProductEntity({stored_element, location, lastRoute, prevRoute}) {
     // ======= Hooks
@@ -119,7 +119,7 @@ export default function EditProductEntity({stored_element, location, lastRoute, 
             <br/>
             <form onSubmit={handleAdd}>
                 <ContentBlock title="Add Product Entity">
-                    <TableHorizontal
+                    <CustomTable
                         tableContent={[
                             {
                                 items: [
@@ -147,7 +147,7 @@ export default function EditProductEntity({stored_element, location, lastRoute, 
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugi</p>
             <br/>
             <ContentBlock title="Current">
-                <TableHorizontal
+                <CustomTable
                     tableContentState={{
 						tableContent: currentEntity,
 						setTableContent: setCurrentEntity
